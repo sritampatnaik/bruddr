@@ -1,1 +1,3 @@
-# my blog yay
+# NVC - bruddr
+
+Node, Express, MongoDb/Mongoose
