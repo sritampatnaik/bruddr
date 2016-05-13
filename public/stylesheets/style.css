@@ -49,3 +49,9 @@ a {
   align-items: space-around;
   -webkit-align-items: space-around;
 }
+.bottomText {
+  text-align: center;
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+}
