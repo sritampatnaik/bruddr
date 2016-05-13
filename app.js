@@ -5,14 +5,28 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./server/routes/index');
-var users = require('./server/routes/users');
+/* Grab credentials */
+const credentials = require('./config/credentials')
+
+/* Routes init */
+var routes = require('./routes/index');
+var todos = require('./routes/todos');
 
 var app = express();
 
+/* Db connection */
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://'+credentials.mongoUser+':'+credentials.mongoPW+'@ds013941.mlab.com:13941/bruddr-prod', function(err) {
+    if(err) {
+        console.log('connection error', err);
+    } else {
+        console.log('connection successful');
+    }
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -22,8 +36,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+/* Adding route controllers */
 app.use('/', routes);
-app.use('/users', users);
+app.use('/todos', todos);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,2 +1,1 @@
-# fictional-umbrella
-NVC yoooooooo
+# my blog yay
