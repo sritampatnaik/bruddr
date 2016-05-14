@@ -12,6 +12,7 @@ const credentials = require('./config/credentials')
 var routes = require('./routes/index');
 var todos = require('./routes/todos');
 var messengerBot = require('./routes/api/v1/messenger-bot');
+var betaEmail = require('./routes/api/v1/beta-email');
 
 var app = express();
 
@@ -43,6 +44,7 @@ app.use('/todos', todos);
 
 /* Adding API controllers */
 app.use('/api/v1/messenger-bot', messengerBot);
+app.use('/api/v1/beta-email', betaEmail);
 
 
 // catch 404 and forward to error handler

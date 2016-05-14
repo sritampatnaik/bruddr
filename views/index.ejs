@@ -1,32 +1,55 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    
-    <div id='splashImageContainer'></div>  
-    
-    <div id='contentsContainer'>
-      <div id='logoContainer'>
-        <img src='https://scontent.xx.fbcdn.net/v/t1.0-9/13087409_1017094681672990_7692124595092719181_n.png?oh=6ad572960ad3ff8c5da1335aa1f6778c&oe=57E3D1BC' height='200px'/>
-      </div>
-      <div id='textContainer'>
-        <h1><%= title %></h1>
-        <p>this is still a W.I.P by <span class='blue-txt'>bruddr</span></p>
-        <p>Check back soon, alright! :)</p>
-      </div>
-      <div></div>
-    </div>
-    
-    <div class='blue-txt bottomText'>
-        © brudder
-    </div>
-    
-  </body>
+	<head>
+		<title>Bruddr</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="/stylesheets/main.css" />
+    <link rel="stylesheet" href="/stylesheets/font-awesome.min.css" />
+    <script   src="https://code.jquery.com/jquery-1.12.3.min.js"   integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ="   crossorigin="anonymous"></script>
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body>
+
+		<!-- Logo --> 
+		<!-- <div style="
+			position:fixed;
+			top:0px;
+		    left:0px;
+		    width:100%;">
+		</div> -->
+
+
+		<!-- Header -->
+			<header id="header">
+				<h1>Bruddr<!--<image style="width:42px;height:42px;" src="images/TripStitch.png"/>--></h1>
+				<p>Find a bruddr.<br />
+				Get stuff done today.</p>
+				<p style="font-size:85%">Sign up for our waiting list now!</p>
+			</header>
+
+		<!-- Signup Form -->
+			<form id="signup-form" method="post" action="#">
+				<input type="email" name="email" id="email" placeholder="Email Address" />
+				<input type="submit" value="Sign up" />
+			</form>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<ul class="icons">
+					<li><a href="https://www.facebook.com/bruddr/" target="_blank" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+					<li><a href="mailto:bruddrz@gmail.com" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
+				</ul>
+				<ul class="copyright">
+					<li>&copy; bruddr</li>
+				</ul>
+			</footer>
+
+		<!-- Scripts -->
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="/js/main.js"></script>
+
+	</body>
 </html>
-
-<script>
-
-</script>
