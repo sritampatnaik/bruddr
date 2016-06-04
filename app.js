@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var expressSession = require('express-session');
 
 /* Grab credentials */
 const credentials = require('./config/credentials')
@@ -13,8 +15,18 @@ var routes = require('./routes/index');
 var todos = require('./routes/todos');
 var messengerBot = require('./routes/api/v1/messenger-bot');
 var betaEmail = require('./routes/api/v1/beta-email');
+var user = require('./routes/user');
 
 var app = express();
+
+/* Passport (Login) Stuff */
+app.use(expressSession({
+  secret: 'mySecretKey',
+  resave: true,
+  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 /* Db connection */
 var mongoose = require('mongoose');
@@ -41,6 +53,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 /* Adding route controllers */
 app.use('/', routes);
 app.use('/todos', todos);
+app.use('/user', user);
 
 /* Adding API controllers */
 app.use('/api/v1/messenger-bot', messengerBot);
