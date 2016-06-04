@@ -18,14 +18,14 @@ module.exports = function(){
   /* Handle Login POST */
   router.post('/api/login', passport.authenticate('login', {
     successRedirect: '/',
-    failureRedirect: '/login', 
+    failureRedirect: '/user/login', 
     failureFlash : true  
   }));
   
 	/* Handle Registration POST */
 	router.post('/api/signup', passport.authenticate('signup', {
 		successRedirect: '/',
-		failureRedirect: '/signup',
+		failureRedirect: '/user/signup',
 		failureFlash : true  
 	}));
 

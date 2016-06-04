@@ -1,5 +1,5 @@
 body {
-	background: url("/images/bg/bg03.jpg") no-repeat center center fixed;
+	background: url("/images/bg/bg02.jpg") no-repeat center center fixed;
 	background-size: cover;
 	font-size: 16px;
 	font-family: 'Lato', sans-serif;
@@ -79,7 +79,7 @@ p.small {
 }
 
 .login-box .box-header {
-	background-color: #665851;
+	background-color: #0267C1;
 	margin-top: 0;
 	border-radius: 5px 5px 0 0;
 }
@@ -87,39 +87,39 @@ p.small {
 .login-box label {
 	font-weight: 700;
 	font-size: .8em;
-	color: #888;
+	color: #094074;
 	letter-spacing: 1px;
 	text-transform: uppercase;
 	line-height: 2em;
 }
 
 .login-box input {
-	margin-bottom: 20px;
+	margin-bottom: 7.5px;
 	padding: 8px;
 	border: 1px solid #ccc;
 	border-radius: 2px;
 	font-size: .9em;
-	color: #888;
+	color: #094074;
 }
 
 .login-box input:focus {
 	outline: none;
-	border-color: #665851;
+	border-color: #0267C1;
 	transition: 0.5s;
-	color: #665851;
+	color: #666;
 }
 
 .login-box button {
-	margin-top: 0px;
+	margin-top: 12.5px;
 	border: 0;
 	border-radius: 2px;
 	color: white;
-	padding: 10px;
+	padding: 10px 50px;
 	text-transform: uppercase;
 	font-weight: 400;
 	font-size: 0.7em;
 	letter-spacing: 1px;
-	background-color: #665851;
+	background-color: #0267C1;
 	cursor:pointer;
 	outline: none;
 }
@@ -135,7 +135,7 @@ p.small {
 }
 
 .selected {
-	color: #665851!important;
+	color: #0267C1!important;
 	transition: 0.5s;
 }
 
