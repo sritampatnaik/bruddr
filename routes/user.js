@@ -1,29 +1,30 @@
 var express = require('express');
 var router = express.Router();
+var passport = require('passport');
 
-module.exports = function(passport){
+module.exports = function(){
 
 	/* GET login page. */
-	router.get('/', function(req, res) {
+	router.get('/login', function(req, res) {
     	// Display the Login page with any flash message, if any
-		res.render('index', { message: req.flash('message') });
+		res.render('user/login', { message: req.flash('message') });
 	});
 
 	/* GET Registration Page */
 	router.get('/signup', function(req, res){
-		res.render('register',{message: req.flash('message')});
+		res.render('user/signup',{message: req.flash('message')});
 	});
   
   /* Handle Login POST */
   router.post('/api/login', passport.authenticate('login', {
-    successRedirect: '/home',
-    failureRedirect: '/',
+    successRedirect: '/',
+    failureRedirect: '/login', 
     failureFlash : true  
   }));
-
+  
 	/* Handle Registration POST */
 	router.post('/api/signup', passport.authenticate('signup', {
-		successRedirect: '/home',
+		successRedirect: '/',
 		failureRedirect: '/signup',
 		failureFlash : true  
 	}));

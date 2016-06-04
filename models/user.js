@@ -7,4 +7,4 @@ var UserSchema = new mongoose.Schema({
   updated_at: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model('User', TodoSchema);
+module.exports = mongoose.model('User', UserSchema);

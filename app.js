@@ -15,9 +15,14 @@ var routes = require('./routes/index');
 var todos = require('./routes/todos');
 var messengerBot = require('./routes/api/v1/messenger-bot');
 var betaEmail = require('./routes/api/v1/beta-email');
-var user = require('./routes/user');
+var user = require('./routes/user')(passport);
 
 var app = express();
+
+// Using the flash middleware provided by connect-flash to store messages in session
+// and displaying in templates
+var flash = require('connect-flash');
+app.use(flash());
 
 /* Passport (Login) Stuff */
 app.use(expressSession({
@@ -27,6 +32,10 @@ app.use(expressSession({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Initialize Passport
+var initPassport = require('./passport/init');
+initPassport(passport);
 
 /* Db connection */
 var mongoose = require('mongoose');
