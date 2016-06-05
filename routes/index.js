@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET default page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { username: 'nil' });
+  res.render('index', { username: null });
 });
 
 /* GET logged in home page. */
