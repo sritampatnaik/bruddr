@@ -8,6 +8,9 @@ module.exports = function(){
 
 	/* GET login page. */
 	router.get('/login', function(req, res) {
+    if (req.session.currentUser) {
+      res.redirect('/home');
+    }
     	// Display the Login page with any flash message, if any
 		res.render('user/login', { message: '' });
 	});
@@ -16,12 +19,14 @@ module.exports = function(){
   router.post('/login', function(req, res) {
     UserModel.find({username : req.body.username}, function (err, docs) {
         if (docs.length){ // username found
-          console.log(docs[0].password)
           bCrypt.compare(req.body.password, docs[0].password, function(err, _res) {
             if (_res) {
               // logic successful
               // Redirect to splash page
-              res.json(docs)
+              req.session.currentUser = req.body.username;
+              console.log(req.session.currentUser)
+              req.session.save();
+              res.redirect('/home');
             } else {
               res.render('user/login', { message: 'Incorrect Password' });
             }
@@ -34,6 +39,9 @@ module.exports = function(){
 
 	/* GET Registration Page */
 	router.get('/signup', function(req, res){
+    if (req.session.currentUser) {
+      res.redirect('/home');
+    }
 		res.render('user/signup',{message: ''});
 	});
   
@@ -48,7 +56,10 @@ module.exports = function(){
         }else{
           UserModel.create(payload, function (err,post) {
             if (err) return next(err);
-            res.json(post)
+            req.session.currentUser = req.body.username;
+            console.log(req.session.currentUser)
+            req.session.save();
+            res.redirect('/home');
             // Redirect to splash page
           })
         }
@@ -72,9 +83,10 @@ module.exports = function(){
   */
 
 	/* Handle Logout */
-	router.get('/api/signout', function(req, res) {
-		req.logout();
-		res.redirect('/');
+	router.get('/signout', function(req, res) {
+    req.session.reset();
+		// req.logout();
+		res.redirect('/user/login');
 	});
 
 	return router;
