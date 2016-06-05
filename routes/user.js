@@ -14,20 +14,25 @@ module.exports = function(){
 
 	/* GET Registration Page */
 	router.get('/signup', function(req, res){
-		res.render('user/signup',{message: req.flash('message')});
+		res.render('user/signup',{message: ''});
 	});
   
-  
-  /* Fake login using self stuff */
+  /* Pseduo signup using self logic stuff */
   router.post('/api/signup', function(req, res) {
     var payload = req.body
     var cryptedPW = bCrypt.hashSync(req.body.password, bCrypt.genSaltSync(10), null);
     payload.password = cryptedPW;
-    UserModel.create(payload, function (err,post) {
-      if (err) return next(err);
-      res.json(post)
-      // Redirect to splash page
-    })
+    UserModel.find({username : payload.username}, function (err, docs) {
+        if (docs.length){
+          res.render('user/signup',{message: 'Username is already taken'});
+        }else{
+          UserModel.create(payload, function (err,post) {
+            if (err) return next(err);
+            res.json(post)
+            // Redirect to splash page
+          })
+        }
+    });
   });
   
   /* Real login using passport
