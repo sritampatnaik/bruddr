@@ -1,0 +1,30 @@
+@import "color_variables";
+
+.bg-bruddrBlue { 
+	background-color: $bruddrBlue !important;
+}
+.bg-darkBlue { 
+	background-color: $darkBlue !important;
+}
+
+.container-fluid {
+	padding: 20px 0px;
+}
+.card {
+	.card-header {
+		background-color: $turqoise;
+		color: #fff;
+	}
+	.taskCells {
+		box-shadow: 0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24);
+		-webkit-box-shadow: 0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24);
+		-moz-box-shadow: 0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24);
+		transition: box-shadow 0.25s ease-in, border 0.25s ease-in;
+		margin-bottom: 15px;
+		&:hover {
+			box-shadow: none;
+			-webkit-box-shadow: none;
+			-moz-box-shadow: none;
+		}
+	}
+}
