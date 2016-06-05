@@ -3,8 +3,7 @@
   background-position: center center;
   -webkit-background-size: cover;
   background-size: cover;
-  height: 40vh;
-  margin-bottom: 25px; }
+  height: 40vh; }
   #banner-top .banner-splash {
     width: inherit;
     height: inherit;
@@ -25,6 +24,13 @@
       font-weight: 200;
       text-shadow: 2px 2px rgba(0, 0, 0, 0.75); }
 
+.container {
+  height: 60vh;
+  padding-top: 25px;
+  box-shadow: 12px 0 30px -4px rgba(0, 0, 0, 0.15), -12px 0 23px -4px rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 12px 0 30px -4px rgba(0, 0, 0, 0.15), -12px 0 23px -4px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 12px 0 30px -4px rgba(0, 0, 0, 0.15), -12px 0 23px -4px rgba(0, 0, 0, 0.15); }
+
 #taskContainer .nav-inline {
   display: flex;
   -webkit-display: flex;
@@ -36,4 +42,5 @@
     font-family: 'Crete Round', serif;
     margin-bottom: 2.5px;
     width: 100%;
-    font-size: 1.1em; }
+    font-size: 1.1em;
+    white-space: nowrap; }
