@@ -30,5 +30,8 @@
   -webkit-display: flex;
   justify-content: space-around;
   -webkit-justify-content: space-around; }
+  #taskContainer .nav-inline li {
+    text-align: center; }
   #taskContainer .nav-inline .nav-link {
-    font-family: 'Crete Round', serif; }
+    font-family: 'Crete Round', serif;
+    margin-bottom: 2px; }

@@ -19976,6 +19976,11 @@ module.exports = require('./lib/React');
 },{"./lib/React":68}],174:[function(require,module,exports){
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Underline = undefined;
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -20002,6 +20007,70 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var Underline = exports.Underline = function (_React$Component) {
+  _inherits(Underline, _React$Component);
+
+  function Underline(props) {
+    _classCallCheck(this, Underline);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Underline).call(this, props));
+
+    _this.state = {
+      width: _this.props.width || '100%',
+      color: _this.props.color || 'black',
+      height: _this.props.height || '1px'
+    };
+    return _this;
+  }
+
+  _createClass(Underline, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement('div', { style: {
+          width: this.state.width,
+          backgroundColor: this.state.color,
+          height: this.state.height,
+          margin: '0 auto'
+        },
+        className: this.props.classes
+      });
+    }
+  }]);
+
+  return Underline;
+}(_react2.default.Component);
+
+},{"react":173,"react-dom":31,"react-list":32,"react-spinkit":44}],175:[function(require,module,exports){
+"use strict";
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactList = require('react-list');
+
+var _reactList2 = _interopRequireDefault(_reactList);
+
+var _reactSpinkit = require('react-spinkit');
+
+var _reactSpinkit2 = _interopRequireDefault(_reactSpinkit);
+
+var _underline = require('./../../components/underline');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 var MainPanel = function (_React$Component) {
   _inherits(MainPanel, _React$Component);
 
@@ -20011,7 +20080,8 @@ var MainPanel = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(MainPanel).call(this, props));
 
     _this.state = {
-      selectedTab: 0
+      selectedTab: 0,
+      tabs: [[0, 'All'], [1, 'Quick & Easy'], [2, 'Premium']]
     };
     return _this;
   }
@@ -20028,51 +20098,23 @@ var MainPanel = function (_React$Component) {
   }, {
     key: 'renderTabs',
     value: function renderTabs() {
+      var _this2 = this;
+
       return _react2.default.createElement(
         'ul',
-        { className: 'nav nav-inline' },
-        _react2.default.createElement(
-          'li',
-          { className: 'nav-item' },
-          _react2.default.createElement(
-            'a',
-            { className: 'nav-link', href: '#' },
-            'Link'
-          ),
-          this.state.selectedTab == 0 ? _react2.default.createElement(
-            'div',
-            null,
-            'Hey'
-          ) : null
-        ),
-        _react2.default.createElement(
-          'li',
-          { className: 'nav-item' },
-          _react2.default.createElement(
-            'a',
-            { className: 'nav-link', href: '#' },
-            'Quick & Easy'
-          ),
-          this.state.selectedTab == 0 ? _react2.default.createElement(
-            'div',
-            null,
-            'Hey'
-          ) : null
-        ),
-        _react2.default.createElement(
-          'li',
-          { className: 'nav-item' },
-          _react2.default.createElement(
-            'a',
-            { className: 'nav-link', href: '#' },
-            'Premium'
-          ),
-          this.state.selectedTab == 0 ? _react2.default.createElement(
-            'div',
-            null,
-            'Hey'
-          ) : null
-        )
+        { className: 'nav nav-inline row' },
+        this.state.tabs.map(function (tab) {
+          return _react2.default.createElement(
+            'li',
+            { className: 'nav-item col-xs-4' },
+            _react2.default.createElement(
+              'a',
+              { className: 'nav-link' },
+              tab[1]
+            ),
+            _this2.state.selectedTab == tab[0] ? _react2.default.createElement(_underline.Underline, { color: '#001F54', height: '5px', width: '80%', classes: 'animated fadeInUp' }) : null
+          );
+        })
       );
     }
   }]);
@@ -20082,4 +20124,4 @@ var MainPanel = function (_React$Component) {
 
 _reactDom2.default.render(_react2.default.createElement(MainPanel, null), taskContainer);
 
-},{"react":173,"react-dom":31,"react-list":32,"react-spinkit":44}]},{},[174]);
+},{"./../../components/underline":174,"react":173,"react-dom":31,"react-list":32,"react-spinkit":44}]},{},[175]);

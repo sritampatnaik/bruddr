@@ -41,9 +41,12 @@ $bannerHeight: 40vh;
     -webkit-display: flex;
     justify-content: space-around;
     -webkit-justify-content: space-around;
-    
+    li {
+      text-align: center;
+    }
     .nav-link {
       font-family: 'Crete Round', serif;
+      margin-bottom: 2px;
     }
     
   }
