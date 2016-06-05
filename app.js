@@ -13,6 +13,7 @@ const credentials = require('./config/credentials')
 /* Routes init */
 var routes = require('./routes/index');
 var todos = require('./routes/todos');
+var task = require('./routes/task');
 var messengerBot = require('./routes/api/v1/messenger-bot');
 var betaEmail = require('./routes/api/v1/beta-email');
 var user = require('./routes/user')(passport);
@@ -63,6 +64,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/todos', todos);
 app.use('/user', user);
+app.use('/task', task);
 
 /* Adding API controllers */
 app.use('/api/v1/messenger-bot', messengerBot);
