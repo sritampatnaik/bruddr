@@ -34,4 +34,6 @@
     text-align: center; }
   #taskContainer .nav-inline .nav-link {
     font-family: 'Crete Round', serif;
-    margin-bottom: 2px; }
+    margin-bottom: 2.5px;
+    width: 100%;
+    font-size: 1.1em; }

@@ -20080,8 +20080,8 @@ var MainPanel = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(MainPanel).call(this, props));
 
     _this.state = {
-      selectedTab: 0,
-      tabs: [[0, 'All'], [1, 'Quick & Easy'], [2, 'Premium']]
+      selectedTab: 'All',
+      tabs: ['All', 'Quick & Easy', 'Premium']
     };
     return _this;
   }
@@ -20106,13 +20106,15 @@ var MainPanel = function (_React$Component) {
         this.state.tabs.map(function (tab) {
           return _react2.default.createElement(
             'li',
-            { className: 'nav-item col-xs-4' },
+            { className: 'nav-item col-xs-4', key: tab },
             _react2.default.createElement(
               'a',
-              { className: 'nav-link' },
-              tab[1]
+              { onClick: function onClick() {
+                  _this2.setState({ selectedTab: tab });
+                }, className: 'nav-link' },
+              tab
             ),
-            _this2.state.selectedTab == tab[0] ? _react2.default.createElement(_underline.Underline, { color: '#001F54', height: '5px', width: '80%', classes: 'animated fadeInUp' }) : null
+            _this2.state.selectedTab == tab ? _react2.default.createElement(_underline.Underline, { color: '#001F54', height: '5px', width: '80%', classes: 'animated fadeInUp' }) : null
           );
         })
       );

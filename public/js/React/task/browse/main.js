@@ -10,11 +10,11 @@ class MainPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 0,
+      selectedTab: 'All',
       tabs : [
-        [0, 'All'],
-        [1, 'Quick & Easy'],
-        [2, 'Premium']
+        'All',
+        'Quick & Easy',
+        'Premium'
       ]
     };
   }
@@ -32,9 +32,9 @@ class MainPanel extends React.Component {
       <ul className="nav nav-inline row">
         {this.state.tabs.map( (tab) => {
           return (
-            <li className="nav-item col-xs-4">
-              <a className="nav-link" >{tab[1]}</a>
-              {(this.state.selectedTab == tab[0]) ? <Underline color='#001F54' height='5px' width='80%' classes='animated fadeInUp' /> : null }
+            <li className="nav-item col-xs-4" key={tab}>
+              <a onClick={()=>{this.setState({selectedTab:tab})}} className="nav-link" >{tab}</a>
+              {(this.state.selectedTab == tab) ? <Underline color='#001F54' height='5px' width='80%' classes='animated fadeInUp' /> : null }
             </li>
           )
         })}
