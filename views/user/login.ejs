@@ -18,17 +18,22 @@
 <body>
 	<div class="container">
 		<div class="top">
+      <% if (message.length > 0){%>
+      <div style='width:100%;background-color:"red"'>
+        <%= message %>
+      </div>
+      <% } else { %>
+      <div></div>
+      <% } %>
 			<h1 id="title" class="hidden"><span id="logo">Bruddr</span></h1>
 		</div>
 		<div class="login-box animated fadeInUp">
 			<div class="box-header">
 				<h2>Log In</h2>
 			</div>
-			<!-- <label for="username">Username</label> -->
 			<br/>
 			<input type="text" id="username" placeholder="Username">
 			<br/>
-			<!-- <label for="password">Password</label> -->
 			<br/>
 			<input type="password" id="password" placeholder="Password">
 			<br/>
