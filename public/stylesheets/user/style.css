@@ -8,6 +8,16 @@ body {
 	color: #666;
 }
 
+#errorMessage { 
+	width:100%;
+	padding: 5px;
+	background-color: lightcoral;
+	font-weight: 300;
+	color: #fff;
+	text-align: center;
+	font-size: 1.1em;
+}
+
 /* Typography */
 h1#title {
 	font-family: 'Roboto Slab', serif;

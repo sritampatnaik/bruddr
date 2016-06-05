@@ -23,7 +23,7 @@ module.exports = function(){
               // Redirect to splash page
               res.json(docs)
             } else {
-              res.render('user/login', { message: 'Password Incorrect' });
+              res.render('user/login', { message: 'Incorrect Password' });
             }
           });
         }else{
