@@ -1,7 +1,10 @@
 @import "color_variables";
 
 nav {
-	background-color: $bruddrBlue !important;
+	background: $bruddrBlue !important;
+	background: -moz-radial-gradient(top,ellipse cover,$turqoise 0%, $bruddrBlue 100%) !important;
+	background: -webkit-radial-gradient(top,ellipse cover,$turqoise 0%, $bruddrBlue 100%) !important;
+	background: radial-gradient(ellipse at top,$turqoise 0%, $bruddrBlue 100%) !important;
 }
 .navbar {
   border-radius: 0px;
