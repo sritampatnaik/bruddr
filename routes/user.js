@@ -9,8 +9,28 @@ module.exports = function(){
 	/* GET login page. */
 	router.get('/login', function(req, res) {
     	// Display the Login page with any flash message, if any
-		res.render('user/login', { message: req.flash('message') });
+		res.render('user/login', { message: '' });
 	});
+  
+  /* Pseduo logic using self logic stuff */
+  router.post('/login', function(req, res) {
+    UserModel.find({username : req.body.username}, function (err, docs) {
+        if (docs.length){ // username found
+          console.log(docs[0].password)
+          bCrypt.compare(req.body.password, docs[0].password, function(err, _res) {
+            if (_res) {
+              // logic successful
+              // Redirect to splash page
+              res.json(docs)
+            } else {
+              res.render('user/login', { message: 'Password Incorrect' });
+            }
+          });
+        }else{
+          res.render('user/login', { message: 'Username not found' });
+        }
+    });
+  });
 
 	/* GET Registration Page */
 	router.get('/signup', function(req, res){
@@ -18,7 +38,7 @@ module.exports = function(){
 	});
   
   /* Pseduo signup using self logic stuff */
-  router.post('/api/signup', function(req, res) {
+  router.post('/signup', function(req, res) {
     var payload = req.body
     var cryptedPW = bCrypt.hashSync(req.body.password, bCrypt.genSaltSync(10), null);
     payload.password = cryptedPW;
