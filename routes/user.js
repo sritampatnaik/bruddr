@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
+var bCrypt = require('bcrypt-nodejs');
+var UserModel = require('../models/user')
 
 module.exports = function(){
 
@@ -15,19 +17,34 @@ module.exports = function(){
 		res.render('user/signup',{message: req.flash('message')});
 	});
   
-  /* Handle Login POST */
+  
+  /* Fake login using self stuff */
+  router.post('/api/signup', function(req, res) {
+    var payload = req.body
+    var cryptedPW = bCrypt.hashSync(req.body.password, bCrypt.genSaltSync(10), null);
+    payload.password = cryptedPW;
+    UserModel.create(payload, function (err,post) {
+      if (err) return next(err);
+      res.json(post)
+      // Redirect to splash page
+    })
+  });
+  
+  /* Real login using passport
+  // Handle Login POST
   router.post('/api/login', passport.authenticate('login', {
     successRedirect: '/',
     failureRedirect: '/user/login', 
     failureFlash : true  
   }));
   
-	/* Handle Registration POST */
+	// Handle Registration POST
 	router.post('/api/signup', passport.authenticate('signup', {
 		successRedirect: '/',
 		failureRedirect: '/user/signup',
 		failureFlash : true  
 	}));
+  */
 
 	/* Handle Logout */
 	router.get('/api/signout', function(req, res) {
