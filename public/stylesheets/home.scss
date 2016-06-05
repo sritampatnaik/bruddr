@@ -1,0 +1,11 @@
+@import "color_variables";
+
+nav {
+	background-color: $bruddrBlue !important;
+}
+.navbar {
+  border-radius: 0px;
+	a {
+	  margin-right: 15px;
+	}
+}
