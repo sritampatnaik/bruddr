@@ -4,7 +4,10 @@ var router = express.Router();
 /* GET browse page */
 router.get('/browse', function(req, res, next) {
   if (req.session.currentUser) {
-    res.render('task/browse', { username: req.session.currentUser });
+    res.render('task/browse', { 
+      username: req.session.currentUser,
+      selected: 1,
+    });
   } else {
     res.redirect('/user/login');
   }

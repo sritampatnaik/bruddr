@@ -6,9 +6,15 @@
 
 <nav class="navbar navbar-dark bg-faded">
   <div class="nav navbar-nav">
-    <a class="nav-item nav-link active" href="/home">Home <span class="sr-only">(current)</span></a>
-    <a class="nav-item nav-link" href="#">Find Tasks</a>
-    <a class="nav-item nav-link" href="#">Contact</a>
-    <a class="nav-item nav-link" style='float:right; margin-right:30px;' href="#">Logout</a>
+    <a class="nav-item nav-link <% if (selected == 0) { %>active<% } %>" href="/home">
+      Home
+    </a>
+    <a class="nav-item nav-link <% if (selected == 1) { %>active<% } %>" href="/task/browse">
+      Find Tasks
+    </a>
+    <a class="nav-item nav-link <% if (selected == 2) { %>active<% } %>" href="#">
+      Contact
+    </a>
+    <a class="nav-item nav-link" style='float:right; margin-right:30px;' href="#">Logout - <%= selected %></a>
   </div>
 </nav>
