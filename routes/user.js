@@ -18,7 +18,7 @@ module.exports = function(){
   /* Pseduo logic using self logic stuff */
   router.post('/login', function(req, res) {
     UserModel.find({username : req.body.username}, function (err, docs) {
-        if (docs.length){ // username found
+        if (docs && docs.length){ // username found
           bCrypt.compare(req.body.password, docs[0].password, function(err, _res) {
             if (_res) {
               // logic successful

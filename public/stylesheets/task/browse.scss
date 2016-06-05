@@ -7,6 +7,7 @@ $bannerHeight: 40vh;
   -webkit-background-size: cover;
   background-size: cover;
   height: $bannerHeight;
+  margin-bottom: 25px;
       
   .banner-splash {
       width: inherit;
@@ -31,5 +32,19 @@ $bannerHeight: 40vh;
         font-weight: 200;
         text-shadow: 2px 2px rgba(0,0,0,0.75);
       }
+  }
+}
+
+#taskContainer {
+  .nav-inline {
+    display: flex;
+    -webkit-display: flex;
+    justify-content: space-around;
+    -webkit-justify-content: space-around;
+    
+    .nav-link {
+      font-family: 'Crete Round', serif;
+    }
+    
   }
 }
