@@ -20080,8 +20080,11 @@ var MainPanel = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(MainPanel).call(this, props));
 
     _this.state = {
-      selectedTab: 'All',
-      tabs: ['All', 'Quick & Easy', 'Premium']
+      loaded: false,
+      tasks: [],
+
+      selectedTab: 'Available',
+      tabs: ['Available', 'Pending', 'Completed']
     };
     return _this;
   }
@@ -20092,7 +20095,8 @@ var MainPanel = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        this.renderTabs()
+        this.renderTabs(),
+        this.renderTaskList()
       );
     }
   }, {
@@ -20118,6 +20122,52 @@ var MainPanel = function (_React$Component) {
           );
         })
       );
+    }
+  }, {
+    key: 'renderTaskList',
+    value: function renderTaskList() {
+      if (this.state.loaded) {
+        if (this.state.tasks.length == 0) {
+          return _react2.default.createElement(
+            'div',
+            { className: 'animated bounceInDown' },
+            _react2.default.createElement(
+              'h2',
+              { className: 'animated swing' },
+              'No Tasks to show!'
+            )
+          );
+        }
+
+        return _react2.default.createElement(
+          'div',
+          { className: 'animated slideInDown' },
+          _react2.default.createElement(_reactList2.default, {
+            ref: 'list',
+            itemRenderer: this.renderCell.bind(this),
+            length: this.props.tasks.length,
+            pageSize: 50,
+            type: 'simple'
+          })
+        );
+      } else {
+        return _react2.default.createElement(
+          'div',
+          { id: 'loadingDiv' },
+          _react2.default.createElement(_reactSpinkit2.default, { spinnerName: 'three-bounce', noFadeIn: true })
+        );
+      }
+    }
+  }, {
+    key: 'renderCell',
+    value: function renderCell(index, key) {
+      return _react2.default.createElement('div', {
+        isSelected: this.props.selectedIdx == index,
+        key: key,
+        index: index,
+        didSelectQuestionFromLeftPanel: this.props.didSelectQuestionFromLeftPanel.bind(this),
+        questionData: this.props.questions[index]
+      });
     }
   }]);
 
