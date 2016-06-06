@@ -36,7 +36,6 @@ $bannerHeight: 40vh;
 
 .container {
   height: 100vh - $bannerHeight;
-  padding-top: 25px;
   box-shadow: 12px 0 30px -4px rgba(0,0,0,0.15), -12px 0 23px -4px rgba(0,0,0,0.15);
   -webkit-box-shadow: 12px 0 30px -4px rgba(0,0,0,0.15), -12px 0 23px -4px rgba(0,0,0,0.15);
   -moz-box-shadow: 12px 0 30px -4px rgba(0,0,0,0.15), -12px 0 23px -4px rgba(0,0,0,0.15);
@@ -53,7 +52,9 @@ $bannerHeight: 40vh;
     }
     .nav-link {
       font-family: 'Crete Round', serif;
-      margin-bottom: 2.5px;
+      padding-top: 20px;
+      padding-bottom: 2.5px;
+      
       width: 100%;
       font-size: 1.1em;
       white-space: nowrap;
