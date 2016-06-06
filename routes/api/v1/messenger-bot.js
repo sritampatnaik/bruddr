@@ -1,6 +1,7 @@
 var express = require('express');
 var request = require('request');
 var router = express.Router();
+var messengerMessage = require('./../../../models/messengerMessage')
 
 // Database setup
 var mongoose = require('mongoose');
@@ -25,6 +26,14 @@ router.post('/', function (req, res, err) {
   for (i = 0; i < messaging_events.length; i++) {
     event = req.body.entry[0].messaging[i];
     sender = event.sender.id;
+    var message = {
+        message: event.message.text,
+        sender_id: sender
+      }
+    messengerMessage.create(message, function (err,post) {     
+      if (err) return console.log(err);
+      console.log(post);
+    })
     if (event.message && event.message.text) {
       text = event.message.text;
       sendTextMessage(sender, text);
