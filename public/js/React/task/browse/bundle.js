@@ -20161,7 +20161,7 @@ var MainPanel = function (_React$Component) {
   }, {
     key: 'renderCell',
     value: function renderCell(index, key) {
-      return _react2.default.createElement('div', {
+      return _react2.default.createElement(TaskCell, {
         isSelected: this.props.selectedIdx == index,
         key: key,
         index: index,

@@ -77,16 +77,16 @@ class MainPanel extends React.Component {
   }
   
   renderCell(index, key) {
-  return (
-    <div 
-      isSelected={this.props.selectedIdx == index}
-      key={key}
-      index={index}
-      didSelectQuestionFromLeftPanel={this.props.didSelectQuestionFromLeftPanel.bind(this)}
-      questionData={this.props.questions[index]}
-    ></div>
-  )
-}
+    return (
+      <TaskCell
+        isSelected={this.props.selectedIdx == index}
+        key={key}
+        index={index}
+        didSelectQuestionFromLeftPanel={this.props.didSelectQuestionFromLeftPanel.bind(this)}
+        questionData={this.props.questions[index]}
+      />
+    )
+  }
 }
 
 ReactDOM.render(<MainPanel/>, taskContainer);
