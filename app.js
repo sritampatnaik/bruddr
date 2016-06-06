@@ -11,6 +11,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var expressSession = require('express-session');
 
 /* Grab credentials */
 const credentials = require('./config/credentials')
@@ -18,9 +20,30 @@ const credentials = require('./config/credentials')
 /* Routes init */
 var routes = require('./routes/index');
 var todos = require('./routes/todos');
+var task = require('./routes/task');
 var messengerBot = require('./routes/api/v1/messenger-bot');
+var betaEmail = require('./routes/api/v1/beta-email');
+var user = require('./routes/user')(passport);
 
 var app = express();
+
+// Using the flash middleware provided by connect-flash to store messages in session
+// and displaying in templates
+var flash = require('connect-flash');
+app.use(flash());
+
+/* Passport (Login) Stuff */
+app.use(expressSession({
+  secret: 'mySecretKey',
+  resave: true,
+  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Initialize Passport
+var initPassport = require('./passport/init');
+initPassport(passport);
 
 /* Db connection */
 var mongoose = require('mongoose');
@@ -47,9 +70,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 /* Adding route controllers */
 app.use('/', routes);
 app.use('/todos', todos);
+app.use('/user', user);
+app.use('/task', task);
 
 /* Adding API controllers */
 app.use('/api/v1/messenger-bot', messengerBot);
+app.use('/api/v1/beta-email', betaEmail);
 
 
 // catch 404 and forward to error handler
