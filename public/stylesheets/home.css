@@ -19,26 +19,28 @@
   z-index: 100;
   padding: 20px 0px;
   margin-top: -26.8vh;
-  min-height: 80.8vh;
+  height: 80.8vh;
   background-color: white;
   box-shadow: 0px 25px 55px 0px rgba(0, 0, 0, 0.19), 0px 16px 28px 0px rgba(0, 0, 0, 0.24);
   -webkit-box-shadow: 0px 25px 55px 0px rgba(0, 0, 0, 0.19), 0px 16px 28px 0px rgba(0, 0, 0, 0.24);
   -moz-box-shadow: 0px 25px 55px 0px rgba(0, 0, 0, 0.19), 0px 16px 28px 0px rgba(0, 0, 0, 0.24);
   position: fixed;
   left: 15px;
-  right: 15px; }
+  right: 15px;
+  overflow-y: scroll; }
 
-.card .card-header {
-  background-color: #00A5CF;
-  color: #fff; }
-
-.card .taskCells {
-  box-shadow: 0px 25px 55px 0px rgba(0, 0, 0, 0.19), 0px 16px 28px 0px rgba(0, 0, 0, 0.24);
-  -webkit-box-shadow: 0px 25px 55px 0px rgba(0, 0, 0, 0.19), 0px 16px 28px 0px rgba(0, 0, 0, 0.24);
-  -moz-box-shadow: 0px 25px 55px 0px rgba(0, 0, 0, 0.19), 0px 16px 28px 0px rgba(0, 0, 0, 0.24);
-  transition: box-shadow 0.25s ease-in, border 0.25s ease-in;
-  margin-bottom: 15px; }
-  .card .taskCells:hover {
-    box-shadow: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none; }
+#taskCellsContainer {
+  padding: 15px 1%; }
+  #taskCellsContainer .card-header {
+    background-color: #00A5CF;
+    color: #fff; }
+  #taskCellsContainer .taskCells {
+    box-shadow: 0px 25px 55px 0px rgba(0, 0, 0, 0.19), 0px 16px 28px 0px rgba(0, 0, 0, 0.24);
+    -webkit-box-shadow: 0px 25px 55px 0px rgba(0, 0, 0, 0.19), 0px 16px 28px 0px rgba(0, 0, 0, 0.24);
+    -moz-box-shadow: 0px 25px 55px 0px rgba(0, 0, 0, 0.19), 0px 16px 28px 0px rgba(0, 0, 0, 0.24);
+    transition: box-shadow 0.25s ease-in, border 0.25s ease-in;
+    margin-bottom: 20px; }
+    #taskCellsContainer .taskCells:hover {
+      box-shadow: none;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none; }
