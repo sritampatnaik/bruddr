@@ -1,14 +1,36 @@
 var express = require('express');
 var request = require('request');
 var router = express.Router();
-var messengerMessage = require('./../../../models/messengerMessage')
-
-// Database setup
-var mongoose = require('mongoose');
+var messengerMessage = require('./../../../models/messengerMessage');
 
 // Credentials
 const credentials = include('config/credentials');
 
+//This is wir specific code
+const Wit = require('node-wit').Wit;
+
+// Wit.ai bot specific code
+// Our bot actions
+const actions = {
+  say(sessionId, context, message, cb) {
+    console.log(message);
+    cb();
+  },
+  merge(sessionId, context, entities, message, cb) {
+    cb(context);
+  },
+  error(sessionId, context, error) {
+    console.log(error.message);
+  },
+  // You should implement your custom actions here
+  // See https://wit.ai/docs/quickstart
+};
+
+// Setting up our bot
+const wit = new Wit(credentials.witServerAccessToken, actions);
+
+// Database setup
+var mongoose = require('mongoose');
 
 // @mark: Replace this with your messenger model
 // var todoModel = require('../models/todo.js');
@@ -26,18 +48,20 @@ router.post('/', function (req, res, err) {
   for (i = 0; i < messaging_events.length; i++) {
     event = req.body.entry[0].messaging[i];
     sender = event.sender.id;
-    var message = {
+    
+
+    if (event.message && event.message.text) {
+      var message = {
         message: event.message.text,
         sender_id: sender
       }
-    messengerMessage.create(message, function (err,post) {     
-      if (err) return console.log(err);
-      console.log(post);
-    })
-    if (event.message && event.message.text) {
-      text = event.message.text;
-      sendTextMessage(sender, text);
-      console.log(text);
+      messengerMessage.create(message, function (err,post) {     
+        if (err) return console.log(err);
+      });
+      var text = event.message.text;
+      witUnderstandText(text);
+      
+      sendTextMessage(sender, text);    
     }
   }
 
@@ -61,6 +85,17 @@ function sendTextMessage(sender, text) {
       console.log('Error sending message: ', error);
     } else if (response.body.error) {
       console.log('Error: ', response.body.error);
+    }
+  });
+}
+
+function witUnderstandText(text){
+  const context = {};
+  wit.message(text, context, (error, data) => {
+    if (error) {
+      console.log('Oops! Got an error: ' + error);
+    } else {
+      console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
     }
   });
 }

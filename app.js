@@ -77,8 +77,6 @@ app.use('/task', task);
 app.use('/api/v1/messenger-bot', messengerBot);
 app.use('/api/v1/beta-email', betaEmail);
 
-
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
