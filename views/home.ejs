@@ -16,20 +16,27 @@
 	</section>
 	
 	<div class='container'>
-		<h1> 
-			Current Tasks 
-		</h1>
+		<div class='headerContainer'>
+			<h1> 
+				Current Tasks 
+			</h1>
+		</div>
 		<hr/>
 		<div id='taskCellsContainer'>
-			<% for(var i = 0 ; i < 11; i++) { %>
+			<% for(var i = 0 ; i < 7; i++) { %>
 			  <div class='col-md-6 col-xs-12'>
 			    <div class="taskCells card text-xs-center">
-			      <div class="card-header">
+			      <!-- <div class="card-header">
 			        Featured
-			      </div>
-			      <div class="card-block">
-			        <h4 class="card-title">Special title treatment</h4>
-			        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+			      </div> -->
+			      <div class="card-block row">
+							<div class='col-lg-3 avatarContainer'>
+								<img src='/images/bg/bg0<%= i+1 %>.jpg' width='100px' height='100px'/>
+							</div>
+							<div class='col-lg-9'>
+								<h4 class="card-title">@TODO Title</h4>
+				        <p class="card-text">@TODO Description Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p>
+							</div>
 			      </div>
 			      <div class="card-footer text-muted">
 			        <%= 23-i %> Hours Left

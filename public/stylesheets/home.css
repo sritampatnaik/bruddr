@@ -28,12 +28,34 @@
   left: 15px;
   right: 15px;
   overflow-y: scroll; }
+  .container .headerContainer {
+    padding: 15px 0px; }
+    .container .headerContainer h1 {
+      font-family: 'Crete Round', serif;
+      padding-left: 5%;
+      text-align: center;
+      color: rgba(50, 50, 50, 0.75); }
 
 #taskCellsContainer {
   padding: 15px 1%; }
   #taskCellsContainer .card-header {
     background-color: #00A5CF;
     color: #fff; }
+  #taskCellsContainer .card-block .avatarContainer {
+    display: flex;
+    -webkit-display: flex;
+    align-items: center;
+    -webkit-align-items: center;
+    justify-content: center;
+    -webkit-justify-content: center;
+    padding-bottom: 15px; }
+    #taskCellsContainer .card-block .avatarContainer img {
+      border-radius: 50%; }
+  @media only screen and (min-width: 992px) {
+    #taskCellsContainer .card-block .card-title {
+      text-align: right !important; }
+    #taskCellsContainer .card-block .card-text {
+      text-align: right !important; } }
   #taskCellsContainer .taskCells {
     box-shadow: 0px 25px 55px 0px rgba(0, 0, 0, 0.19), 0px 16px 28px 0px rgba(0, 0, 0, 0.24);
     -webkit-box-shadow: 0px 25px 55px 0px rgba(0, 0, 0, 0.19), 0px 16px 28px 0px rgba(0, 0, 0, 0.24);

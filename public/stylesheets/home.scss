@@ -36,13 +36,47 @@ $bannerHeight: 40vh;
 	left: 15px;
 	right: 15px;
 	overflow-y: scroll;
-
+	.headerContainer{
+		padding: 15px 0px;
+		h1 {
+			font-family: 'Crete Round', serif;
+			padding-left: 5%;
+			text-align: center;
+			color: rgba(50,50,50,0.75);
+		}
+	}
 }
 #taskCellsContainer {
 	padding: 15px 1%;
 	.card-header {
 		background-color: $turqoise;
 		color: #fff;
+	}
+	.card-block {
+		.avatarContainer {
+			display: flex;
+			-webkit-display: flex;
+			
+			align-items: center;
+			-webkit-align-items: center;
+			
+			justify-content: center;
+			-webkit-justify-content: center;
+			
+			padding-bottom: 15px;
+			
+			img {
+				border-radius: 50%;
+			}
+		}
+		@media only screen and (min-width: 992px) {
+			.card-title {
+				text-align: right !important;
+			}
+			.card-text {
+				text-align: right !important;
+			}
+		}
 	}
 	.taskCells {
 		box-shadow: 0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24);
