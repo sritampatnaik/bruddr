@@ -50,6 +50,10 @@ router.post('/', function (req, res, err) {
     var event = req.body.entry[0].messaging[i];
     var sender = event.sender.id;
     
+    if (event.postback) {
+        var text = JSON.stringify(event.postback)
+        sendTextMessage(sender, "Postback received: "+text.substring(0, 200))
+      }
 
     if (event.message && event.message.text) {
       var message = {
