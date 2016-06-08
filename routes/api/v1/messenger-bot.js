@@ -59,7 +59,7 @@ router.post('/', function (req, res, err) {
         if (err) return console.log(err);
       });
       var text = event.message.text;
-      witUnderstandText(text, sender, sendTextMessage);
+      witUnderstandText(text, sender);
     }
   }
 
@@ -68,7 +68,7 @@ router.post('/', function (req, res, err) {
 
 function sendTextMessage(sender, text) {
   var messageData = {
-    text: "Hello there you said this:" + text
+    text: text
   }
   request({
     url: 'https://graph.facebook.com/v2.6/me/messages',
@@ -87,13 +87,31 @@ function sendTextMessage(sender, text) {
   });
 }
 
-function witUnderstandText(text, sender, sendTextMessage){
+function determineTask(taskData, sender) {
+  var task = taskData.entities.task;
+  if(!task){
+    console.log("Sorry could you be more specific ?");
+    sendTextMessage(sender, "Sorry could you be more specific ?");
+  } else if (taskData.entities.task[0].value == "print") {
+    sendTextMessage(sender, "You want to print stuff.");
+  } else if (taskData.entities.task[0].value == "delivery") {
+    sendTextMessage(sender, "You want to deliver something.");
+  } else if (taskData.entities.task[0].value == "logo") {
+    sendTextMessage(sender, "You need help with a logo.");
+  } else if (taskData.entities.task[0].value == "summary") {
+    sendTextMessage(sender, "You need help with a summary.");
+  } else if (taskData.entities.task[0].value == "resume") {
+    sendTextMessage(sender, "You need a bruddr to design your resume.");
+  }
+}
+
+function witUnderstandText(text, sender){
   const context = {};
   wit.message(text, context, (error, data) => {
     if (error) {
       console.log('Oops! Got an error: ' + error);
     } else {
-      sendTextMessage(sender, text);
+      determineTask(data, sender);
       console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
     }
   });
