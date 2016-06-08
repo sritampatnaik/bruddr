@@ -3,7 +3,14 @@ var router = express.Router();
 
 /* GET default page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { username: null });
+  if (req.session.currentUser) {
+    res.render('home', { 
+      username: req.session.currentUser,
+      selected: 0,
+    });
+  } else {
+    res.render('index', { username: null });
+  }
 });
 
 /* GET logged in home page. */
