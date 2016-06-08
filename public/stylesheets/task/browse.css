@@ -26,7 +26,6 @@
 
 .container {
   height: 60vh;
-  padding-top: 25px;
   box-shadow: 12px 0 30px -4px rgba(0, 0, 0, 0.15), -12px 0 23px -4px rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: 12px 0 30px -4px rgba(0, 0, 0, 0.15), -12px 0 23px -4px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 12px 0 30px -4px rgba(0, 0, 0, 0.15), -12px 0 23px -4px rgba(0, 0, 0, 0.15); }
@@ -40,7 +39,17 @@
     text-align: center; }
   #taskContainer .nav-inline .nav-link {
     font-family: 'Crete Round', serif;
-    margin-bottom: 2.5px;
+    padding-top: 20px;
+    padding-bottom: 2.5px;
     width: 100%;
     font-size: 1.1em;
     white-space: nowrap; }
+
+#taskContainer #loadingDiv {
+  display: flex;
+  -webkit-display: flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+  height: 50vh; }

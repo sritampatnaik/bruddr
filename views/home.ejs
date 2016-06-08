@@ -6,35 +6,51 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="/stylesheets/font-awesome.min.css" />
 	<link rel="stylesheet" href="/stylesheets/home.css">
+	<link rel="shortcut icon" type="image/png" href="/images/logo/logo.png"/>
   <script src="https://code.jquery.com/jquery-1.12.3.min.js"   integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ="   crossorigin="anonymous"></script>
 </head>
 <body>
 	<% include ./partials/navbar_logged-in %>
 	
-	<div class='container-fluid'>
-		<div class="card">
-		  <div class="card-header bg-bruddrBlue">
-		    Current Tasks
-		  </div>
-		  <div class="card-block row">
-				<% for(var i = 0 ; i < 11; i++) { %>
-					<div class='col-lg-4 col-md-6 col-xs-12'>
-					  <div class="taskCells card text-xs-center">
-					    <div class="card-header">
-					      Featured
-					    </div>
-					    <div class="card-block">
-					      <h4 class="card-title">Special title treatment</h4>
-					      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-					    </div>
-					    <div class="card-footer text-muted">
-					      <%= 23-i %> Hours Left
-					    </div>
-					  </div>
-					</div>
-				<% } %>
-		  </div>
+	<section id="banner-top">
+			<div class="banner-splash animated fadeIn"></div>
+	</section>
+	
+	<div class='container'>
+		<div class='headerContainer'>
+			<h1> 
+				Current Tasks 
+			</h1>
 		</div>
+		<hr/>
+		<div id='taskCellsContainer' class='row'>
+			<% for(var i = 0 ; i < 7; i++) { %>
+			  <div class='col-md-6 col-xs-12'>
+			    <div class="taskCells card text-xs-center">
+			      <!-- <div class="card-header">
+			        Featured
+			      </div> -->
+			      <div class="card-block row">
+							<div class='col-lg-3 avatarContainer'>
+								<img src='/images/bg/bg0<%= i+1 %>.jpg' width='100px' height='100px'/>
+							</div>
+							<div class='col-lg-9'>
+								<h4 class="card-title">@TODO Title</h4>
+				        <p class="card-text">@TODO Description Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p>
+							</div>
+			      </div>
+			      <div class="card-footer text-muted">
+			        <%= 23-i %> Hours Left
+			      </div>
+			    </div>
+			  </div>
+			<% } %>
+		</div>
+		<div class="alert alert-info" role="alert" style='margin:0px 1%'>
+			<h3>Tip of the day</h3>
+			<p>Bruddr has a reputation system - So you'll get matched with better paying clients the more tasks you complete on Bruddr!</p>
+		</div>
+		
 	</div>
 	
 </body>

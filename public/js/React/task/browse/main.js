@@ -10,11 +10,14 @@ class MainPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 'All',
+      loaded: false,
+      tasks: [],
+      
+      selectedTab: 'Available',
       tabs : [
-        'All',
-        'Quick & Easy',
-        'Premium'
+        'Available',
+        'Pending',
+        'Completed'
       ]
     };
   }
@@ -23,6 +26,7 @@ class MainPanel extends React.Component {
     return (
       <div>
         {this.renderTabs()}
+        {this.renderTaskList()}
       </div>
     )
   }
@@ -39,6 +43,48 @@ class MainPanel extends React.Component {
           )
         })}
       </ul>
+    )
+  }
+
+  renderTaskList() {
+    if (this.state.loaded) {
+      if (this.state.tasks.length == 0) {
+        return (
+          <div className='animated bounceInDown'>
+            <h2 className='animated swing'>No Tasks to show!</h2>
+          </div>
+        )
+      }
+      
+      return (
+        <div className='animated slideInDown'>
+          <ReactList
+              ref={'list'}
+              itemRenderer={this.renderCell.bind(this)}
+              length={this.props.tasks.length}
+              pageSize={50}
+              type='simple'
+            />
+        </div>
+      )
+    } else {
+      return (
+        <div id='loadingDiv'>
+          <Spinner spinnerName='three-bounce' noFadeIn />
+        </div>
+      )
+    }
+  }
+  
+  renderCell(index, key) {
+    return (
+      <TaskCell
+        isSelected={this.props.selectedIdx == index}
+        key={key}
+        index={index}
+        didSelectQuestionFromLeftPanel={this.props.didSelectQuestionFromLeftPanel.bind(this)}
+        questionData={this.props.questions[index]}
+      />
     )
   }
 }

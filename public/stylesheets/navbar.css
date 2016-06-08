@@ -1,8 +1,8 @@
 nav {
-  background: #0267C1 !important;
-  background: -moz-radial-gradient(top, ellipse cover, #00A5CF 0%, #0267C1 100%) !important;
-  background: -webkit-radial-gradient(top, ellipse cover, #00A5CF 0%, #0267C1 100%) !important;
-  background: radial-gradient(ellipse at top, #00A5CF 0%, #0267C1 100%) !important; }
+  position: absolute !important;
+  width: 100% !important;
+  background-color: rgba(0, 0, 0, 0.75) !important;
+  z-index: 1000000 !important; }
 
 .navbar {
   border-radius: 0px;

@@ -1,13 +1,15 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
+<link href='https://fonts.googleapis.com/css?family=Merienda+One' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Crete+Round' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="/stylesheets/navbar.css">
 <link rel="stylesheet" href="/stylesheets/animate.css">
 
 <nav class="navbar navbar-dark bg-faded">
   <div class="nav navbar-nav">
     <a class="nav-item nav-link <% if (selected == 0) { %>active<% } %>" href="/home">
-      Home
+      <image style="margin-left:15px;width:30px;height:30px;" src="/images/logo/logo-white.png"/>
     </a>
     <a class="nav-item nav-link <% if (selected == 1) { %>active<% } %>" href="/task/browse">
       Find Tasks
@@ -15,6 +17,6 @@
     <a class="nav-item nav-link <% if (selected == 2) { %>active<% } %>" href="#">
       Contact
     </a>
-    <a class="nav-item nav-link" style='float:right; margin-right:30px;' href="#">Logout</a>
+    <a class="nav-item nav-link" style='float:right; margin-right:30px;' href="/user/logout">Logout</a>
   </div>
 </nav>

@@ -7,20 +7,84 @@
 	background-color: $darkBlue !important;
 }
 
-.container-fluid {
-	padding: 20px 0px;
+$bannerHeight: 40vh;
+
+#banner-top {
+  background-image: url("/images/bg/sunset.jpg");
+  background-position: center center;
+  -webkit-background-size: cover;
+  background-size: cover;
+  height: $bannerHeight;
+      
+  .banner-splash {
+    width: inherit;
+    height:inherit;
+    background-color: rgba(0,0,0,0.5);
+  }
 }
-.card {
+
+.container {
+	z-index: 100;
+	padding: 20px 0px;
+	margin-top: ($bannerHeight * -(0.67));
+	height: 94vh - ($bannerHeight * 0.33);
+	background-color: white;
+	box-shadow: 0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24);
+	-webkit-box-shadow: 0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24);
+	-moz-box-shadow: 0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24);
+	position:fixed;
+	left: 15px;
+	right: 15px;
+	overflow-y: scroll;
+	.headerContainer{
+		padding: 15px 0px;
+		h1 {
+			font-family: 'Crete Round', serif;
+			padding-left: 5%;
+			text-align: center;
+			color: rgba(50,50,50,0.75);
+		}
+	}
+}
+#taskCellsContainer {
+	padding: 15px 1%;
 	.card-header {
 		background-color: $turqoise;
 		color: #fff;
+	}
+	.card-block {
+		.avatarContainer {
+			display: flex;
+			-webkit-display: flex;
+			
+			align-items: center;
+			-webkit-align-items: center;
+			
+			justify-content: center;
+			-webkit-justify-content: center;
+			
+			padding-bottom: 15px;
+			min-height: 115px;
+			
+			img {
+				border-radius: 50%;
+			}
+		}
+		@media only screen and (min-width: 992px) {
+			.card-title {
+				text-align: right !important;
+			}
+			.card-text {
+				text-align: right !important;
+			}
+		}
 	}
 	.taskCells {
 		box-shadow: 0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24);
 		-webkit-box-shadow: 0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24);
 		-moz-box-shadow: 0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24);
 		transition: box-shadow 0.25s ease-in, border 0.25s ease-in;
-		margin-bottom: 15px;
+		margin-bottom: 20px;
 		&:hover {
 			box-shadow: none;
 			-webkit-box-shadow: none;
