@@ -46,8 +46,8 @@ router.get('/', function(req, res) {
 router.post('/', function (req, res, err) {
   messaging_events = req.body.entry[0].messaging;
   for (i = 0; i < messaging_events.length; i++) {
-    event = req.body.entry[0].messaging[i];
-    sender = event.sender.id;
+    var event = req.body.entry[0].messaging[i];
+    var sender = event.sender.id;
     
 
     if (event.message && event.message.text) {
@@ -59,9 +59,7 @@ router.post('/', function (req, res, err) {
         if (err) return console.log(err);
       });
       var text = event.message.text;
-      witUnderstandText(text);
-      
-      sendTextMessage(sender, text);    
+      witUnderstandText(text, sender, sendTextMessage);
     }
   }
 
@@ -89,12 +87,13 @@ function sendTextMessage(sender, text) {
   });
 }
 
-function witUnderstandText(text){
+function witUnderstandText(text, sender, sendTextMessage){
   const context = {};
   wit.message(text, context, (error, data) => {
     if (error) {
       console.log('Oops! Got an error: ' + error);
     } else {
+      sendTextMessage(sender, text);
       console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
     }
   });
