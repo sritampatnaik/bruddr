@@ -39,6 +39,7 @@ var mongoose = require('mongoose');
 router.get('/', function(req, res) {
   if (req.query['hub.verify_token'] === 'bruddr') {
     res.send(req.query['hub.challenge']);
+      
   }
   res.send('Error, wrong validation token');
 });
@@ -60,6 +61,7 @@ router.post('/', function (req, res, err) {
       });
       var text = event.message.text;
       witUnderstandText(text, sender);
+      sendGenericMessage(sender);
     }
   }
 
@@ -103,6 +105,55 @@ function determineTask(taskData, sender) {
   } else if (taskData.entities.task[0].value == "resume") {
     sendTextMessage(sender, "You need a bruddr to design your resume.");
   }
+}
+
+function sendGenericMessage(sender) {
+  messageData = {
+    "attachment": {
+      "type": "template",
+      "payload": {
+        "template_type": "generic",
+        "elements": [{
+          "title": "First card",
+          "subtitle": "Element #1 of an hscroll",
+          "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+          "buttons": [{
+            "type": "web_url",
+            "url": "https://www.messenger.com/",
+            "title": "Web url"
+          }, {
+            "type": "postback",
+            "title": "Postback",
+            "payload": "Payload for first element in a generic bubble",
+          }],
+        },{
+          "title": "Second card",
+          "subtitle": "Element #2 of an hscroll",
+          "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+          "buttons": [{
+            "type": "postback",
+            "title": "Postback",
+            "payload": "Payload for second element in a generic bubble",
+          }],
+        }]
+      }
+    }
+  };
+  request({
+    url: 'https://graph.facebook.com/v2.6/me/messages',
+    qs: {access_token:credentials.fbtoken},
+    method: 'POST',
+    json: {
+      recipient: {id:sender},
+      message: messageData,
+    }
+  }, function(error, response, body) {
+    if (error) {
+      console.log('Error sending message: ', error);
+    } else if (response.body.error) {
+      console.log('Error: ', response.body.error);
+    }
+  });
 }
 
 function witUnderstandText(text, sender){
