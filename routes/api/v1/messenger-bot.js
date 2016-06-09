@@ -1,8 +1,31 @@
 var express = require('express');
 var request = require('request');
+var fs = require('fs');
+var mkdirp = require('mkdirp');
 var router = express.Router();
 var messengerMessage = require('./../../../models/messengerMessage');
 var bruddrTask = require('./../../../models/bruddrTask');
+
+
+
+var download = function(uri, dir, filename, callback){
+  var folderPlusName = dir + '/' + filename;
+
+  request.head(uri, function(err, res, body){
+    console.log('content-type:', res.headers['content-type']);
+    console.log('content-length:', res.headers['content-length']);
+    if (!fs.existsSync(dir)){
+        mkdirp(dir, function (err) {
+            if (err) console.error(err)
+            else     
+              request(uri).pipe(fs.createWriteStream(folderPlusName)).on('close', callback);
+
+        });
+    } else {
+        request(uri).pipe(fs.createWriteStream(folderPlusName)).on('close', callback);
+    }
+  });
+};
 
 // Credentials
 const credentials = include('config/credentials');
@@ -50,12 +73,27 @@ router.post('/', function (req, res, err) {
   for (i = 0; i < messaging_events.length; i++) {
     var event = req.body.entry[0].messaging[i];
     var sender = event.sender.id;
-    
+    var atts = event.message.attachments;
+
     if (event.postback) {
         var text = JSON.stringify(event.postback)
         sendTextMessage(sender, "Postback received: "+text.substring(0, 200))
       }
 
+    if (atts) {
+      // We received an attachment
+      console.log(atts);
+      if(atts[0].type === "image"){
+        var imageURL = atts[0].payload.url;
+        var timestamp = new Date().getUTCMilliseconds();
+        var folder = './uploads/' + sender;
+        var filename = sender + '_' + timestamp + '.png'
+
+        download(imageURL, folder, filename, function(){console.log('done');});
+
+      }
+    }
+  
     if (event.message && event.message.text) {
       var message = {
         message: event.message.text,
