@@ -2,6 +2,7 @@ var express = require('express');
 var request = require('request');
 var router = express.Router();
 var messengerMessage = require('./../../../models/messengerMessage');
+var bruddrTask = require('./../../../models/bruddrTask');
 
 // Credentials
 const credentials = include('config/credentials');
@@ -65,7 +66,7 @@ router.post('/', function (req, res, err) {
       });
       var text = event.message.text;
       witUnderstandText(text, sender);
-      sendGenericMessage(sender);
+      // sendGenericMessage(sender);
     }
   }
 
@@ -93,6 +94,7 @@ function sendTextMessage(sender, text) {
   });
 }
 
+
 function determineTask(taskData, sender) {
   var task = taskData.entities.task;
   if(!task){
@@ -108,6 +110,19 @@ function determineTask(taskData, sender) {
     sendTextMessage(sender, "You need help with a summary.");
   } else if (taskData.entities.task[0].value == "resume") {
     sendTextMessage(sender, "You need a bruddr to design your resume.");
+  }
+  if(task) {
+    var task = {
+      title: "This is a " + taskData.entities.task[0].value + " task." ,
+      type: taskData.entities.task[0].value,
+      description: taskData._text,
+      owner_id: sender,
+      price: 0,
+      status: 0,
+    }
+    bruddrTask.create(task, function (err,post) {     
+      if (err) return console.log(err);
+    });
   }
 }
 
