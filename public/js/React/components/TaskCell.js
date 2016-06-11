@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactList from 'react-list';
 import Spinner from 'react-spinkit';
+import TimeAgo from 'react-timeago';
 
 export class TaskCell extends React.Component {
   constructor(props) {
@@ -28,11 +29,13 @@ export class TaskCell extends React.Component {
         <div className='col-md-3' style={styleSheet.leftContainer}>
           <img 
             src={'http://graph.facebook.com/'+ this.props.taskData.owner_id +'/picture?type=square'} 
-            height='60px'
+            height='75px'
             style={styleSheet.leftContainerAvatar}
             />
-          <h3>{this.props.taskData.owner_name || 'Taylor Swift'}</h3>
-          <h5>{this.props.taskData.received_at}</h5>
+          <div style={{textAlign:'center'}}>
+            <h3>{this.props.taskData.owner_name || 'Taylor Swift'}</h3>
+            <h5 style={{color:'rgba(0,0,0,0.6)'}}><TimeAgo date={this.props.taskData.received_at} /></h5>
+          </div>
         </div>
         <div className='col-md-9'>
           
