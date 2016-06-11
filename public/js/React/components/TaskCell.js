@@ -11,33 +11,67 @@ export class TaskCell extends React.Component {
     this.state = {
       width: this.props.width || '100%',
       color: this.props.color || 'rgba(255,255,255,0.5)',
-      height: this.props.height || '50px',
+      height: this.props.height || 'inherit',
+      minHeight: this.props.height || 'inherit',
       margin: this.props.margin || '0 auto',
+      padding: this.props.padding || '0px',
     };
   }
   
   render() {
     return (
-      <div style={{
+      <div 
+        className='row'
+        style={{
+          boxShadow: '0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24)',
+          webkitBoxShadow: '0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24)',
+          mozBoxShadow: '0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24)',
+          transition: 'box-shadow 0.25s ease-in, border 0.25s ease-in',
           width:this.state.width,
           backgroundColor: this.state.color,
           height: this.state.height,
+          minHeight: this.state.minHeight,
           margin: this.state.margin,
-          border: 'thin solid black'
+          padding: this.state.padding,
         }}
       >
+      
         <div className='col-md-3' style={styleSheet.leftContainer}>
           <img 
-            src={'http://graph.facebook.com/'+ this.props.taskData.owner_id +'/picture?type=square'} 
-            height='75px'
+            src={this.props.taskData.owner_avatar || '/images/bg/bg01.jpg'} 
+            height='100px'
+            width='100px'
             style={styleSheet.leftContainerAvatar}
             />
           <div style={{textAlign:'center'}}>
             <h3>{this.props.taskData.owner_name || 'Taylor Swift'}</h3>
-            <h5 style={{color:'rgba(0,0,0,0.6)'}}><TimeAgo date={this.props.taskData.received_at} /></h5>
+            <p style={{color:'rgba(0,0,0,0.6)'}}><TimeAgo date={this.props.taskData.received_at} /></p>
           </div>
         </div>
-        <div className='col-md-9'>
+        
+        <div className='col-md-9' style={{padding:'5px'}}>
+          <h2>{this.props.taskData.title}</h2>
+          <hr/>
+          
+          <div className='row'>
+            <div className='col-xs-8' style={{borderRight: 'thin solid rgba(0,0,0,0.25)'}}>
+              <h5>Description</h5>
+              <p>{this.props.taskData.description}</p>
+            </div>
+            <div className='col-xs-4'>
+              <h5>Price</h5>
+              <p>{this.props.taskData.price}</p>
+            </div>
+          </div>
+          
+          <div className='row'>
+            <div className='col-xs-8'>
+              Location..
+            </div>
+            <div className='col-xs-4'>
+              Deliver in..
+            </div>
+          </div>
           
         </div>
       </div>
@@ -46,12 +80,13 @@ export class TaskCell extends React.Component {
 }
 
 const styleSheet = {
+  
   leftContainer : {
     height: 'inherit',
     display:'flex', 
     flexDirection:'column', 
     alignItems:'center', 
-    justifyContent:'space-around'
+    justifyContent:'space-around',
   },
   leftContainerAvatar : {
     border:'thin solid rgba("0,0,0,0.75")',

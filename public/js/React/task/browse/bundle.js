@@ -20151,8 +20151,10 @@ var TaskCell = exports.TaskCell = function (_React$Component) {
     _this.state = {
       width: _this.props.width || '100%',
       color: _this.props.color || 'rgba(255,255,255,0.5)',
-      height: _this.props.height || '50px',
-      margin: _this.props.margin || '0 auto'
+      height: _this.props.height || 'inherit',
+      minHeight: _this.props.height || 'inherit',
+      margin: _this.props.margin || '0 auto',
+      padding: _this.props.padding || '0px'
     };
     return _this;
   }
@@ -20162,20 +20164,28 @@ var TaskCell = exports.TaskCell = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { style: {
+        {
+          className: 'row',
+          style: {
+            boxShadow: '0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24)',
+            webkitBoxShadow: '0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24)',
+            mozBoxShadow: '0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24)',
+            transition: 'box-shadow 0.25s ease-in, border 0.25s ease-in',
             width: this.state.width,
             backgroundColor: this.state.color,
             height: this.state.height,
+            minHeight: this.state.minHeight,
             margin: this.state.margin,
-            border: 'thin solid black'
+            padding: this.state.padding
           }
         },
         _react2.default.createElement(
           'div',
           { className: 'col-md-3', style: styleSheet.leftContainer },
           _react2.default.createElement('img', {
-            src: 'http://graph.facebook.com/' + this.props.taskData.owner_id + '/picture?type=square',
-            height: '75px',
+            src: this.props.taskData.owner_avatar || '/images/bg/bg01.jpg',
+            height: '100px',
+            width: '100px',
             style: styleSheet.leftContainerAvatar
           }),
           _react2.default.createElement(
@@ -20183,17 +20193,72 @@ var TaskCell = exports.TaskCell = function (_React$Component) {
             { style: { textAlign: 'center' } },
             _react2.default.createElement(
               'h3',
-              { style: { color: '#001F54' } },
+              null,
               this.props.taskData.owner_name || 'Taylor Swift'
             ),
             _react2.default.createElement(
-              'h5',
+              'p',
               { style: { color: 'rgba(0,0,0,0.6)' } },
               _react2.default.createElement(_reactTimeago2.default, { date: this.props.taskData.received_at })
             )
           )
         ),
-        _react2.default.createElement('div', { className: 'col-md-9' })
+        _react2.default.createElement(
+          'div',
+          { className: 'col-md-9', style: { padding: '5px' } },
+          _react2.default.createElement(
+            'h2',
+            null,
+            this.props.taskData.title
+          ),
+          _react2.default.createElement('hr', null),
+          _react2.default.createElement(
+            'div',
+            { className: 'row' },
+            _react2.default.createElement(
+              'div',
+              { className: 'col-xs-8', style: { borderRight: 'thin solid rgba(0,0,0,0.25)' } },
+              _react2.default.createElement(
+                'h5',
+                null,
+                'Description'
+              ),
+              _react2.default.createElement(
+                'p',
+                null,
+                this.props.taskData.description
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'col-xs-4' },
+              _react2.default.createElement(
+                'h5',
+                null,
+                'Price'
+              ),
+              _react2.default.createElement(
+                'p',
+                null,
+                this.props.taskData.price
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'row' },
+            _react2.default.createElement(
+              'div',
+              { className: 'col-xs-8' },
+              'Location..'
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'col-xs-4' },
+              'Deliver in..'
+            )
+          )
+        )
       );
     }
   }]);
@@ -20202,6 +20267,7 @@ var TaskCell = exports.TaskCell = function (_React$Component) {
 }(_react2.default.Component);
 
 var styleSheet = {
+
   leftContainer: {
     height: 'inherit',
     display: 'flex',
@@ -20280,9 +20346,9 @@ var TaskList = exports.TaskList = function (_React$Component) {
         index: index,
         taskData: this.state.tasks[index],
 
-        margin: '10px 5%',
-        width: '90%',
-        height: '200px'
+        padding: '10px 0px',
+        margin: '20px 5%',
+        width: '90%'
       });
     }
   }]);
