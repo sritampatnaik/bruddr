@@ -63,7 +63,7 @@ class MainPanel extends React.Component {
       }
       
       return (
-        <div className='animated slideInDown'>
+        <div className='animated slideInUp' style={{padding:'25px 0px'}}>
           <TaskList
             tasks = {this.state.tasks}
             pageSize = {50}

@@ -31,6 +31,10 @@ export class TaskList extends React.Component {
         key={key}
         index={index}
         taskData={this.state.tasks[index]}
+        
+        margin= '10px 5%'
+        width= '90%'
+        height= '200px'
       />
     )
   }

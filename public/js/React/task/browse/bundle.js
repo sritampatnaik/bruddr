@@ -20018,7 +20018,8 @@ var TaskCell = exports.TaskCell = function (_React$Component) {
     _this.state = {
       width: _this.props.width || '100%',
       color: _this.props.color || 'rgba(255,255,255,0.5)',
-      height: _this.props.height || '50px'
+      height: _this.props.height || '50px',
+      margin: _this.props.margin || '0 auto'
     };
     return _this;
   }
@@ -20032,18 +20033,50 @@ var TaskCell = exports.TaskCell = function (_React$Component) {
             width: this.state.width,
             backgroundColor: this.state.color,
             height: this.state.height,
-            margin: '0 auto',
+            margin: this.state.margin,
             border: 'thin solid black'
-          },
-          className: this.props.classes
+          }
         },
-        this.props.taskData.title
+        _react2.default.createElement(
+          'div',
+          { className: 'col-md-3', style: styleSheet.leftContainer },
+          _react2.default.createElement('img', {
+            src: 'http://graph.facebook.com/' + this.props.taskData.owner_id + '/picture?type=square',
+            height: '60px',
+            style: styleSheet.leftContainerAvatar
+          }),
+          _react2.default.createElement(
+            'h3',
+            null,
+            this.props.taskData.owner_name || 'Taylor Swift'
+          ),
+          _react2.default.createElement(
+            'h5',
+            null,
+            this.props.taskData.received_at
+          )
+        ),
+        _react2.default.createElement('div', { className: 'col-md-9' })
       );
     }
   }]);
 
   return TaskCell;
 }(_react2.default.Component);
+
+var styleSheet = {
+  leftContainer: {
+    height: 'inherit',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-around'
+  },
+  leftContainerAvatar: {
+    border: 'thin solid rgba("0,0,0,0.75")',
+    borderRadius: '50%'
+  }
+};
 
 },{"react":173,"react-dom":31,"react-list":32,"react-spinkit":44}],175:[function(require,module,exports){
 "use strict";
@@ -20108,7 +20141,11 @@ var TaskList = exports.TaskList = function (_React$Component) {
       return _react2.default.createElement(_TaskCell.TaskCell, {
         key: key,
         index: index,
-        taskData: this.state.tasks[index]
+        taskData: this.state.tasks[index],
+
+        margin: '10px 5%',
+        width: '90%',
+        height: '200px'
       });
     }
   }]);
@@ -20289,7 +20326,7 @@ var MainPanel = function (_React$Component) {
 
         return _react2.default.createElement(
           'div',
-          { className: 'animated slideInDown' },
+          { className: 'animated slideInUp', style: { padding: '25px 0px' } },
           _react2.default.createElement(_TaskList.TaskList, {
             tasks: this.state.tasks,
             pageSize: 50
