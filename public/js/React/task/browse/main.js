@@ -1,10 +1,10 @@
 "use strict";
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactList from 'react-list';
 import Spinner from 'react-spinkit';
 
 import {Underline} from './../../components/underline'
+import {TaskList} from './../../components/TaskList'
 
 class MainPanel extends React.Component {
   constructor(props) {
@@ -20,6 +20,12 @@ class MainPanel extends React.Component {
         'Completed'
       ]
     };
+  }
+  
+  componentDidMount() {
+    this.getTasks({
+      status: 0
+    })
   }
   
   render() {
@@ -58,12 +64,9 @@ class MainPanel extends React.Component {
       
       return (
         <div className='animated slideInDown'>
-          <ReactList
-              ref={'list'}
-              itemRenderer={this.renderCell.bind(this)}
-              length={this.props.tasks.length}
-              pageSize={50}
-              type='simple'
+          <TaskList
+            tasks = {this.state.tasks}
+            pageSize = {50}
             />
         </div>
       )
@@ -75,18 +78,28 @@ class MainPanel extends React.Component {
       )
     }
   }
-  
-  renderCell(index, key) {
-    return (
-      <TaskCell
-        isSelected={this.props.selectedIdx == index}
-        key={key}
-        index={index}
-        didSelectQuestionFromLeftPanel={this.props.didSelectQuestionFromLeftPanel.bind(this)}
-        questionData={this.props.questions[index]}
-      />
-    )
+
+  /* API Calls */
+  getTasks(query) {
+    const _apiURL = '/api/v1/bruddrtask/getAvailableTasks'
+    $.ajax({
+      type: "GET",
+      url: _apiURL,
+      data: query,
+      dataType: 'json',
+      success: function(data) {
+        this.setState({
+          tasks: data,
+          loaded: true,
+        })
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.log('error')
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
   }
+
 }
 
 ReactDOM.render(<MainPanel/>, taskContainer);

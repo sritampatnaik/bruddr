@@ -19979,6 +19979,149 @@ module.exports = require('./lib/React');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.TaskCell = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactList = require('react-list');
+
+var _reactList2 = _interopRequireDefault(_reactList);
+
+var _reactSpinkit = require('react-spinkit');
+
+var _reactSpinkit2 = _interopRequireDefault(_reactSpinkit);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TaskCell = exports.TaskCell = function (_React$Component) {
+  _inherits(TaskCell, _React$Component);
+
+  function TaskCell(props) {
+    _classCallCheck(this, TaskCell);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TaskCell).call(this, props));
+
+    _this.state = {
+      width: _this.props.width || '100%',
+      color: _this.props.color || 'rgba(255,255,255,0.5)',
+      height: _this.props.height || '50px'
+    };
+    return _this;
+  }
+
+  _createClass(TaskCell, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { style: {
+            width: this.state.width,
+            backgroundColor: this.state.color,
+            height: this.state.height,
+            margin: '0 auto',
+            border: 'thin solid black'
+          },
+          className: this.props.classes
+        },
+        this.props.taskData.title
+      );
+    }
+  }]);
+
+  return TaskCell;
+}(_react2.default.Component);
+
+},{"react":173,"react-dom":31,"react-list":32,"react-spinkit":44}],175:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.TaskList = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactList = require('react-list');
+
+var _reactList2 = _interopRequireDefault(_reactList);
+
+var _TaskCell = require('./TaskCell');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TaskList = exports.TaskList = function (_React$Component) {
+  _inherits(TaskList, _React$Component);
+
+  function TaskList(props) {
+    _classCallCheck(this, TaskList);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TaskList).call(this, props));
+
+    _this.state = {
+      tasks: _this.props.tasks
+    };
+    return _this;
+  }
+
+  _createClass(TaskList, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(_reactList2.default, {
+        ref: 'list',
+        itemRenderer: this.renderCell.bind(this),
+        length: this.state.tasks.length,
+        pageSize: this.props.pageSize || 20,
+        type: this.props.type || 'simple'
+      });
+    }
+  }, {
+    key: 'renderCell',
+    value: function renderCell(index, key) {
+      return _react2.default.createElement(_TaskCell.TaskCell, {
+        key: key,
+        index: index,
+        taskData: this.state.tasks[index]
+      });
+    }
+  }]);
+
+  return TaskList;
+}(_react2.default.Component);
+
+},{"./TaskCell":174,"react":173,"react-dom":31,"react-list":32}],176:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.Underline = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -20040,7 +20183,7 @@ var Underline = exports.Underline = function (_React$Component) {
   return Underline;
 }(_react2.default.Component);
 
-},{"react":173,"react-dom":31,"react-list":32,"react-spinkit":44}],175:[function(require,module,exports){
+},{"react":173,"react-dom":31,"react-list":32,"react-spinkit":44}],177:[function(require,module,exports){
 "use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -20053,15 +20196,13 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactList = require('react-list');
-
-var _reactList2 = _interopRequireDefault(_reactList);
-
 var _reactSpinkit = require('react-spinkit');
 
 var _reactSpinkit2 = _interopRequireDefault(_reactSpinkit);
 
 var _underline = require('./../../components/underline');
+
+var _TaskList = require('./../../components/TaskList');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20090,6 +20231,13 @@ var MainPanel = function (_React$Component) {
   }
 
   _createClass(MainPanel, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.getTasks({
+        status: 0
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -20142,12 +20290,9 @@ var MainPanel = function (_React$Component) {
         return _react2.default.createElement(
           'div',
           { className: 'animated slideInDown' },
-          _react2.default.createElement(_reactList2.default, {
-            ref: 'list',
-            itemRenderer: this.renderCell.bind(this),
-            length: this.props.tasks.length,
-            pageSize: 50,
-            type: 'simple'
+          _react2.default.createElement(_TaskList.TaskList, {
+            tasks: this.state.tasks,
+            pageSize: 50
           })
         );
       } else {
@@ -20158,15 +20303,28 @@ var MainPanel = function (_React$Component) {
         );
       }
     }
+
+    /* API Calls */
+
   }, {
-    key: 'renderCell',
-    value: function renderCell(index, key) {
-      return _react2.default.createElement(TaskCell, {
-        isSelected: this.props.selectedIdx == index,
-        key: key,
-        index: index,
-        didSelectQuestionFromLeftPanel: this.props.didSelectQuestionFromLeftPanel.bind(this),
-        questionData: this.props.questions[index]
+    key: 'getTasks',
+    value: function getTasks(query) {
+      var _apiURL = '/api/v1/bruddrtask/getAvailableTasks';
+      $.ajax({
+        type: "GET",
+        url: _apiURL,
+        data: query,
+        dataType: 'json',
+        success: function (data) {
+          this.setState({
+            tasks: data,
+            loaded: true
+          });
+        }.bind(this),
+        error: function (xhr, status, err) {
+          console.log('error');
+          console.error(this.props.url, status, err.toString());
+        }.bind(this)
       });
     }
   }]);
@@ -20176,4 +20334,4 @@ var MainPanel = function (_React$Component) {
 
 _reactDom2.default.render(_react2.default.createElement(MainPanel, null), taskContainer);
 
-},{"./../../components/underline":174,"react":173,"react-dom":31,"react-list":32,"react-spinkit":44}]},{},[175]);
+},{"./../../components/TaskList":175,"./../../components/underline":176,"react":173,"react-dom":31,"react-spinkit":44}]},{},[177]);

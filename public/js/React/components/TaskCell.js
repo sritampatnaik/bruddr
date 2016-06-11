@@ -9,7 +9,7 @@ export class TaskCell extends React.Component {
     super(props);
     this.state = {
       width: this.props.width || '100%',
-      color: this.props.color || 'black',
+      color: this.props.color || 'rgba(255,255,255,0.5)',
       height: this.props.height || '50px',
     };
   }
@@ -25,6 +25,7 @@ export class TaskCell extends React.Component {
         }}
         className={this.props.classes}
       >
+      {this.props.taskData.title}
       </div>
     )
   }
