@@ -5,6 +5,7 @@ var BruddrTaskSchema = new mongoose.Schema({
 	type: String,
 	description: String,
 	owner_id: Number,
+	bruddr_name: String,
 	price: Number,
 	status: Number,
 	received_at: { type : Date, default: Date.now},

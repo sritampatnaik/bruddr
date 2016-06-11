@@ -24,7 +24,6 @@ module.exports = function(){
               // logic successful
               // Redirect to splash page
               req.session.currentUser = req.body.username;
-              console.log(req.session.currentUser)
               req.session.save();
               res.redirect('/home');
             } else {
