@@ -15,18 +15,16 @@ export class TaskCell extends React.Component {
       minHeight: this.props.height || 'inherit',
       margin: this.props.margin || '0 auto',
       padding: this.props.padding || '0px',
+      boxShadow: styleSheet.boxShadow,
     };
   }
   
   render() {
     return (
       <div 
-        className='row'
         style={{
-          boxShadow: '0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24)',
-          webkitBoxShadow: '0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24)',
-          mozBoxShadow: '0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24)',
-          transition: 'box-shadow 0.25s ease-in, border 0.25s ease-in',
+          boxShadow: this.state.boxShadow, 
+          transition: 'box-shadow 0.15s ease-in, border 0.15s ease-in',
           width:this.state.width,
           backgroundColor: this.state.color,
           height: this.state.height,
@@ -34,6 +32,9 @@ export class TaskCell extends React.Component {
           margin: this.state.margin,
           padding: this.state.padding,
         }}
+        className='row'
+        onMouseOver={()=>{this.setState({boxShadow:'none'})}}
+        onMouseOut={()=>{this.setState({boxShadow:styleSheet.boxShadow})}}
       >
       
         <div className='col-md-3' style={styleSheet.leftContainer}>
@@ -80,6 +81,7 @@ export class TaskCell extends React.Component {
 }
 
 const styleSheet = {
+  boxShadow:'0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24)',
   
   leftContainer : {
     height: 'inherit',

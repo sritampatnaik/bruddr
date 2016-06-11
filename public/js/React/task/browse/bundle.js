@@ -20154,7 +20154,8 @@ var TaskCell = exports.TaskCell = function (_React$Component) {
       height: _this.props.height || 'inherit',
       minHeight: _this.props.height || 'inherit',
       margin: _this.props.margin || '0 auto',
-      padding: _this.props.padding || '0px'
+      padding: _this.props.padding || '0px',
+      boxShadow: styleSheet.boxShadow
     };
     return _this;
   }
@@ -20162,21 +20163,27 @@ var TaskCell = exports.TaskCell = function (_React$Component) {
   _createClass(TaskCell, [{
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       return _react2.default.createElement(
         'div',
         {
-          className: 'row',
           style: {
-            boxShadow: '0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24)',
-            webkitBoxShadow: '0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24)',
-            mozBoxShadow: '0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24)',
-            transition: 'box-shadow 0.25s ease-in, border 0.25s ease-in',
+            boxShadow: this.state.boxShadow,
+            transition: 'box-shadow 0.15s ease-in, border 0.15s ease-in',
             width: this.state.width,
             backgroundColor: this.state.color,
             height: this.state.height,
             minHeight: this.state.minHeight,
             margin: this.state.margin,
             padding: this.state.padding
+          },
+          className: 'row',
+          onMouseOver: function onMouseOver() {
+            _this2.setState({ boxShadow: 'none' });
+          },
+          onMouseOut: function onMouseOut() {
+            _this2.setState({ boxShadow: styleSheet.boxShadow });
           }
         },
         _react2.default.createElement(
@@ -20267,6 +20274,7 @@ var TaskCell = exports.TaskCell = function (_React$Component) {
 }(_react2.default.Component);
 
 var styleSheet = {
+  boxShadow: '0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24)',
 
   leftContainer: {
     height: 'inherit',
