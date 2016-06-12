@@ -9,10 +9,7 @@ const middleware = require('./../middleware')
 /* GET default page. */
 router.get('/', function(req, res, next) {
   if (req.session.currentUser) {
-    res.render('home', { 
-      username: req.session.currentUser,
-      selected: 0,
-    });
+    res.redirect('/home');
   } else {
     res.render('index', { username: null });
   }
