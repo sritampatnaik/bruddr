@@ -20222,35 +20222,103 @@ var Modal_TaskTake = exports.Modal_TaskTake = function (_React$Component) {
                 )
               )
             ),
-            _react2.default.createElement(
-              'div',
-              { className: 'modal-footer' },
-              _react2.default.createElement(
-                'div',
-                { className: 'row' },
-                _react2.default.createElement(
-                  'div',
-                  { className: 'col-xs-5 col-sm-offset-1' },
-                  _react2.default.createElement(
-                    'button',
-                    { style: styleSheet.maxWidth, 'data-dismiss': 'modal', className: 'btn btn-md btn-danger' },
-                    'Decline'
-                  )
-                ),
-                _react2.default.createElement(
-                  'div',
-                  { className: 'col-xs-5' },
-                  _react2.default.createElement(
-                    'button',
-                    { style: styleSheet.maxWidth, 'data-dismiss': 'modal', className: 'btn btn-md btn-success', onClick: this.handleAccept.bind(this) },
-                    'Accept'
-                  )
-                )
-              )
-            )
+            this.renderActions()
           )
         )
       );
+    }
+  }, {
+    key: 'renderActions',
+    value: function renderActions() {
+      if (this.props.taskData.status == 0) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'modal-footer' },
+          _react2.default.createElement(
+            'div',
+            { className: 'row' },
+            _react2.default.createElement(
+              'div',
+              { className: 'col-xs-5 col-xs-offset-1' },
+              _react2.default.createElement(
+                'button',
+                { style: styleSheet.maxWidth, 'data-dismiss': 'modal', className: 'btn btn-md btn-danger' },
+                'Decline'
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'col-xs-5' },
+              _react2.default.createElement(
+                'button',
+                { style: styleSheet.maxWidth, 'data-dismiss': 'modal', className: 'btn btn-md btn-success', onClick: this.handleAccept.bind(this) },
+                'Accept'
+              )
+            )
+          )
+        );
+      } else if (this.props.taskData.status == 1) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'modal-footer' },
+          _react2.default.createElement(
+            'div',
+            { className: 'row' },
+            _react2.default.createElement(
+              'div',
+              { className: 'col-xs-5 col-xs-offset-1' },
+              _react2.default.createElement(
+                'button',
+                { style: styleSheet.maxWidth, 'data-dismiss': 'modal', className: 'btn btn-md btn-danger' },
+                'Cancel'
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'col-xs-5' },
+              _react2.default.createElement(
+                'button',
+                { style: styleSheet.maxWidth, 'data-dismiss': 'modal', className: 'btn btn-md btn-success', onClick: this.handleMarkComplete.bind(this) },
+                'Mark as Complete'
+              )
+            )
+          )
+        );
+      } else {
+        return _react2.default.createElement(
+          'div',
+          { className: 'modal-footer' },
+          _react2.default.createElement(
+            'div',
+            { className: 'row' },
+            _react2.default.createElement(
+              'div',
+              { className: 'col-xs-8 col-xs-offset-2' },
+              _react2.default.createElement(
+                'button',
+                { style: styleSheet.maxWidth, 'data-dismiss': 'modal', className: 'btn btn-md btn-info' },
+                'Close'
+              )
+            )
+          )
+        );
+      }
+    }
+  }, {
+    key: 'handleMarkComplete',
+    value: function handleMarkComplete() {
+      var _apiURL = '/api/v1/bruddrtask/markAsComplete/' + this.props.taskData._id;
+      $.ajax({
+        type: "GET",
+        url: _apiURL,
+        dataType: 'json',
+        success: function (data) {
+          this.props.refresh({ status: this.props.status });
+        }.bind(this),
+        error: function (xhr, status, err) {
+          alert('error:' + err);
+        }.bind(this)
+      });
     }
   }, {
     key: 'handleAccept',

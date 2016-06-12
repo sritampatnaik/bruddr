@@ -63,20 +63,68 @@ export class Modal_TaskTake extends React.Component {
               
             </div>
             
-            <div className="modal-footer">
-              <div className="row">
-                <div className="col-xs-5 col-sm-offset-1">
-                  <button style={styleSheet.maxWidth} data-dismiss="modal" className="btn btn-md btn-danger">Decline</button>
-                </div>
-                <div className="col-xs-5">
-                  <button style={styleSheet.maxWidth} data-dismiss="modal" className="btn btn-md btn-success" onClick={this.handleAccept.bind(this)}>Accept</button>
-                </div>
-              </div>
-            </div>
+            {this.renderActions()}
           </div>
         </div>
       </div>
     )
+  }
+  
+  renderActions() {
+    if (this.props.taskData.status == 0) {
+      return (
+        <div className="modal-footer">
+          <div className="row">
+            <div className="col-xs-5 col-xs-offset-1">
+              <button style={styleSheet.maxWidth} data-dismiss="modal" className="btn btn-md btn-danger">Decline</button>
+            </div>
+            <div className="col-xs-5">
+              <button style={styleSheet.maxWidth} data-dismiss="modal" className="btn btn-md btn-success" onClick={this.handleAccept.bind(this)}>Accept</button>
+            </div>
+          </div>
+        </div>
+      )
+    } else if (this.props.taskData.status == 1) {
+      return (
+        <div className="modal-footer">
+          <div className="row">
+            <div className="col-xs-5 col-xs-offset-1">
+              <button style={styleSheet.maxWidth} data-dismiss="modal" className="btn btn-md btn-danger">Cancel</button>
+            </div>
+            <div className="col-xs-5">
+              <button style={styleSheet.maxWidth} data-dismiss="modal" className="btn btn-md btn-success" onClick={this.handleMarkComplete.bind(this)}>Mark as Complete</button>
+            </div>
+          </div>
+        </div>
+      )
+    } else {
+      return (
+        <div className="modal-footer">
+          <div className="row">
+            <div className="col-xs-8 col-xs-offset-2">
+              <button style={styleSheet.maxWidth} data-dismiss="modal" className="btn btn-md btn-info">Close</button>
+            </div>
+          </div>
+        </div>
+      )
+    }
+  }
+  
+  handleMarkComplete() {
+    const _apiURL = '/api/v1/bruddrtask/markAsComplete/' + this.props.taskData._id
+    $.ajax({
+      type: "GET",
+      url: _apiURL,
+      dataType: 'json',
+      success: function(data) {
+        this.props.refresh(
+          {status:this.props.status}
+        )
+      }.bind(this),
+      error: function(xhr, status, err) {
+        alert('error:' + err)
+      }.bind(this)
+    });
   }
   
   handleAccept() {
