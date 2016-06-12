@@ -13,6 +13,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var expressSession = require('express-session');
+var autoIncrement = require('mongoose-auto-increment');
 
 /* Grab credentials */
 const credentials = require('./config/credentials')
@@ -48,7 +49,7 @@ initPassport(passport);
 
 /* Db connection */
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://'+credentials.mongoUser+':'+credentials.mongoPW+'@ds013941.mlab.com:13941/bruddr-prod', function(err) {
+var connection = mongoose.connect('mongodb://'+credentials.mongoUser+':'+credentials.mongoPW+'@ds013941.mlab.com:13941/bruddr-prod', function(err) {
     if(err) {
         console.log('connection error', err);
     } else {

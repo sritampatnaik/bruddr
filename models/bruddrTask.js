@@ -1,6 +1,9 @@
 var mongoose = require('mongoose');
+var autoIncrement = require('mongoose-auto-increment');
+autoIncrement.initialize(mongoose);
 
 var BruddrTaskSchema = new mongoose.Schema({
+	// Auto included _id: Number
 	title: String,
 	type: String,
 	description: String,
@@ -11,4 +14,5 @@ var BruddrTaskSchema = new mongoose.Schema({
 	received_at: { type : Date, default: Date.now},
 });
 
+BruddrTaskSchema.plugin(autoIncrement.plugin, 'BruddrTask');
 module.exports = mongoose.model('BruddrTask', BruddrTaskSchema);
