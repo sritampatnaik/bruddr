@@ -1198,3 +1198,11 @@ section a:hover {
 	color: white !important;
 	box-shadow: none;
 }
+
+#messenger {
+	margin-top: 15px;
+	opacity: 1;
+}
+#messenger:hover {
+	opacity: 0.75;
+}
