@@ -20834,10 +20834,10 @@ var MainPanel = function (_React$Component) {
         if (this.state.tasks.length == 0) {
           return _react2.default.createElement(
             'div',
-            { id: 'loadingDiv', className: 'animated bounceInDown' },
+            { id: 'loadingDiv' },
             _react2.default.createElement(
               'h2',
-              { className: 'animated swing' },
+              { className: 'animated fadeInUp' },
               'No Tasks to show!'
             )
           );

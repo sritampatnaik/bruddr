@@ -59,8 +59,8 @@ class MainPanel extends React.Component {
     if (this.state.loaded) {
       if (this.state.tasks.length == 0) {
         return (
-          <div id='loadingDiv' className='animated bounceInDown'>
-            <h2 className='animated swing'>No Tasks to show!</h2>
+          <div id='loadingDiv'>
+            <h2  className='animated fadeInUp'>No Tasks to show!</h2>
           </div>
         )
       }
