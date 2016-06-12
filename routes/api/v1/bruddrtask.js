@@ -31,4 +31,16 @@ router.get('/takeTask/:id', middleware.isAuthenticated, function(req,res,next) {
   });
 })
 
+router.get('/markAsComplete/:id', middleware.isAuthenticated, function(req,res,next) {
+  const id = req.params.id
+  bruddrTask.findOne({_id: id}, function (err, task) {
+    task.status = 2
+    
+    task.save(function (err) {
+      if(err) console.error('ERROR!');
+      res.json(task);
+    });
+  });
+})
+
 module.exports = router;
