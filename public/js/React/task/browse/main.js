@@ -23,7 +23,9 @@ class MainPanel extends React.Component {
   }
   
   componentDidMount() {
-    this.getTasks(0)
+    this.getTasks({
+      status: 0
+    })
   }
   
   render() {
@@ -54,7 +56,7 @@ class MainPanel extends React.Component {
     if (this.state.loaded) {
       if (this.state.tasks.length == 0) {
         return (
-          <div className='animated bounceInDown'>
+          <div id='loadingDiv' className='animated bounceInDown'>
             <h2 className='animated swing'>No Tasks to show!</h2>
           </div>
         )
@@ -81,13 +83,17 @@ class MainPanel extends React.Component {
     this.setState({
       selectedTab: tab
     }, () => {
-      const idx = this.state.tabs.indexOf(this.state.selectedTab)
-      console.log(idx)
+      this.getTasks({
+        status:this.state.tabs.indexOf(this.state.selectedTab)
+      })
     })
   }
   
   /* API Calls */
   getTasks(query) {
+    this.setState({
+      loaded: false
+    })
     const _apiURL = '/api/v1/bruddrtask/getTasks'
     $.ajax({
       type: "GET",

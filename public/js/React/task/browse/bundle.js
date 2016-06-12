@@ -20496,7 +20496,9 @@ var MainPanel = function (_React$Component) {
   _createClass(MainPanel, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.getTasks(0);
+      this.getTasks({
+        status: 0
+      });
     }
   }, {
     key: 'render',
@@ -20537,7 +20539,7 @@ var MainPanel = function (_React$Component) {
         if (this.state.tasks.length == 0) {
           return _react2.default.createElement(
             'div',
-            { className: 'animated bounceInDown' },
+            { id: 'loadingDiv', className: 'animated bounceInDown' },
             _react2.default.createElement(
               'h2',
               { className: 'animated swing' },
@@ -20570,8 +20572,9 @@ var MainPanel = function (_React$Component) {
       this.setState({
         selectedTab: tab
       }, function () {
-        var idx = _this3.state.tabs.indexOf(_this3.state.selectedTab);
-        console.log(idx);
+        _this3.getTasks({
+          status: _this3.state.tabs.indexOf(_this3.state.selectedTab)
+        });
       });
     }
 
@@ -20580,6 +20583,9 @@ var MainPanel = function (_React$Component) {
   }, {
     key: 'getTasks',
     value: function getTasks(query) {
+      this.setState({
+        loaded: false
+      });
       var _apiURL = '/api/v1/bruddrtask/getTasks';
       $.ajax({
         type: "GET",
