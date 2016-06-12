@@ -36,6 +36,9 @@ export class TaskCell extends React.Component {
         className='row'
         onMouseOver={()=>{this.setState({boxShadow:'none'})}}
         onMouseOut={()=>{this.setState({boxShadow:styleSheet.boxShadow})}}
+        onClick={() => {
+          $('#Modal_TaskTake').modal('show');
+        }}
       >
       
         <div className='col-md-3' style={styleSheet.leftContainer}>

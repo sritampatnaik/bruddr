@@ -5,6 +5,7 @@ import Spinner from 'react-spinkit';
 
 import {Underline} from './../../components/underline'
 import {TaskList} from './../../components/TaskList'
+import {Modal_TaskTake} from './../../components/Modal_TaskTake'
 
 class MainPanel extends React.Component {
   constructor(props) {
@@ -33,6 +34,7 @@ class MainPanel extends React.Component {
       <div>
         {this.renderTabs()}
         {this.renderTaskList()}
+        {this.renderPopup()}
       </div>
     )
   }
@@ -77,6 +79,12 @@ class MainPanel extends React.Component {
         </div>
       )
     }
+  }
+
+  renderPopup() {
+    return (
+      <Modal_TaskTake />
+    )
   }
 
   handleTabClicked(tab) {

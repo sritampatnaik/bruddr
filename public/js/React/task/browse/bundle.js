@@ -20108,6 +20108,110 @@ module.exports = require('./lib/React');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.Modal_TaskTake = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Modal_TaskTake = exports.Modal_TaskTake = function (_React$Component) {
+  _inherits(Modal_TaskTake, _React$Component);
+
+  function Modal_TaskTake(props) {
+    _classCallCheck(this, Modal_TaskTake);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Modal_TaskTake).call(this, props));
+
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(Modal_TaskTake, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'modal', id: 'Modal_TaskTake' },
+        _react2.default.createElement(
+          'div',
+          { className: 'modal-dialog' },
+          _react2.default.createElement(
+            'div',
+            { className: 'modal-content' },
+            _react2.default.createElement(
+              'button',
+              { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+              _react2.default.createElement(
+                'span',
+                { 'aria-hidden': 'true' },
+                '×'
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'modal-body' },
+              _react2.default.createElement(
+                'div',
+                { className: 'row' },
+                'blah blah blah blah'
+              ),
+              _react2.default.createElement('hr', null),
+              _react2.default.createElement(
+                'div',
+                { className: 'row' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'col-sm-10 col-sm-offset-1' },
+                  'blah blah details blah blah'
+                )
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'modal-footer' },
+              _react2.default.createElement(
+                'div',
+                { className: 'row' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'col-sm-8 col-sm-offset-2' },
+                  _react2.default.createElement(
+                    'button',
+                    { className: 'btn btn-blue', onclick: 'location.href=\'/questions/newest\';' },
+                    'Onward to 50 questions!'
+                  )
+                )
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return Modal_TaskTake;
+}(_react2.default.Component);
+
+},{"react":174,"react-dom":31}],176:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.TaskCell = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -20185,6 +20289,9 @@ var TaskCell = exports.TaskCell = function (_React$Component) {
           },
           onMouseOut: function onMouseOut() {
             _this2.setState({ boxShadow: styleSheet.boxShadow });
+          },
+          onClick: function onClick() {
+            $('#Modal_TaskTake').modal('show');
           }
         },
         _react2.default.createElement(
@@ -20303,7 +20410,7 @@ var styleSheet = {
   }
 };
 
-},{"react":174,"react-dom":31,"react-list":32,"react-spinkit":44,"react-timeago":45}],176:[function(require,module,exports){
+},{"react":174,"react-dom":31,"react-list":32,"react-spinkit":44,"react-timeago":45}],177:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -20379,7 +20486,7 @@ var TaskList = exports.TaskList = function (_React$Component) {
   return TaskList;
 }(_react2.default.Component);
 
-},{"./TaskCell":175,"react":174,"react-dom":31,"react-list":32}],177:[function(require,module,exports){
+},{"./TaskCell":176,"react":174,"react-dom":31,"react-list":32}],178:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -20446,7 +20553,7 @@ var Underline = exports.Underline = function (_React$Component) {
   return Underline;
 }(_react2.default.Component);
 
-},{"react":174,"react-dom":31,"react-list":32,"react-spinkit":44}],178:[function(require,module,exports){
+},{"react":174,"react-dom":31,"react-list":32,"react-spinkit":44}],179:[function(require,module,exports){
 "use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -20466,6 +20573,8 @@ var _reactSpinkit2 = _interopRequireDefault(_reactSpinkit);
 var _underline = require('./../../components/underline');
 
 var _TaskList = require('./../../components/TaskList');
+
+var _Modal_TaskTake = require('./../../components/Modal_TaskTake');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20507,7 +20616,8 @@ var MainPanel = function (_React$Component) {
         'div',
         null,
         this.renderTabs(),
-        this.renderTaskList()
+        this.renderTaskList(),
+        this.renderPopup()
       );
     }
   }, {
@@ -20565,6 +20675,11 @@ var MainPanel = function (_React$Component) {
       }
     }
   }, {
+    key: 'renderPopup',
+    value: function renderPopup() {
+      return _react2.default.createElement(_Modal_TaskTake.Modal_TaskTake, null);
+    }
+  }, {
     key: 'handleTabClicked',
     value: function handleTabClicked(tab) {
       var _this3 = this;
@@ -20611,4 +20726,4 @@ var MainPanel = function (_React$Component) {
 
 _reactDom2.default.render(_react2.default.createElement(MainPanel, null), taskContainer);
 
-},{"./../../components/TaskList":176,"./../../components/underline":177,"react":174,"react-dom":31,"react-spinkit":44}]},{},[178]);
+},{"./../../components/Modal_TaskTake":175,"./../../components/TaskList":177,"./../../components/underline":178,"react":174,"react-dom":31,"react-spinkit":44}]},{},[179]);
