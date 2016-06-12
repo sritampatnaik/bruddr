@@ -50,7 +50,7 @@ export class TaskCell extends React.Component {
           </div>
         </div>
         
-        <div className='col-md-9' style={{padding:'5px'}}>
+        <div className='col-md-9' style={{padding:'25px'}}>
           <h2>{this.props.taskData.title}</h2>
           <hr/>
           
@@ -75,7 +75,7 @@ export class TaskCell extends React.Component {
             </div>
             <div className='col-xs-4'>
               <i className='fa fa-2x fa-clock-o' style={{color: '#0267C1', marginRight:'10px'}}></i>
-              2 Hours
+              <span style={{whiteSpace: 'nowrap'}}>2 H</span>
             </div>
           </div>
           
@@ -94,7 +94,7 @@ const styleSheet = {
     display:'flex', 
     flexDirection:'column', 
     alignItems:'center', 
-    justifyContent:'space-around',
+    justifyContent:'center',
   },
   leftContainerAvatar : {
     border:'thin solid rgba("0,0,0,0.75")',

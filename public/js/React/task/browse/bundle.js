@@ -20212,7 +20212,7 @@ var TaskCell = exports.TaskCell = function (_React$Component) {
         ),
         _react2.default.createElement(
           'div',
-          { className: 'col-md-9', style: { padding: '5px' } },
+          { className: 'col-md-9', style: { padding: '25px' } },
           _react2.default.createElement(
             'h2',
             null,
@@ -20269,7 +20269,11 @@ var TaskCell = exports.TaskCell = function (_React$Component) {
               'div',
               { className: 'col-xs-4' },
               _react2.default.createElement('i', { className: 'fa fa-2x fa-clock-o', style: { color: '#0267C1', marginRight: '10px' } }),
-              '2 Hours'
+              _react2.default.createElement(
+                'span',
+                { style: { whiteSpace: 'nowrap' } },
+                '2 H'
+              )
             )
           )
         )
@@ -20289,7 +20293,7 @@ var styleSheet = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'space-around'
+    justifyContent: 'center'
   },
   leftContainerAvatar: {
     border: 'thin solid rgba("0,0,0,0.75")',
