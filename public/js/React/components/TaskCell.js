@@ -75,11 +75,13 @@ export class TaskCell extends React.Component {
           <div style={{marginTop: '25px'}} className='row'>
             <div className='col-xs-8'>
               <i className='fa fa-2x fa-map-marker' style={{color: 'darkorange', marginRight:'10px'}}></i>
-              300m from you.
+              {this.props.taskData.location || '300m from you.'}
             </div>
             <div className='col-xs-4'>
               <i className='fa fa-2x fa-clock-o' style={{color: '#0267C1', marginRight:'10px'}}></i>
-              <span style={{whiteSpace: 'nowrap'}}>2 H</span>
+              <span style={{whiteSpace: 'nowrap'}}>
+                {this.props.taskData.time_limit || '2 H'}
+              </span>
             </div>
           </div>
           

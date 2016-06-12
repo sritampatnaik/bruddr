@@ -1,7 +1,7 @@
 "use strict";
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import TimeAgo from 'react-timeago';
 
 export class Modal_TaskTake extends React.Component {
   constructor(props) {
@@ -11,7 +11,17 @@ export class Modal_TaskTake extends React.Component {
   }
   
   render() {
-    if (!this.props.taskData) return <div></div>
+    if (!this.props.taskData) return (<div></div>)
+    
+    const taskDetails = [
+      ['Title', this.props.taskData.title],
+      ['Description', this.props.taskData.description],
+      ['Posted', <TimeAgo date={this.props.taskData.received_at} />],
+      ['Limit', this.props.taskData.time_limit || '2 H'],
+      ['Price', this.props.taskData.price],
+      ['Location', this.props.taskData.location || '300m from you.'],
+    ]
+    
     return (
       <div className="modal" id='Modal_TaskTake'>
         <div className="modal-dialog" style={styleSheet.modalDialog}>
@@ -34,7 +44,20 @@ export class Modal_TaskTake extends React.Component {
               
               <div className="row">
                 <div className="col-sm-10 col-sm-offset-1">
-                  {this.props.taskData.description}
+                  <table style={styleSheet.maxWidth}>
+                    <tbody style={styleSheet.maxWidth}>
+                      { 
+                          taskDetails.map( (detail) => {
+                            return (
+                              <tr key={detail[0]} style={styleSheet.tr}>
+                                <td style={styleSheet.leftTD}>{detail[0]}</td>
+                                <td style={styleSheet.rightTD}>{detail[1]}</td>
+                              </tr>
+                            )
+                          })
+                      }                      
+                    </tbody>
+                  </table>
                 </div>
               </div>
               
@@ -42,8 +65,11 @@ export class Modal_TaskTake extends React.Component {
             
             <div className="modal-footer">
               <div className="row">
-                <div className="col-sm-8 col-sm-offset-2">
-                  <button className="btn btn-blue" onclick="location.href='/questions/newest';" >Onward to 50 questions!</button>
+                <div className="col-xs-5 col-sm-offset-1">
+                  <button style={styleSheet.maxWidth} data-dismiss="modal" className="btn btn-md btn-danger">Decline</button>
+                </div>
+                <div className="col-xs-5">
+                  <button style={styleSheet.maxWidth} data-dismiss="modal" className="btn btn-md btn-success" onClick={this.handleAccept.bind(this)}>Accept</button>
                 </div>
               </div>
             </div>
@@ -51,6 +77,23 @@ export class Modal_TaskTake extends React.Component {
         </div>
       </div>
     )
+  }
+  
+  handleAccept() {
+    const _apiURL = '/api/v1/bruddrtask/takeTask/' + this.props.taskData._id
+    $.ajax({
+      type: "GET",
+      url: _apiURL,
+      dataType: 'json',
+      success: function(data) {
+        this.props.refresh(
+          {status:this.props.status}
+        )
+      }.bind(this),
+      error: function(xhr, status, err) {
+        alert('error:' + err)
+      }.bind(this)
+    });
   }
 }
 
@@ -84,5 +127,21 @@ const styleSheet = {
   childIcon: {
     marginRight: '10px',
     color: '#0267C1'
-  }
+  },
+  tr: {
+    marginBottom: '7.5px',
+  },
+  leftTD: {
+    fontWeight: '700',
+    textAlign: 'left',
+    width: '30%',
+  },
+  rightTD: {
+    fontWeight: '300',
+    textAlign: 'right',
+    width: '70%',
+  },
+  maxWidth: {
+    width: '100%',
+  },
 }

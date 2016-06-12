@@ -20120,6 +20120,10 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _reactTimeago = require('react-timeago');
+
+var _reactTimeago2 = _interopRequireDefault(_reactTimeago);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -20144,6 +20148,9 @@ var Modal_TaskTake = exports.Modal_TaskTake = function (_React$Component) {
     key: 'render',
     value: function render() {
       if (!this.props.taskData) return _react2.default.createElement('div', null);
+
+      var taskDetails = [['Title', this.props.taskData.title], ['Description', this.props.taskData.description], ['Posted', _react2.default.createElement(_reactTimeago2.default, { date: this.props.taskData.received_at })], ['Limit', this.props.taskData.time_limit || '2 H'], ['Price', this.props.taskData.price], ['Location', this.props.taskData.location || '300m from you.']];
+
       return _react2.default.createElement(
         'div',
         { className: 'modal', id: 'Modal_TaskTake' },
@@ -20188,7 +20195,30 @@ var Modal_TaskTake = exports.Modal_TaskTake = function (_React$Component) {
                 _react2.default.createElement(
                   'div',
                   { className: 'col-sm-10 col-sm-offset-1' },
-                  this.props.taskData.description
+                  _react2.default.createElement(
+                    'table',
+                    { style: styleSheet.maxWidth },
+                    _react2.default.createElement(
+                      'tbody',
+                      { style: styleSheet.maxWidth },
+                      taskDetails.map(function (detail) {
+                        return _react2.default.createElement(
+                          'tr',
+                          { key: detail[0], style: styleSheet.tr },
+                          _react2.default.createElement(
+                            'td',
+                            { style: styleSheet.leftTD },
+                            detail[0]
+                          ),
+                          _react2.default.createElement(
+                            'td',
+                            { style: styleSheet.rightTD },
+                            detail[1]
+                          )
+                        );
+                      })
+                    )
+                  )
                 )
               )
             ),
@@ -20200,11 +20230,20 @@ var Modal_TaskTake = exports.Modal_TaskTake = function (_React$Component) {
                 { className: 'row' },
                 _react2.default.createElement(
                   'div',
-                  { className: 'col-sm-8 col-sm-offset-2' },
+                  { className: 'col-xs-5 col-sm-offset-1' },
                   _react2.default.createElement(
                     'button',
-                    { className: 'btn btn-blue', onclick: 'location.href=\'/questions/newest\';' },
-                    'Onward to 50 questions!'
+                    { style: styleSheet.maxWidth, 'data-dismiss': 'modal', className: 'btn btn-md btn-danger' },
+                    'Decline'
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'col-xs-5' },
+                  _react2.default.createElement(
+                    'button',
+                    { style: styleSheet.maxWidth, 'data-dismiss': 'modal', className: 'btn btn-md btn-success', onClick: this.handleAccept.bind(this) },
+                    'Accept'
                   )
                 )
               )
@@ -20212,6 +20251,22 @@ var Modal_TaskTake = exports.Modal_TaskTake = function (_React$Component) {
           )
         )
       );
+    }
+  }, {
+    key: 'handleAccept',
+    value: function handleAccept() {
+      var _apiURL = '/api/v1/bruddrtask/takeTask/' + this.props.taskData._id;
+      $.ajax({
+        type: "GET",
+        url: _apiURL,
+        dataType: 'json',
+        success: function (data) {
+          this.props.refresh({ status: this.props.status });
+        }.bind(this),
+        error: function (xhr, status, err) {
+          alert('error:' + err);
+        }.bind(this)
+      });
     }
   }]);
 
@@ -20247,10 +20302,26 @@ var styleSheet = {
   childIcon: {
     marginRight: '10px',
     color: '#0267C1'
+  },
+  tr: {
+    marginBottom: '7.5px'
+  },
+  leftTD: {
+    fontWeight: '700',
+    textAlign: 'left',
+    width: '30%'
+  },
+  rightTD: {
+    fontWeight: '300',
+    textAlign: 'right',
+    width: '70%'
+  },
+  maxWidth: {
+    width: '100%'
   }
 };
 
-},{"react":174,"react-dom":31}],176:[function(require,module,exports){
+},{"react":174,"react-dom":31,"react-timeago":45}],176:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -20415,7 +20486,7 @@ var TaskCell = exports.TaskCell = function (_React$Component) {
               'div',
               { className: 'col-xs-8' },
               _react2.default.createElement('i', { className: 'fa fa-2x fa-map-marker', style: { color: 'darkorange', marginRight: '10px' } }),
-              '300m from you.'
+              this.props.taskData.location || '300m from you.'
             ),
             _react2.default.createElement(
               'div',
@@ -20424,7 +20495,7 @@ var TaskCell = exports.TaskCell = function (_React$Component) {
               _react2.default.createElement(
                 'span',
                 { style: { whiteSpace: 'nowrap' } },
-                '2 H'
+                this.props.taskData.time_limit || '2 H'
               )
             )
           )
@@ -20725,7 +20796,9 @@ var MainPanel = function (_React$Component) {
     key: 'renderPopup',
     value: function renderPopup() {
       return _react2.default.createElement(_Modal_TaskTake.Modal_TaskTake, {
-        taskData: this.state.selectedTask
+        taskData: this.state.selectedTask,
+        refresh: this.getTasks.bind(this),
+        status: this.state.tabs.indexOf(this.state.selectedTab)
       });
     }
   }, {
@@ -20756,6 +20829,7 @@ var MainPanel = function (_React$Component) {
   }, {
     key: 'getTasks',
     value: function getTasks(query) {
+      console.log(query);
       this.setState({
         loaded: false
       });

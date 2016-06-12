@@ -87,6 +87,8 @@ class MainPanel extends React.Component {
     return (
       <Modal_TaskTake 
         taskData = {this.state.selectedTask}
+        refresh = {this.getTasks.bind(this)}
+        status = {this.state.tabs.indexOf(this.state.selectedTab)}
         />
     )
   }
@@ -111,6 +113,7 @@ class MainPanel extends React.Component {
   
   /* API Calls */
   getTasks(query) {
+    console.log(query)
     this.setState({
       loaded: false
     })
