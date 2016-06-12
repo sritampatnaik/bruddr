@@ -31,6 +31,7 @@ export class TaskList extends React.Component {
         key={key}
         index={index}
         taskData={this.state.tasks[index]}
+        handleCellClicked = {this.props.handleCellClicked.bind(this)}
         
         padding= '10px 0px'
         margin= '20px 5%'

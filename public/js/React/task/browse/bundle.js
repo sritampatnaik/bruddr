@@ -20143,6 +20143,7 @@ var Modal_TaskTake = exports.Modal_TaskTake = function (_React$Component) {
   _createClass(Modal_TaskTake, [{
     key: 'render',
     value: function render() {
+      if (!this.props.task) return _react2.default.createElement('div', null);
       return _react2.default.createElement(
         'div',
         { className: 'modal', id: 'Modal_TaskTake' },
@@ -20176,7 +20177,7 @@ var Modal_TaskTake = exports.Modal_TaskTake = function (_React$Component) {
                 _react2.default.createElement(
                   'div',
                   { className: 'col-sm-10 col-sm-offset-1' },
-                  'blah blah details blah blah'
+                  this.props.task.description
                 )
               )
             ),
@@ -20291,7 +20292,7 @@ var TaskCell = exports.TaskCell = function (_React$Component) {
             _this2.setState({ boxShadow: styleSheet.boxShadow });
           },
           onClick: function onClick() {
-            $('#Modal_TaskTake').modal('show');
+            _this2.props.handleCellClicked(_this2.props.taskData);
           }
         },
         _react2.default.createElement(
@@ -20474,6 +20475,7 @@ var TaskList = exports.TaskList = function (_React$Component) {
         key: key,
         index: index,
         taskData: this.state.tasks[index],
+        handleCellClicked: this.props.handleCellClicked.bind(this),
 
         padding: '10px 0px',
         margin: '20px 5%',
@@ -20597,6 +20599,7 @@ var MainPanel = function (_React$Component) {
       tasks: [],
 
       selectedTab: 'Available',
+      selectedTask: null,
       tabs: ['Available', 'Pending', 'Completed']
     };
     return _this;
@@ -20662,6 +20665,7 @@ var MainPanel = function (_React$Component) {
           'div',
           { className: 'animated slideInUp', style: { padding: '25px 0px' } },
           _react2.default.createElement(_TaskList.TaskList, {
+            handleCellClicked: this.handleCellClicked.bind(this),
             tasks: this.state.tasks,
             pageSize: 50
           })
@@ -20677,7 +20681,18 @@ var MainPanel = function (_React$Component) {
   }, {
     key: 'renderPopup',
     value: function renderPopup() {
-      return _react2.default.createElement(_Modal_TaskTake.Modal_TaskTake, null);
+      return _react2.default.createElement(_Modal_TaskTake.Modal_TaskTake, {
+        task: this.state.selectedTask
+      });
+    }
+  }, {
+    key: 'handleCellClicked',
+    value: function handleCellClicked(_obj) {
+      this.setState({
+        selectedTask: _obj
+      }, function () {
+        $('#Modal_TaskTake').modal('show');
+      });
     }
   }, {
     key: 'handleTabClicked',

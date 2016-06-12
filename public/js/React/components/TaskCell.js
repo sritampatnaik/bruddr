@@ -37,7 +37,7 @@ export class TaskCell extends React.Component {
         onMouseOver={()=>{this.setState({boxShadow:'none'})}}
         onMouseOut={()=>{this.setState({boxShadow:styleSheet.boxShadow})}}
         onClick={() => {
-          $('#Modal_TaskTake').modal('show');
+          this.props.handleCellClicked(this.props.taskData)
         }}
       >
       

@@ -15,6 +15,7 @@ class MainPanel extends React.Component {
       tasks: [],
       
       selectedTab: 'Available',
+      selectedTask: null,
       tabs : [
         'Available',
         'Pending',
@@ -67,6 +68,7 @@ class MainPanel extends React.Component {
       return (
         <div className='animated slideInUp' style={{padding:'25px 0px'}}>
           <TaskList
+            handleCellClicked = {this.handleCellClicked.bind(this)}
             tasks = {this.state.tasks}
             pageSize = {50}
             />
@@ -83,8 +85,18 @@ class MainPanel extends React.Component {
 
   renderPopup() {
     return (
-      <Modal_TaskTake />
+      <Modal_TaskTake 
+        task = {this.state.selectedTask}
+        />
     )
+  }
+  
+  handleCellClicked(_obj) {
+    this.setState({
+      selectedTask: _obj
+    }, () => {
+      $('#Modal_TaskTake').modal('show')
+    })
   }
 
   handleTabClicked(tab) {

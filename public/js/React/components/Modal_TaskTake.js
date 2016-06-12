@@ -11,6 +11,7 @@ export class Modal_TaskTake extends React.Component {
   }
   
   render() {
+    if (!this.props.task) return <div></div>
     return (
       <div className="modal" id='Modal_TaskTake'>
         <div className="modal-dialog">
@@ -25,7 +26,7 @@ export class Modal_TaskTake extends React.Component {
               <hr/>
               <div className="row">
                 <div className="col-sm-10 col-sm-offset-1">
-                  blah blah details blah blah
+                  {this.props.task.description}
                 </div>
               </div>
               
