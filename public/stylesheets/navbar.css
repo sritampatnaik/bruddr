@@ -1,0 +1,17 @@
+nav {
+  background: #0267C1 !important;
+  background: -moz-radial-gradient(top, ellipse cover, #00A5CF 0%, #0267C1 100%) !important;
+  background: -webkit-radial-gradient(top, ellipse cover, #00A5CF 0%, #0267C1 100%) !important;
+  background: radial-gradient(ellipse at top, #00A5CF 0%, #0267C1 100%) !important; }
+
+.navbar {
+  border-radius: 0px;
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.12), 0px 2px 2px 0px rgba(0, 0, 0, 0.24); }
+  .navbar a {
+    margin-right: 15px; }
+
+.bg-bruddrBlue {
+  background-color: #0267C1 !important; }
+
+.bg-darkBlue {
+  background-color: #001F54 !important; }

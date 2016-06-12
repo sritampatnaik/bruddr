@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Bruddr</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="/stylesheets/font-awesome.min.css" />
+	<link rel="stylesheet" href="/stylesheets/home.css">
+	<link rel="shortcut icon" type="image/png" href="/images/logo/logo.png"/>
+  <script src="https://code.jquery.com/jquery-1.12.3.min.js"   integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ="   crossorigin="anonymous"></script>
+</head>
+<body>
+	<% include ./partials/navbar_logged-in %>
+	
+	<section id="banner-top">
+			<div class="banner-splash animated fadeIn"></div>
+	</section>
+	
+	<div class='container'>
+		<div class='headerContainer'>
+			<h1> 
+				Hello <span class='txt-bruddrblue'><%= username %></span> !
+			</h1>
+		</div>
+		<hr/>
+		
+		<div class='callToActionContainer'>
+			<div class='row'>
+				<div class='col-md-4 col-md-offset-1 margin-vertical-m'>
+					<table class='max-width' cellspacing="10">
+						<tbody class='max-width'>
+							<tr class='max-width'>
+								<td class='td-left'>Balance:</td>
+								<td class='td-right'><i class='fa fa-dollar'></i><%= balance.toFixed(2) %></td>
+							</tr>
+							<tr class='max-width'>
+								<td class='td-left'>Pending Tasks:</td>
+								<td class='td-right'><%= pendingTasks %></td>
+							</tr>
+							<tr class='max-width'>
+								<td class='td-left'>Completed Tasks:</td>
+								<td class='td-right'><%= completedTasks %></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>	
+				<div class='col-md-6 col-md-offset-1 margin-vertical-m'>
+					<a id='browseButton' href='/task/browse'>
+						<div class="card text-xs-center">
+				      <div class="card-footer text-muted">
+				        Browse Tasks
+				      </div>
+				    </div>
+					</a>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Not sure that I want this right now as it is actually displayed in the other page.. -->
+		<% if(false){ %>
+		
+		<div id='taskCellsContainer' class='row'>
+			<% for(var i = 0 ; i < pendingTasks.length; i++) { %>
+			  <div class='col-md-6 col-xs-12'>
+			    <div class="taskCells card text-xs-center">
+			      <div class="card-header">
+			        <%= pendingTasks[i].owner_name || 'Taylor Swift' %>
+			      </div>
+			      <div class="card-block row">
+							<div class='col-lg-3 avatarContainer'>
+								<img src='<%= pendingTasks[i].owner_avatar || '/images/bg/bg01.jpg' %>' width='100px' height='100px'/>
+							</div>
+							<div class='col-lg-9'>
+								<h4 class="card-title"><%= pendingTasks[i].title %></h4>
+				        <p class="card-text"><%= pendingTasks[i].description %></p>
+							</div>
+			      </div>
+			      <div class="card-footer text-muted">
+			        <%= 23-i %> Hours Left
+			      </div>
+			    </div>
+			  </div>
+			<% } %>
+		</div>
+		
+		<% } %>
+		
+		<div class="alert alert-info" role="alert">
+			<h3>Tip of the day</h3>
+			<p>Bruddr has a reputation system - So you'll get matched with better paying clients the more tasks you complete on Bruddr!</p>
+		</div>
+		
+	</div>
+	
+</body>
+</html>

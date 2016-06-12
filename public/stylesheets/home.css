@@ -1,0 +1,133 @@
+.bg-bruddrBlue {
+  background-color: #0267C1 !important; }
+
+.txt-bruddrblue {
+  color: #0267C1 !important; }
+
+.bg-darkBlue {
+  background-color: #001F54 !important; }
+
+.txt-darkBlue {
+  color: #001F54 !important; }
+
+.max-width {
+  width: 100%; }
+
+.margin-vertical-m {
+  margin: 25px 0px; }
+
+#banner-top {
+  background-image: url("/images/bg/sunset.jpg");
+  background-position: center center;
+  -webkit-background-size: cover;
+  background-size: cover;
+  height: 40vh; }
+  #banner-top .banner-splash {
+    width: inherit;
+    height: inherit;
+    background-color: rgba(0, 0, 0, 0.5); }
+
+.alert {
+  margin: 10px 2.5%; }
+
+.container {
+  z-index: 100;
+  padding: 20px 0px;
+  margin-top: -26.8vh;
+  height: 80.8vh;
+  background-color: white;
+  box-shadow: 0px 25px 55px 0px rgba(0, 0, 0, 0.19), 0px 16px 28px 0px rgba(0, 0, 0, 0.24);
+  -webkit-box-shadow: 0px 25px 55px 0px rgba(0, 0, 0, 0.19), 0px 16px 28px 0px rgba(0, 0, 0, 0.24);
+  -moz-box-shadow: 0px 25px 55px 0px rgba(0, 0, 0, 0.19), 0px 16px 28px 0px rgba(0, 0, 0, 0.24);
+  position: fixed;
+  left: 15px;
+  right: 15px;
+  overflow-y: scroll; }
+  .container h1 {
+    font-family: 'Crete Round', serif;
+    padding-left: 5%;
+    color: rgba(50, 50, 50, 0.75); }
+  .container .headerContainer {
+    text-align: center;
+    padding: 15px 0px; }
+  .container .callToActionContainer {
+    height: 47.5vh;
+    padding: 10px 40px 60px 40px; }
+    .container .callToActionContainer .row {
+      height: 100%; }
+    .container .callToActionContainer .col-md-6 {
+      height: 100%; }
+    .container .callToActionContainer table {
+      border-collapse: separate;
+      border-spacing: 15px; }
+    .container .callToActionContainer .td-left {
+      width: 50%;
+      font-weight: 700;
+      text-align: left; }
+    .container .callToActionContainer .td-right {
+      font-color: grey;
+      width: 50%;
+      font-weight: 400;
+      text-align: right; }
+    .container .callToActionContainer .fa-dollar {
+      color: green;
+      margin-right: 10px; }
+    .container .callToActionContainer #browseButton {
+      height: 100%;
+      width: 100%; }
+      .container .callToActionContainer #browseButton .card {
+        background-image: url("/images/bg/bg06.jpg");
+        background-position: center center;
+        -webkit-background-size: cover;
+        background-size: cover;
+        display: flex;
+        flex-direction: column-reverse;
+        -webkit-display: flex;
+        -webkit-flex-direction: column-reverse;
+        border: none;
+        border-radius: .25rem;
+        height: 100%;
+        box-shadow: 0px 25px 55px 0px rgba(0, 0, 0, 0.19), 0px 16px 28px 0px rgba(0, 0, 0, 0.24);
+        -webkit-box-shadow: 0px 25px 55px 0px rgba(0, 0, 0, 0.19), 0px 16px 28px 0px rgba(0, 0, 0, 0.24);
+        -moz-box-shadow: 0px 25px 55px 0px rgba(0, 0, 0, 0.19), 0px 16px 28px 0px rgba(0, 0, 0, 0.24);
+        transition: box-shadow 0.15s ease-in, border 0.15s ease-in; }
+        .container .callToActionContainer #browseButton .card:hover {
+          box-shadow: none;
+          -webkit-box-shadow: none;
+          -moz-box-shadow: none; }
+        .container .callToActionContainer #browseButton .card .card-footer {
+          border-top: none;
+          background-color: #00A5CF;
+          color: #f8f8f8; }
+
+#taskCellsContainer {
+  padding: 15px 1%; }
+  #taskCellsContainer .card-header {
+    background-color: #00A5CF;
+    color: #fff; }
+  #taskCellsContainer .card-block .avatarContainer {
+    display: flex;
+    -webkit-display: flex;
+    align-items: center;
+    -webkit-align-items: center;
+    justify-content: center;
+    -webkit-justify-content: center;
+    padding-bottom: 15px;
+    min-height: 115px; }
+    #taskCellsContainer .card-block .avatarContainer img {
+      border-radius: 50%; }
+  @media only screen and (min-width: 992px) {
+    #taskCellsContainer .card-block .card-title {
+      text-align: right !important; }
+    #taskCellsContainer .card-block .card-text {
+      text-align: right !important; } }
+  #taskCellsContainer .taskCells {
+    box-shadow: 0px 25px 55px 0px rgba(0, 0, 0, 0.19), 0px 16px 28px 0px rgba(0, 0, 0, 0.24);
+    -webkit-box-shadow: 0px 25px 55px 0px rgba(0, 0, 0, 0.19), 0px 16px 28px 0px rgba(0, 0, 0, 0.24);
+    -moz-box-shadow: 0px 25px 55px 0px rgba(0, 0, 0, 0.19), 0px 16px 28px 0px rgba(0, 0, 0, 0.24);
+    transition: box-shadow 0.25s ease-in, border 0.25s ease-in;
+    margin-bottom: 20px; }
+    #taskCellsContainer .taskCells:hover {
+      box-shadow: none;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none; }

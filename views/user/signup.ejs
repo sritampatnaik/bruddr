@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Sign Up - Bruddr</title>
+  
+  <!-- Google Fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700|Lato:400,100,300,700,900' rel='stylesheet' type='text/css'>
+  
+  <link rel="stylesheet" href="/stylesheets/animate.css">
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="/stylesheets/user/style.css">
+  <link rel="shortcut icon" type="image/png" href="/images/logo/logo.png"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="/js/google-analytics.js"></script>
+</head>
+<% include ./../partials/google-analytics %>
+<body>
+  <div id='mainContainer' class="container">
+    <div class="top">
+      <% if (message.length > 0){%>
+        <div class='animated pulse' id='errorMessage'>
+          <%= message %>
+        </div>
+      <% } else { %>
+        <div></div>
+      <% } %>
+      <h1 id="title" class="hidden"><span id="logo">Bruddr</span></h1>
+    </div>
+    <div class="login-box animated fadeInUp">
+      <div class="box-header">
+        <h2>Sign Up</h2>
+      </div>
+      <form action="/user/signup" method="post">
+        <br/>
+        <input name='username' type="text" id="username" placeholder="Username">
+        <br/>
+        <br/>
+        <input name='password' type="password" id="password" placeholder="Password">
+        <br/>
+        <br/>
+        <input name='email' type="text" id="email" placeholder="Email">
+        <br/>
+        <button type="submit">Sign Up</button>
+        <br/>
+      </form>
+      <a href="/user/login"><p class="small">Already have an account?</p></a>
+    </div>
+  </div>
+</body>
+
+<script>
+$(document).ready(function () {
+  $('#logo').addClass('animated fadeInDown');
+  $("input:text:visible:first").focus();
+});
+$('#username').focus(function() {
+  $('label[for="username"]').addClass('selected');
+});
+$('#username').blur(function() {
+  $('label[for="username"]').removeClass('selected');
+});
+$('#password').focus(function() {
+  $('label[for="password"]').addClass('selected');
+});
+$('#password').blur(function() {
+  $('label[for="password"]').removeClass('selected');
+});
+</script>
+
+</html>
