@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var bruddrTask = require('./../models/bruddrTask');
+var UserModel = require('./../models/user')
 
 const middleware = require('./../middleware')
 
@@ -19,10 +20,20 @@ router.get('/', function(req, res, next) {
 
 /* GET logged in home page. */
 router.get('/home', middleware.isAuthenticated, function(req, res, next) {
+  UserModel.find({_id : req.session.currentUserID}, function (err, post) {
+    if (err) return next(err);
+    res.render('home', { 
+      username: req.session.currentUser,
+      balance: post[0].balance,
+      selected: 0,
+    });
+  });
   
-  /* Get this user pending tasks */
+  
+  /* Get this user pending tasks (deprecated maybe) 
   const searchQuery = {
-    bruddr_name: req.session.currentUser
+    status: 1,
+    bruddr_id: req.session.currentUserID
   }
   bruddrTask.find(searchQuery , function (err, post) {
     if (err) return next(err);
@@ -32,6 +43,7 @@ router.get('/home', middleware.isAuthenticated, function(req, res, next) {
       selected: 0,
     });
   });
+  */
 });
 
 module.exports = router;

@@ -3,8 +3,17 @@
 .bg-bruddrBlue { 
 	background-color: $bruddrBlue !important;
 }
+.txt-bruddrblue {
+	color: $bruddrBlue !important;
+}
 .bg-darkBlue { 
 	background-color: $darkBlue !important;
+}
+.txt-darkBlue {
+	color: $darkBlue !important;
+}
+.max-width {
+	width: 100%;
 }
 
 $bannerHeight: 40vh;
@@ -36,13 +45,56 @@ $bannerHeight: 40vh;
 	left: 15px;
 	right: 15px;
 	overflow-y: scroll;
+	h1 {
+		font-family: 'Crete Round', serif;
+		padding-left: 5%;
+		color: rgba(50,50,50,0.75);
+	}
 	.headerContainer{
+		text-align: center;
 		padding: 15px 0px;
-		h1 {
-			font-family: 'Crete Round', serif;
-			padding-left: 5%;
-			text-align: center;
-			color: rgba(50,50,50,0.75);
+	}
+	.callToActionContainer {
+		height: 100vh - $bannerHeight - 11vh;
+		padding: 20px 40px;
+		.row {
+			height: 100%;
+		}
+		.col-md-6 {
+			height: 100%;
+		}
+		#browseButton {
+			height: 100%;
+			width: 100%;
+			.card {
+				background-image: url("/images/bg/bg03.jpg");
+			  background-position: center center;
+			  -webkit-background-size: cover;
+			  background-size: cover;
+				
+				border: none;
+				border-radius: .25rem;
+				
+				height: 100%;
+				box-shadow: 0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24);
+				-webkit-box-shadow: 0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24);
+				-moz-box-shadow: 0px 25px 55px 0px rgba(0,0,0,0.19), 0px 16px 28px 0px rgba(0,0,0,0.24);
+				transition: box-shadow 0.15s ease-in, border 0.15s ease-in;
+				&:hover {
+					box-shadow: none;
+					-webkit-box-shadow: none;
+					-moz-box-shadow: none;
+				}
+				.card-block {
+					height: 85%;
+				}				
+				.card-footer{
+					border-top: none;
+					height: 15%;
+					background-color: $bruddrBlue;
+					color: #f8f8f8;
+				}
+			}
 		}
 	}
 }
