@@ -8,7 +8,7 @@ var BruddrTaskSchema = new mongoose.Schema({
 	type: String,
 	description: String,
 	owner_id: Number,
-	bruddr_name: String,
+	bruddr_id: { type : Number, default: -1},
 	price: Number,
 	status: Number, // 0: Pending, 1: Bruddr matched, 2: Bruddr Completed, 3: Withdrawn
 	received_at: { type : Date, default: Date.now},

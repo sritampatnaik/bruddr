@@ -23,7 +23,9 @@ module.exports = function(){
             if (_res) {
               // logic successful
               // Redirect to splash page
-              req.session.currentUser = req.body.username;
+              req.session.currentUser = docs[0].username;
+							req.session.currentUserID = docs[0]._id;
+							console.log(docs[0])
               req.session.save();
               res.redirect('/home');
             } else {
@@ -55,7 +57,9 @@ module.exports = function(){
         }else{
           UserModel.create(payload, function (err,post) {
             if (err) return next(err);
-            req.session.currentUser = req.body.username;
+            req.session.currentUser = post.username;
+						req.session.currentUserID = post._id;
+						console.log(post._id)
             console.log(req.session.currentUser)
             req.session.save();
             res.redirect('/home');
