@@ -20197,7 +20197,7 @@ var Modal_TaskTake = exports.Modal_TaskTake = function (_React$Component) {
                   { className: 'col-sm-10 col-sm-offset-1' },
                   _react2.default.createElement(
                     'table',
-                    { style: styleSheet.maxWidth },
+                    { style: styleSheet.table },
                     _react2.default.createElement(
                       'tbody',
                       { style: styleSheet.maxWidth },
@@ -20373,6 +20373,11 @@ var styleSheet = {
   },
   tr: {
     marginBottom: '7.5px'
+  },
+  table: {
+    width: '100%',
+    borderCollapse: 'separate',
+    borderSpacing: '15px'
   },
   leftTD: {
     fontWeight: '700',

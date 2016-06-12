@@ -44,7 +44,7 @@ export class Modal_TaskTake extends React.Component {
               
               <div className="row">
                 <div className="col-sm-10 col-sm-offset-1">
-                  <table style={styleSheet.maxWidth}>
+                  <table style={styleSheet.table}>
                     <tbody style={styleSheet.maxWidth}>
                       { 
                           taskDetails.map( (detail) => {
@@ -178,6 +178,11 @@ const styleSheet = {
   },
   tr: {
     marginBottom: '7.5px',
+  },
+  table: {
+    width: '100%',
+    borderCollapse: 'separate',
+    borderSpacing: '15px'
   },
   leftTD: {
     fontWeight: '700',
