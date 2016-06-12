@@ -20496,9 +20496,7 @@ var MainPanel = function (_React$Component) {
   _createClass(MainPanel, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.getTasks({
-        status: 0
-      });
+      this.getTasks(0);
     }
   }, {
     key: 'render',
@@ -20524,9 +20522,7 @@ var MainPanel = function (_React$Component) {
             { className: 'nav-item col-xs-4', key: tab },
             _react2.default.createElement(
               'a',
-              { onClick: function onClick() {
-                  _this2.setState({ selectedTab: tab });
-                }, className: 'nav-link' },
+              { onClick: _this2.handleTabClicked.bind(_this2, tab), className: 'nav-link' },
               tab
             ),
             _this2.state.selectedTab == tab ? _react2.default.createElement(_underline.Underline, { color: '#001F54', height: '5px', width: '80%', classes: 'animated fadeInUp' }) : null
@@ -20566,13 +20562,25 @@ var MainPanel = function (_React$Component) {
         );
       }
     }
+  }, {
+    key: 'handleTabClicked',
+    value: function handleTabClicked(tab) {
+      var _this3 = this;
+
+      this.setState({
+        selectedTab: tab
+      }, function () {
+        var idx = _this3.state.tabs.indexOf(_this3.state.selectedTab);
+        console.log(idx);
+      });
+    }
 
     /* API Calls */
 
   }, {
     key: 'getTasks',
     value: function getTasks(query) {
-      var _apiURL = '/api/v1/bruddrtask/getAvailableTasks';
+      var _apiURL = '/api/v1/bruddrtask/getTasks';
       $.ajax({
         type: "GET",
         url: _apiURL,

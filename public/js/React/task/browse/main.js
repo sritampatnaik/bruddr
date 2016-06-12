@@ -23,9 +23,7 @@ class MainPanel extends React.Component {
   }
   
   componentDidMount() {
-    this.getTasks({
-      status: 0
-    })
+    this.getTasks(0)
   }
   
   render() {
@@ -43,7 +41,7 @@ class MainPanel extends React.Component {
         {this.state.tabs.map( (tab) => {
           return (
             <li className="nav-item col-xs-4" key={tab}>
-              <a onClick={()=>{this.setState({selectedTab:tab})}} className="nav-link" >{tab}</a>
+              <a onClick={this.handleTabClicked.bind(this,tab)} className="nav-link" >{tab}</a>
               {(this.state.selectedTab == tab) ? <Underline color='#001F54' height='5px' width='80%' classes='animated fadeInUp' /> : null }
             </li>
           )
@@ -79,9 +77,18 @@ class MainPanel extends React.Component {
     }
   }
 
+  handleTabClicked(tab) {
+    this.setState({
+      selectedTab: tab
+    }, () => {
+      const idx = this.state.tabs.indexOf(this.state.selectedTab)
+      console.log(idx)
+    })
+  }
+  
   /* API Calls */
   getTasks(query) {
-    const _apiURL = '/api/v1/bruddrtask/getAvailableTasks'
+    const _apiURL = '/api/v1/bruddrtask/getTasks'
     $.ajax({
       type: "GET",
       url: _apiURL,
