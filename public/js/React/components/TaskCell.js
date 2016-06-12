@@ -31,6 +31,7 @@ export class TaskCell extends React.Component {
           height: this.state.height,
           margin: this.state.margin,
           padding: this.state.padding,
+          borderLeft: 'thick solid #0267C1'
         }}
         className='row'
         onMouseOver={()=>{this.setState({boxShadow:'none'})}}
@@ -57,7 +58,7 @@ export class TaskCell extends React.Component {
           <div className='row'>
             <div className='col-xs-8' style={{borderRight: 'thin solid rgba(0,0,0,0.25)'}}>
               <h5>Description</h5>
-              <p>{this.props.taskData.description}</p>
+              <p style={{color:'rgba(0,0,0,0.6)'}}>{this.props.taskData.description}</p>
             </div>
             <div className='col-xs-4'>
               <h5>Price</h5>

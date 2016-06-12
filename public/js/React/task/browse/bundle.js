@@ -20176,7 +20176,8 @@ var TaskCell = exports.TaskCell = function (_React$Component) {
             minHeight: this.state.minHeight,
             height: this.state.height,
             margin: this.state.margin,
-            padding: this.state.padding
+            padding: this.state.padding,
+            borderLeft: 'thick solid #0267C1'
           },
           className: 'row',
           onMouseOver: function onMouseOver() {
@@ -20232,7 +20233,7 @@ var TaskCell = exports.TaskCell = function (_React$Component) {
               ),
               _react2.default.createElement(
                 'p',
-                null,
+                { style: { color: 'rgba(0,0,0,0.6)' } },
                 this.props.taskData.description
               )
             ),
