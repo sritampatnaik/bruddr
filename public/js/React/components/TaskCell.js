@@ -12,7 +12,7 @@ export class TaskCell extends React.Component {
       width: this.props.width || '100%',
       color: this.props.color || 'rgba(255,255,255,0.5)',
       height: this.props.height || 'inherit',
-      minHeight: this.props.height || 'inherit',
+      minHeight: this.props.minimumHeight || '',
       margin: this.props.margin || '0 auto',
       padding: this.props.padding || '0px',
       boxShadow: styleSheet.boxShadow,
@@ -27,8 +27,8 @@ export class TaskCell extends React.Component {
           transition: 'box-shadow 0.15s ease-in, border 0.15s ease-in',
           width:this.state.width,
           backgroundColor: this.state.color,
-          height: this.state.height,
           minHeight: this.state.minHeight,
+          height: this.state.height,
           margin: this.state.margin,
           padding: this.state.padding,
         }}
@@ -46,7 +46,7 @@ export class TaskCell extends React.Component {
             />
           <div style={{textAlign:'center'}}>
             <h3>{this.props.taskData.owner_name || 'Taylor Swift'}</h3>
-            <p style={{color:'rgba(0,0,0,0.6)'}}><TimeAgo date={this.props.taskData.received_at} /></p>
+            <span style={{color:'rgba(0,0,0,0.6)'}}><TimeAgo date={this.props.taskData.received_at} /></span>
           </div>
         </div>
         
@@ -61,16 +61,21 @@ export class TaskCell extends React.Component {
             </div>
             <div className='col-xs-4'>
               <h5>Price</h5>
-              <p>{this.props.taskData.price}</p>
+              <span>
+                <i className='fa fa-dollar' style={{display:'inline',color: 'green', marginRight:'10px'}}></i>
+                <h2 style={{display:'inline'}}>{this.props.taskData.price}</h2>  
+              </span>
             </div>
           </div>
           
-          <div className='row'>
+          <div style={{marginTop: '25px'}} className='row'>
             <div className='col-xs-8'>
-              Location..
+              <i className='fa fa-2x fa-map-marker' style={{color: 'darkorange', marginRight:'10px'}}></i>
+              300m from you.
             </div>
             <div className='col-xs-4'>
-              Deliver in..
+              <i className='fa fa-2x fa-clock-o' style={{color: '#0267C1', marginRight:'10px'}}></i>
+              2 Hours
             </div>
           </div>
           
@@ -85,6 +90,7 @@ const styleSheet = {
   
   leftContainer : {
     height: 'inherit',
+    minHeight: 'inherit',
     display:'flex', 
     flexDirection:'column', 
     alignItems:'center', 
@@ -92,6 +98,7 @@ const styleSheet = {
   },
   leftContainerAvatar : {
     border:'thin solid rgba("0,0,0,0.75")',
-    borderRadius:'50%'
+    borderRadius:'50%',
+    marginBottom: '15px',
   }
 }

@@ -36,6 +36,7 @@ $bannerHeight: 40vh;
 
 .container {
   min-height: 100vh - $bannerHeight;
+  background-color: whitesmoke;
   box-shadow: 12px 0 30px -4px rgba(0,0,0,0.15), -12px 0 23px -4px rgba(0,0,0,0.15);
   -webkit-box-shadow: 12px 0 30px -4px rgba(0,0,0,0.15), -12px 0 23px -4px rgba(0,0,0,0.15);
   -moz-box-shadow: 12px 0 30px -4px rgba(0,0,0,0.15), -12px 0 23px -4px rgba(0,0,0,0.15);

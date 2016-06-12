@@ -20152,7 +20152,7 @@ var TaskCell = exports.TaskCell = function (_React$Component) {
       width: _this.props.width || '100%',
       color: _this.props.color || 'rgba(255,255,255,0.5)',
       height: _this.props.height || 'inherit',
-      minHeight: _this.props.height || 'inherit',
+      minHeight: _this.props.minimumHeight || '',
       margin: _this.props.margin || '0 auto',
       padding: _this.props.padding || '0px',
       boxShadow: styleSheet.boxShadow
@@ -20173,8 +20173,8 @@ var TaskCell = exports.TaskCell = function (_React$Component) {
             transition: 'box-shadow 0.15s ease-in, border 0.15s ease-in',
             width: this.state.width,
             backgroundColor: this.state.color,
-            height: this.state.height,
             minHeight: this.state.minHeight,
+            height: this.state.height,
             margin: this.state.margin,
             padding: this.state.padding
           },
@@ -20204,7 +20204,7 @@ var TaskCell = exports.TaskCell = function (_React$Component) {
               this.props.taskData.owner_name || 'Taylor Swift'
             ),
             _react2.default.createElement(
-              'p',
+              'span',
               { style: { color: 'rgba(0,0,0,0.6)' } },
               _react2.default.createElement(_reactTimeago2.default, { date: this.props.taskData.received_at })
             )
@@ -20245,24 +20245,31 @@ var TaskCell = exports.TaskCell = function (_React$Component) {
                 'Price'
               ),
               _react2.default.createElement(
-                'p',
+                'span',
                 null,
-                this.props.taskData.price
+                _react2.default.createElement('i', { className: 'fa fa-dollar', style: { display: 'inline', color: 'green', marginRight: '10px' } }),
+                _react2.default.createElement(
+                  'h2',
+                  { style: { display: 'inline' } },
+                  this.props.taskData.price
+                )
               )
             )
           ),
           _react2.default.createElement(
             'div',
-            { className: 'row' },
+            { style: { marginTop: '25px' }, className: 'row' },
             _react2.default.createElement(
               'div',
               { className: 'col-xs-8' },
-              'Location..'
+              _react2.default.createElement('i', { className: 'fa fa-2x fa-map-marker', style: { color: 'darkorange', marginRight: '10px' } }),
+              '300m from you.'
             ),
             _react2.default.createElement(
               'div',
               { className: 'col-xs-4' },
-              'Deliver in..'
+              _react2.default.createElement('i', { className: 'fa fa-2x fa-clock-o', style: { color: '#0267C1', marginRight: '10px' } }),
+              '2 Hours'
             )
           )
         )
@@ -20278,6 +20285,7 @@ var styleSheet = {
 
   leftContainer: {
     height: 'inherit',
+    minHeight: 'inherit',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -20285,7 +20293,8 @@ var styleSheet = {
   },
   leftContainerAvatar: {
     border: 'thin solid rgba("0,0,0,0.75")',
-    borderRadius: '50%'
+    borderRadius: '50%',
+    marginBottom: '15px'
   }
 };
 
@@ -20356,7 +20365,8 @@ var TaskList = exports.TaskList = function (_React$Component) {
 
         padding: '10px 0px',
         margin: '20px 5%',
-        width: '90%'
+        width: '90%',
+        minimumHeight: '200px'
       });
     }
   }]);

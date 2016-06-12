@@ -35,6 +35,7 @@ export class TaskList extends React.Component {
         padding= '10px 0px'
         margin= '20px 5%'
         width= '90%'
+        minimumHeight= '200px'
       />
     )
   }
