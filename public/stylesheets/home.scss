@@ -15,6 +15,9 @@
 .max-width {
 	width: 100%;
 }
+.margin-vertical-m {
+	margin: 25px 0px;
+}
 
 $bannerHeight: 40vh;
 
@@ -30,6 +33,10 @@ $bannerHeight: 40vh;
     height:inherit;
     background-color: rgba(0,0,0,0.5);
   }
+}
+
+.alert {
+	margin: 10px 2.5%;
 }
 
 .container {
@@ -55,22 +62,47 @@ $bannerHeight: 40vh;
 		padding: 15px 0px;
 	}
 	.callToActionContainer {
-		height: 100vh - $bannerHeight - 11vh;
-		padding: 20px 40px;
+		height: 100vh - $bannerHeight - 15vh;
+		padding: 10px 40px 40px 40px;
 		.row {
 			height: 100%;
 		}
 		.col-md-6 {
 			height: 100%;
 		}
+		table {
+			border-collapse: separate;
+			border-spacing: 15px;
+		}
+		.td-left {
+			width: 50%;
+			font-weight: 700;
+			text-align: left;
+		}
+		.td-right {
+			font-color: grey;
+			width: 50%;
+			font-weight: 400;
+			text-align: right;
+		}
+		.fa-dollar {
+			color: green; 
+			margin-right: 10px;
+		}
+		
 		#browseButton {
 			height: 100%;
 			width: 100%;
 			.card {
-				background-image: url("/images/bg/bg03.jpg");
+				background-image: url("/images/bg/bg06.jpg");
 			  background-position: center center;
 			  -webkit-background-size: cover;
 			  background-size: cover;
+				
+				display: flex;
+				flex-direction: column-reverse;
+				-webkit-display: flex;
+				-webkit-flex-direction: column-reverse;
 				
 				border: none;
 				border-radius: .25rem;
@@ -85,13 +117,9 @@ $bannerHeight: 40vh;
 					-webkit-box-shadow: none;
 					-moz-box-shadow: none;
 				}
-				.card-block {
-					height: 85%;
-				}				
 				.card-footer{
 					border-top: none;
-					height: 15%;
-					background-color: $bruddrBlue;
+					background-color: $turqoise;
 					color: #f8f8f8;
 				}
 			}

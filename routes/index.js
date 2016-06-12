@@ -19,30 +19,46 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET logged in home page. */
+
+/* TODO: TIME TO REFACTOR INTO JAVASCRIPT CLOSURE / MODELS FOR EACH OBJECT */
 router.get('/home', middleware.isAuthenticated, function(req, res, next) {
   UserModel.find({_id : req.session.currentUserID}, function (err, post) {
     if (err) return next(err);
-    res.render('home', { 
-      username: req.session.currentUser,
-      balance: post[0].balance,
-      selected: 0,
+    const _balance = post[0].balance
+    const pendingQuery = {
+      status: 1,
+      bruddr_id: req.session.currentUserID
+    }
+    bruddrTask.find(pendingQuery , function (err, post) {
+      if (err) return next(err);
+      const _pendingTaskCount = post.length
+      console.log('pending:')
+      console.log(post)
+      const completedQuery = {
+        status: 2,
+        bruddr_id: req.session.currentUserID
+      }
+      bruddrTask.find(completedQuery , function (err, post) {
+        if (err) return next(err);
+        console.log('completed:')
+        console.log(post)
+        const _completedTaskCount = post.length
+        res.render('home', { 
+          username: req.session.currentUser,
+          balance: _balance,
+          pendingTasks: _pendingTaskCount,
+          completedTasks: _completedTaskCount,
+          selected: 0,
+        });
+
+      });
+
     });
   });
-  
+
   
   /* Get this user pending tasks (deprecated maybe) 
-  const searchQuery = {
-    status: 1,
-    bruddr_id: req.session.currentUserID
-  }
-  bruddrTask.find(searchQuery , function (err, post) {
-    if (err) return next(err);
-    res.render('home', { 
-      username: req.session.currentUser,
-      pendingTasks: post,
-      selected: 0,
-    });
-  });
+  
   */
 });
 

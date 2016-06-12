@@ -26,14 +26,27 @@
 		
 		<div class='callToActionContainer'>
 			<div class='row'>
-				<div class='col-md-6'>
-					
+				<div class='col-md-4 col-md-offset-1 margin-vertical-m'>
+					<table class='max-width' cellspacing="10">
+						<tbody class='max-width'>
+							<tr class='max-width'>
+								<td class='td-left'>Balance:</td>
+								<td class='td-right'><i class='fa fa-dollar'></i><%= balance.toFixed(2) %></td>
+							</tr>
+							<tr class='max-width'>
+								<td class='td-left'>Pending Tasks:</td>
+								<td class='td-right'><%= pendingTasks %></td>
+							</tr>
+							<tr class='max-width'>
+								<td class='td-left'>Completed Tasks:</td>
+								<td class='td-right'><%= completedTasks %></td>
+							</tr>
+						</tbody>
+					</table>
 				</div>	
-				<div class='col-md-6'>
+				<div class='col-md-6 col-md-offset-1 margin-vertical-m'>
 					<a id='browseButton' href='/task/browse'>
 						<div class="card text-xs-center">
-				      <div class="card-block">
-				      </div>
 				      <div class="card-footer text-muted">
 				        Browse Tasks
 				      </div>
@@ -72,7 +85,7 @@
 		
 		<% } %>
 		
-		<div class="alert alert-info" role="alert" style='margin:0px 1%'>
+		<div class="alert alert-info" role="alert">
 			<h3>Tip of the day</h3>
 			<p>Bruddr has a reputation system - So you'll get matched with better paying clients the more tasks you complete on Bruddr!</p>
 		</div>

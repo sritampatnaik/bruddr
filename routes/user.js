@@ -25,7 +25,6 @@ module.exports = function(){
               // Redirect to splash page
               req.session.currentUser = docs[0].username;
 							req.session.currentUserID = docs[0]._id;
-							console.log(docs[0])
               req.session.save();
               res.redirect('/home');
             } else {
