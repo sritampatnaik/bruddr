@@ -11,22 +11,30 @@ export class Modal_TaskTake extends React.Component {
   }
   
   render() {
-    if (!this.props.task) return <div></div>
+    if (!this.props.taskData) return <div></div>
     return (
       <div className="modal" id='Modal_TaskTake'>
-        <div className="modal-dialog">
-          <div className="modal-content">
+        <div className="modal-dialog" style={styleSheet.modalDialog}>
+          <div className="modal-content" style={styleSheet.modalContent}>
             
             <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             
             <div className="modal-body">
-              <div className='row'>
-                blah blah blah blah
+              <div style={styleSheet.topContainer}>
+                <img 
+                  src={this.props.taskData.owner_avatar || '/images/bg/bg01.jpg'} 
+                  height='125px'
+                  width='125px'
+                  style={styleSheet.avatar}
+                  />
+
+                <h2><i style={styleSheet.childIcon} className='fa fa-child'></i>{this.props.taskData.owner_name || 'Taylor Swift'}</h2>
               </div>
               <hr/>
+              
               <div className="row">
                 <div className="col-sm-10 col-sm-offset-1">
-                  {this.props.task.description}
+                  {this.props.taskData.description}
                 </div>
               </div>
               
@@ -43,5 +51,38 @@ export class Modal_TaskTake extends React.Component {
         </div>
       </div>
     )
+  }
+}
+
+const styleSheet = {
+  /* Modal styles */
+  modalDialog: {
+    margin: '2.5px auto'
+  },
+  modalContent: {
+      width: '100%',
+      transform: 'translate(0, 15%) !important',
+      padding: '15px',
+  },
+  
+  
+  /* Modal interior styles */
+  
+  topContainer : {
+    height: 'inherit',
+    minHeight: 'inherit',
+    display:'flex', 
+    alignItems:'center', 
+    justifyContent:'space-around',
+    padding: '5px 15px'
+  },
+  avatar : {
+    border:'thin solid rgba("0,0,0,0.75")',
+    borderRadius:'50%',
+    marginBottom: '15px',
+  },
+  childIcon: {
+    marginRight: '10px',
+    color: '#0267C1'
   }
 }

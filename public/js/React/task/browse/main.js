@@ -86,7 +86,7 @@ class MainPanel extends React.Component {
   renderPopup() {
     return (
       <Modal_TaskTake 
-        task = {this.state.selectedTask}
+        taskData = {this.state.selectedTask}
         />
     )
   }

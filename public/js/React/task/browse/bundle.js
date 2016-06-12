@@ -20143,16 +20143,16 @@ var Modal_TaskTake = exports.Modal_TaskTake = function (_React$Component) {
   _createClass(Modal_TaskTake, [{
     key: 'render',
     value: function render() {
-      if (!this.props.task) return _react2.default.createElement('div', null);
+      if (!this.props.taskData) return _react2.default.createElement('div', null);
       return _react2.default.createElement(
         'div',
         { className: 'modal', id: 'Modal_TaskTake' },
         _react2.default.createElement(
           'div',
-          { className: 'modal-dialog' },
+          { className: 'modal-dialog', style: styleSheet.modalDialog },
           _react2.default.createElement(
             'div',
-            { className: 'modal-content' },
+            { className: 'modal-content', style: styleSheet.modalContent },
             _react2.default.createElement(
               'button',
               { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
@@ -20167,8 +20167,19 @@ var Modal_TaskTake = exports.Modal_TaskTake = function (_React$Component) {
               { className: 'modal-body' },
               _react2.default.createElement(
                 'div',
-                { className: 'row' },
-                'blah blah blah blah'
+                { style: styleSheet.topContainer },
+                _react2.default.createElement('img', {
+                  src: this.props.taskData.owner_avatar || '/images/bg/bg01.jpg',
+                  height: '125px',
+                  width: '125px',
+                  style: styleSheet.avatar
+                }),
+                _react2.default.createElement(
+                  'h2',
+                  null,
+                  _react2.default.createElement('i', { style: styleSheet.childIcon, className: 'fa fa-child' }),
+                  this.props.taskData.owner_name || 'Taylor Swift'
+                )
               ),
               _react2.default.createElement('hr', null),
               _react2.default.createElement(
@@ -20177,7 +20188,7 @@ var Modal_TaskTake = exports.Modal_TaskTake = function (_React$Component) {
                 _react2.default.createElement(
                   'div',
                   { className: 'col-sm-10 col-sm-offset-1' },
-                  this.props.task.description
+                  this.props.taskData.description
                 )
               )
             ),
@@ -20206,6 +20217,38 @@ var Modal_TaskTake = exports.Modal_TaskTake = function (_React$Component) {
 
   return Modal_TaskTake;
 }(_react2.default.Component);
+
+var styleSheet = {
+  /* Modal styles */
+  modalDialog: {
+    margin: '2.5px auto'
+  },
+  modalContent: {
+    width: '100%',
+    transform: 'translate(0, 15%) !important',
+    padding: '15px'
+  },
+
+  /* Modal interior styles */
+
+  topContainer: {
+    height: 'inherit',
+    minHeight: 'inherit',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    padding: '5px 15px'
+  },
+  avatar: {
+    border: 'thin solid rgba("0,0,0,0.75")',
+    borderRadius: '50%',
+    marginBottom: '15px'
+  },
+  childIcon: {
+    marginRight: '10px',
+    color: '#0267C1'
+  }
+};
 
 },{"react":174,"react-dom":31}],176:[function(require,module,exports){
 "use strict";
@@ -20682,7 +20725,7 @@ var MainPanel = function (_React$Component) {
     key: 'renderPopup',
     value: function renderPopup() {
       return _react2.default.createElement(_Modal_TaskTake.Modal_TaskTake, {
-        task: this.state.selectedTask
+        taskData: this.state.selectedTask
       });
     }
   }, {
