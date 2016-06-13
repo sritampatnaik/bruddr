@@ -12,6 +12,8 @@ class MainPanel extends React.Component {
     super(props);
     this.state = {
       loaded: false,
+      isReloading: false,
+      hasReloadedBefore: false,
       tasks: [],
       
       selectedTab: 'Available',
@@ -28,11 +30,13 @@ class MainPanel extends React.Component {
     this.getTasks({
       status: 0
     })
+    this.interval = setInterval(this.refreshTaskList.bind(this), 10000);
   }
   
   render() {
     return (
-      <div>
+      <div style={{position:'relative'}}>
+        {this.renderReloadingInfo()}
         {this.renderTabs()}
         {this.renderTaskList()}
         {this.renderPopup()}
@@ -40,9 +44,27 @@ class MainPanel extends React.Component {
     )
   }
   
+  renderReloadingInfo() {
+    
+    if (this.state.isReloading) {
+      return (
+        <div className='row animated fadeInUp' style={styleSheet.reloadingDiv}>
+          Reloading . .
+        </div>
+      )
+    } 
+    if (!this.state.isReloading && this.state.hasReloadedBefore) {
+      return (
+        <div className='row animated fadeOutUp' style={styleSheet.reloadingDiv}>
+          Done!
+        </div>
+      )
+    }
+  }
+  
   renderTabs() {
     return (
-      <ul className="nav nav-inline row">
+      <ul style={{paddingTop: '20px'}} className="nav nav-inline row">
         {this.state.tabs.map( (tab) => {
           return (
             <li className="nav-item col-xs-4" key={tab}>
@@ -111,12 +133,20 @@ class MainPanel extends React.Component {
     })
   }
   
+  refreshTaskList() {
+    this.setState({
+      isReloading: true,
+      hasReloadedBefore: true,
+    }, () => {
+      setTimeout(()=> {
+        this.getTasks({
+          status:this.state.tabs.indexOf(this.state.selectedTab)
+        })} , 1500)
+    })
+  }
+  
   /* API Calls */
   getTasks(query) {
-    console.log(query)
-    this.setState({
-      loaded: false
-    })
     const _apiURL = '/api/v1/bruddrtask/getTasks'
     $.ajax({
       type: "GET",
@@ -125,9 +155,15 @@ class MainPanel extends React.Component {
       dataType: 'json',
       success: function(data) {
         this.setState({
-          tasks: data,
-          loaded: true,
+          loaded:true,
+          isReloading: false
         })
+        // Update state only if data mutated
+        if (data != this.state.tasks) {
+          this.setState({
+            tasks: data,
+          })
+        }
       }.bind(this),
       error: function(xhr, status, err) {
         console.log('error')
@@ -136,6 +172,20 @@ class MainPanel extends React.Component {
     });
   }
 
+}
+
+const styleSheet = {
+  reloadingDiv : {
+    position:'absolute',
+    top: '0',
+    left: '0',
+    right: '0',
+    color: '#f8f8f8',
+    padding: '4px',
+    textAlign:'center',
+    backgroundColor: 'darkOrange',
+    borderRadius: '0px 0px 3px 3px'
+  }
 }
 
 ReactDOM.render(<MainPanel/>, taskContainer);

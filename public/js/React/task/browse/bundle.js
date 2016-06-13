@@ -20783,6 +20783,8 @@ var MainPanel = function (_React$Component) {
 
     _this.state = {
       loaded: false,
+      isReloading: false,
+      hasReloadedBefore: false,
       tasks: [],
 
       selectedTab: 'Available',
@@ -20798,17 +20800,38 @@ var MainPanel = function (_React$Component) {
       this.getTasks({
         status: 0
       });
+      this.interval = setInterval(this.refreshTaskList.bind(this), 10000);
     }
   }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { style: { position: 'relative' } },
+        this.renderReloadingInfo(),
         this.renderTabs(),
         this.renderTaskList(),
         this.renderPopup()
       );
+    }
+  }, {
+    key: 'renderReloadingInfo',
+    value: function renderReloadingInfo() {
+
+      if (this.state.isReloading) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'row animated fadeInUp', style: styleSheet.reloadingDiv },
+          'Reloading . .'
+        );
+      }
+      if (!this.state.isReloading && this.state.hasReloadedBefore) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'row animated fadeOutUp', style: styleSheet.reloadingDiv },
+          'Done!'
+        );
+      }
     }
   }, {
     key: 'renderTabs',
@@ -20817,7 +20840,7 @@ var MainPanel = function (_React$Component) {
 
       return _react2.default.createElement(
         'ul',
-        { className: 'nav nav-inline row' },
+        { style: { paddingTop: '20px' }, className: 'nav nav-inline row' },
         this.state.tabs.map(function (tab) {
           return _react2.default.createElement(
             'li',
@@ -20896,16 +20919,28 @@ var MainPanel = function (_React$Component) {
         });
       });
     }
+  }, {
+    key: 'refreshTaskList',
+    value: function refreshTaskList() {
+      var _this4 = this;
+
+      this.setState({
+        isReloading: true,
+        hasReloadedBefore: true
+      }, function () {
+        setTimeout(function () {
+          _this4.getTasks({
+            status: _this4.state.tabs.indexOf(_this4.state.selectedTab)
+          });
+        }, 1500);
+      });
+    }
 
     /* API Calls */
 
   }, {
     key: 'getTasks',
     value: function getTasks(query) {
-      console.log(query);
-      this.setState({
-        loaded: false
-      });
       var _apiURL = '/api/v1/bruddrtask/getTasks';
       $.ajax({
         type: "GET",
@@ -20914,9 +20949,15 @@ var MainPanel = function (_React$Component) {
         dataType: 'json',
         success: function (data) {
           this.setState({
-            tasks: data,
-            loaded: true
+            loaded: true,
+            isReloading: false
           });
+          // Update state only if data mutated
+          if (data != this.state.tasks) {
+            this.setState({
+              tasks: data
+            });
+          }
         }.bind(this),
         error: function (xhr, status, err) {
           console.log('error');
@@ -20928,6 +20969,20 @@ var MainPanel = function (_React$Component) {
 
   return MainPanel;
 }(_react2.default.Component);
+
+var styleSheet = {
+  reloadingDiv: {
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    right: '0',
+    color: '#f8f8f8',
+    padding: '4px',
+    textAlign: 'center',
+    backgroundColor: 'darkOrange',
+    borderRadius: '0px 0px 3px 3px'
+  }
+};
 
 _reactDom2.default.render(_react2.default.createElement(MainPanel, null), taskContainer);
 
