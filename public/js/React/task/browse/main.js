@@ -90,6 +90,7 @@ class MainPanel extends React.Component {
       return (
         <div className='animated slideInUp' style={{padding:'25px 0px'}}>
           <TaskList
+            ref={'list'}
             handleCellClicked = {this.handleCellClicked.bind(this)}
             tasks = {this.state.tasks}
             pageSize = {50}
@@ -109,8 +110,7 @@ class MainPanel extends React.Component {
     return (
       <Modal_TaskTake 
         taskData = {this.state.selectedTask}
-        refresh = {this.getTasks.bind(this)}
-        status = {this.state.tabs.indexOf(this.state.selectedTab)}
+        refresh = {this.refreshTaskList.bind(this)}
         />
     )
   }
@@ -125,7 +125,8 @@ class MainPanel extends React.Component {
 
   handleTabClicked(tab) {
     this.setState({
-      selectedTab: tab
+      selectedTab: tab,
+      loaded: false,
     }, () => {
       this.getTasks({
         status:this.state.tabs.indexOf(this.state.selectedTab)
@@ -154,16 +155,12 @@ class MainPanel extends React.Component {
       data: query,
       dataType: 'json',
       success: function(data) {
+        // hacky fix to compare objects
         this.setState({
           loaded:true,
-          isReloading: false
+          isReloading: false,
+          tasks: data,
         })
-        // Update state only if data mutated
-        if (data != this.state.tasks) {
-          this.setState({
-            tasks: data,
-          })
-        }
       }.bind(this),
       error: function(xhr, status, err) {
         console.log('error')

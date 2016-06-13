@@ -117,9 +117,7 @@ export class Modal_TaskTake extends React.Component {
       url: _apiURL,
       dataType: 'json',
       success: function(data) {
-        this.props.refresh(
-          {status:this.props.status}
-        )
+        this.props.refresh()
       }.bind(this),
       error: function(xhr, status, err) {
         alert('error:' + err)
@@ -134,9 +132,7 @@ export class Modal_TaskTake extends React.Component {
       url: _apiURL,
       dataType: 'json',
       success: function(data) {
-        this.props.refresh(
-          {status:this.props.status}
-        )
+        this.props.refresh()
       }.bind(this),
       error: function(xhr, status, err) {
         alert('error:' + err)

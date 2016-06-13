@@ -20313,7 +20313,7 @@ var Modal_TaskTake = exports.Modal_TaskTake = function (_React$Component) {
         url: _apiURL,
         dataType: 'json',
         success: function (data) {
-          this.props.refresh({ status: this.props.status });
+          this.props.refresh();
         }.bind(this),
         error: function (xhr, status, err) {
           alert('error:' + err);
@@ -20329,7 +20329,7 @@ var Modal_TaskTake = exports.Modal_TaskTake = function (_React$Component) {
         url: _apiURL,
         dataType: 'json',
         success: function (data) {
-          this.props.refresh({ status: this.props.status });
+          this.props.refresh();
         }.bind(this),
         error: function (xhr, status, err) {
           alert('error:' + err);
@@ -20638,9 +20638,7 @@ var TaskList = exports.TaskList = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TaskList).call(this, props));
 
-    _this.state = {
-      tasks: _this.props.tasks
-    };
+    _this.state = {};
     return _this;
   }
 
@@ -20650,7 +20648,7 @@ var TaskList = exports.TaskList = function (_React$Component) {
       return _react2.default.createElement(_reactList2.default, {
         ref: 'list',
         itemRenderer: this.renderCell.bind(this),
-        length: this.state.tasks.length,
+        length: this.props.tasks.length,
         pageSize: this.props.pageSize || 20,
         type: this.props.type || 'simple'
       });
@@ -20661,7 +20659,7 @@ var TaskList = exports.TaskList = function (_React$Component) {
       return _react2.default.createElement(_TaskCell.TaskCell, {
         key: key,
         index: index,
-        taskData: this.state.tasks[index],
+        taskData: this.props.tasks[index],
         handleCellClicked: this.props.handleCellClicked.bind(this),
 
         padding: '10px 0px',
@@ -20875,6 +20873,7 @@ var MainPanel = function (_React$Component) {
           'div',
           { className: 'animated slideInUp', style: { padding: '25px 0px' } },
           _react2.default.createElement(_TaskList.TaskList, {
+            ref: 'list',
             handleCellClicked: this.handleCellClicked.bind(this),
             tasks: this.state.tasks,
             pageSize: 50
@@ -20893,8 +20892,7 @@ var MainPanel = function (_React$Component) {
     value: function renderPopup() {
       return _react2.default.createElement(_Modal_TaskTake.Modal_TaskTake, {
         taskData: this.state.selectedTask,
-        refresh: this.getTasks.bind(this),
-        status: this.state.tabs.indexOf(this.state.selectedTab)
+        refresh: this.refreshTaskList.bind(this)
       });
     }
   }, {
@@ -20912,7 +20910,8 @@ var MainPanel = function (_React$Component) {
       var _this3 = this;
 
       this.setState({
-        selectedTab: tab
+        selectedTab: tab,
+        loaded: false
       }, function () {
         _this3.getTasks({
           status: _this3.state.tabs.indexOf(_this3.state.selectedTab)
@@ -20948,16 +20947,12 @@ var MainPanel = function (_React$Component) {
         data: query,
         dataType: 'json',
         success: function (data) {
+          // hacky fix to compare objects
           this.setState({
             loaded: true,
-            isReloading: false
+            isReloading: false,
+            tasks: data
           });
-          // Update state only if data mutated
-          if (data != this.state.tasks) {
-            this.setState({
-              tasks: data
-            });
-          }
         }.bind(this),
         error: function (xhr, status, err) {
           console.log('error');
