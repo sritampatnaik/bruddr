@@ -23,7 +23,7 @@ export class Modal_TaskTake extends React.Component {
     ]
     
     return (
-      <div className="modal" id='Modal_TaskTake'>
+      <div className="modal animated fadeIn" id='Modal_TaskTake'>
         <div className="modal-dialog" style={styleSheet.modalDialog}>
           <div className="modal-content" style={styleSheet.modalContent}>
             

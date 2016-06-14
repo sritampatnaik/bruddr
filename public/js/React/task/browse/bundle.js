@@ -20153,7 +20153,7 @@ var Modal_TaskTake = exports.Modal_TaskTake = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'modal', id: 'Modal_TaskTake' },
+        { className: 'modal animated fadeIn', id: 'Modal_TaskTake' },
         _react2.default.createElement(
           'div',
           { className: 'modal-dialog', style: styleSheet.modalDialog },

@@ -51,8 +51,13 @@
     text-align: center;
     padding: 15px 0px; }
   .container .callToActionContainer {
-    height: 47.5vh;
+    height: 46.5vh;
     padding: 10px 40px 60px 40px; }
+    .container .callToActionContainer .card-header {
+      background-color: tomato;
+      color: white; }
+    .container .callToActionContainer .card-block {
+      padding: 0px 20px; }
     .container .callToActionContainer .row {
       height: 100%; }
     .container .callToActionContainer .col-md-6 {

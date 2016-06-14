@@ -62,8 +62,15 @@ $bannerHeight: 40vh;
 		padding: 15px 0px;
 	}
 	.callToActionContainer {
-		height: 100vh - $bannerHeight - 12.5vh;
+		height: 100vh - $bannerHeight - 13.5vh;
 		padding: 10px 40px 60px 40px;
+		.card-header {
+			background-color: tomato;
+			color: white;
+		}
+		.card-block {
+			padding: 0px 20px;
+		}
 		.row {
 			height: 100%;
 		}

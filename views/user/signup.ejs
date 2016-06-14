@@ -26,9 +26,9 @@
       <% } else { %>
         <div></div>
       <% } %>
-      <h1 id="title" class="hidden"><span id="logo">Bruddr<image style="margin-left:10px;width:50px;height:50px;" src="/images/logo/logo-white.png"/></span></h1>
+      <h1 id="title" class="animated fadeInUp"><span id="logo">Bruddr<image style="margin-left:10px;width:50px;height:50px;" src="/images/logo/logo-white.png"/></span></h1>
     </div>
-    <div class="login-box animated fadeInUp">
+    <div class="login-box">
       <div class="box-header">
         <h2>Sign Up</h2>
       </div>
@@ -52,7 +52,6 @@
 
 <script>
 $(document).ready(function () {
-  $('#logo').addClass('animated fadeInDown');
   $("input:text:visible:first").focus();
 });
 $('#username').focus(function() {

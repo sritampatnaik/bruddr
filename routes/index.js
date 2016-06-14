@@ -29,16 +29,12 @@ router.get('/home', middleware.isAuthenticated, function(req, res, next) {
     bruddrTask.find(pendingQuery , function (err, post) {
       if (err) return next(err);
       const _pendingTaskCount = post.length
-      console.log('pending:')
-      console.log(post)
       const completedQuery = {
         status: 2,
         bruddr_id: req.session.currentUserID
       }
       bruddrTask.find(completedQuery , function (err, post) {
         if (err) return next(err);
-        console.log('completed:')
-        console.log(post)
         const _completedTaskCount = post.length
         res.render('home', { 
           username: req.session.currentUser,
@@ -47,9 +43,7 @@ router.get('/home', middleware.isAuthenticated, function(req, res, next) {
           completedTasks: _completedTaskCount,
           selected: 0,
         });
-
       });
-
     });
   });
 
