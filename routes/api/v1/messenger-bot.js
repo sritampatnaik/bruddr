@@ -2,6 +2,7 @@ var express = require('express');
 var request = require('request');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
+var parser = require('xml2json');
 var router = express.Router();
 var messengerMessage = require('./../../../models/messengerMessage');
 var bruddrTask = require('./../../../models/bruddrTask');
@@ -75,36 +76,64 @@ router.post('/', function (req, res, err) {
     var sender = event.sender.id;
     var atts = event.message.attachments;
 
-    if (event.postback) {
-        var text = JSON.stringify(event.postback)
-        sendTextMessage(sender, "Postback received: "+text.substring(0, 200))
-      }
+    // if (event.postback) {
+    //   var text = JSON.stringify(event.postback)
+    //   sendTextMessage(sender, "Postback received: "+text.substring(0, 200))
+    // }
 
-    if (atts) {
-      // We received an attachment
-      console.log(atts);
-      if(atts[0].type === "image"){
-        var imageURL = atts[0].payload.url;
-        var timestamp = new Date().getUTCMilliseconds();
-        var folder = './uploads/' + sender;
-        var filename = sender + '_' + timestamp + '.png'
+    // if (atts) {
+    //   // We received an attachment
+    //   console.log(atts);
+    //   if(atts[0].type === "image"){
+    //     var imageURL = atts[0].payload.url;
+    //     var timestamp = new Date().getUTCMilliseconds();
+    //     var folder = './uploads/' + sender;
+    //     var filename = sender + '_' + timestamp + '.png'
 
-        download(imageURL, folder, filename, function(){console.log('done');});
+    //     download(imageURL, folder, filename, function(){console.log('done');});
 
-      }
-    }
+    //   }
+    // }
   
     if (event.message && event.message.text) {
       var message = {
         message: event.message.text,
         sender_id: sender
       }
+
       messengerMessage.create(message, function (err,post) {     
         if (err) return console.log(err);
       });
+
       var text = event.message.text;
-      witUnderstandText(text, sender);
+      
+
+      // find each person with a last name matching 'Ghost', selecting the `name` and `occupation` fields
+      // bruddrTask.findOne({ 'owner_id': sender }, 'type', function (err, task) {
+      //   if (err) return handleError(err);
+      //   else {
+      //     if(task) {
+      //       var reply = 'Can you send us more details about your requirements ?'; 
+      //       sendTextMessage(sender, reply);
+      //       console.log(task.type);
+      //     } else {
+      //       witUnderstandText(text, sender);
+      //     }
+      //   }
+      // });
+
+      
       // sendGenericMessage(sender);
+      // request.post({
+      //   url:'http://rezscore.com/a/a57b97/grade', 
+      //   form: {resume:'value'}
+      // }, function(err,httpResponse,body){
+      //     if (err) {
+      //       console.log('Error rez score', error);
+      //     } else {
+      //       console.log(parser.toJson(body));
+      //     } 
+      // });
     }
   }
 
@@ -160,6 +189,7 @@ function determineTask(taskData, sender) {
     }
     bruddrTask.create(task, function (err,post) {     
       if (err) return console.log(err);
+      else console.log("success");
     });
   }
 }
