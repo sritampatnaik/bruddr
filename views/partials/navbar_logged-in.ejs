@@ -5,7 +5,7 @@
 <link href='https://fonts.googleapis.com/css?family=Crete+Round' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="/stylesheets/navbar.css">
 <link rel="stylesheet" href="/stylesheets/animate.css">
-
+<% include ./google-analytics %>
 <nav class="navbar navbar-dark bg-faded">
   <div class="nav navbar-nav">
     <a class="nav-item nav-link <% if (selected == 0) { %>active<% } %>" href="/home">
@@ -14,9 +14,11 @@
     <a class="nav-item nav-link <% if (selected == 1) { %>active<% } %>" href="/task/browse">
       Find Tasks
     </a>
+    <!--
     <a class="nav-item nav-link <% if (selected == 2) { %>active<% } %>" href="#">
       Contact
     </a>
+    -->
     <a class="nav-item nav-link" style='float:right; margin-right:30px;' href="/user/logout">Logout</a>
   </div>
 </nav>

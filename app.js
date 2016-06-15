@@ -13,9 +13,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var expressSession = require('express-session');
-
-/* Grab credentials */
-const credentials = require('./config/credentials')
+var autoIncrement = require('mongoose-auto-increment');
 
 /* Routes init */
 var routes = require('./routes/index');
@@ -23,6 +21,7 @@ var todos = require('./routes/todos');
 var task = require('./routes/task');
 var messengerBot = require('./routes/api/v1/messenger-bot');
 var betaEmail = require('./routes/api/v1/beta-email');
+var bruddrTask = require('./routes/api/v1/bruddrtask');
 var user = require('./routes/user')(passport);
 
 var app = express();
@@ -47,7 +46,7 @@ initPassport(passport);
 
 /* Db connection */
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://'+credentials.mongoUser+':'+credentials.mongoPW+'@ds013941.mlab.com:13941/bruddr-prod', function(err) {
+var connection = mongoose.connect('mongodb://'+process.env.mongoUser+':'+process.env.mongoPW+'@ds013941.mlab.com:13941/bruddr-prod', function(err) {
     if(err) {
         console.log('connection error', err);
     } else {
@@ -76,6 +75,7 @@ app.use('/task', task);
 /* Adding API controllers */
 app.use('/api/v1/messenger-bot', messengerBot);
 app.use('/api/v1/beta-email', betaEmail);
+app.use('/api/v1/bruddrtask', bruddrTask);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
