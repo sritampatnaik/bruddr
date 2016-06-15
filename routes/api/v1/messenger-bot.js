@@ -52,7 +52,7 @@ const actions = {
 };
 
 // Setting up our bot
-const wit = new Wit(credentials.witServerAccessToken, actions);
+const wit = new Wit(process.env.witServerAccessToken, actions);
 
 // Database setup
 var mongoose = require('mongoose');
@@ -146,7 +146,7 @@ function sendTextMessage(sender, text) {
   }
   request({
     url: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: {access_token:credentials.fbtoken},
+    qs: {access_token:process.env.fbtoken},
     method: 'POST',
     json: {
       recipient: {id:sender},
@@ -228,7 +228,7 @@ function sendGenericMessage(sender) {
   };
   request({
     url: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: {access_token:credentials.fbtoken},
+    qs: {access_token:process.env.fbtoken},
     method: 'POST',
     json: {
       recipient: {id:sender},
