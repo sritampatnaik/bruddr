@@ -6,7 +6,7 @@ var parser = require('xml2json');
 var router = express.Router();
 var messengerMessage = require('./../../../models/messengerMessage');
 var bruddrTask = require('./../../../models/bruddrTask');
-
+var extract = require('pdf-text-extract');
 
 
 var download = function(uri, dir, filename, callback){
@@ -65,76 +65,97 @@ router.get('/', function(req, res) {
   if (req.query['hub.verify_token'] === 'bruddr') {
     res.send(req.query['hub.challenge']);
       
+  } else {
+      res.send('Error, wrong validation token');
   }
-  res.send('Error, wrong validation token');
 });
 
 router.post('/', function (req, res, err) {
-  messaging_events = req.body.entry[0].messaging;
+  var messaging_events = req.body.entry[0].messaging;
   for (i = 0; i < messaging_events.length; i++) {
     var event = req.body.entry[0].messaging[i];
     var sender = event.sender.id;
     var atts = event.message.attachments;
+    var postback = event.postback;
 
+    // // find each person with a last name matching 'Ghost', selecting the `name` and `occupation` fields
+    bruddrTask.findOne({ 'owner_id': sender }, 'type description', function (err, task) {
+      if (err) return handleError(err);
+      else {
+        if(task) {
+          if(task.type == 'logo') {
+            console.log(task);
+            if (task.description == "none") {
+              var reply = 'Can you send us more details about your the logo ?'; 
+              sendTextMessage(sender, reply);
+              task.description = 'Design a mickey mouse logo.';
+              task.save();
+            } else if (postback) {
+              console.log("postback");
+              var reply = 'Your logo has been selected.'; 
+              sendTextMessage(sender, reply);
+            } else if (task.description != "none") {
+              sendGenericMessage(sender);
+            } else {
+              console.log('no message');
+            }
+          } else {
+            var reply = 'Can you send us your resume ?'; 
+            sendTextMessage(sender, reply);
+          }
+        } else {
+          console.log("no task");
+          if (event.message && event.message.text) {
+            witUnderstandText(event.message.text, sender);
+          } else if(atts) {
+              if(atts[0].type === "file"){
+                var fileURL = atts[0].payload.url;
+                var timestamp = new Date().getUTCMilliseconds();
+                var folder = './uploads/' + sender;
+                var filename = sender + '_' + timestamp + '.pdf';
+                var filePath = folder + "/" + filename;
+
+                download(fileURL, folder, filename, function(){
+                  extract(filePath, function (err, pages) {
+                    if (err) {
+                      console.dir(err);
+                      return
+                    }
+                    request.post({
+                      url:'http://rezscore.com/a/a57b97/grade', 
+                      form: {resume:pages}
+                    }, function(err,httpResponse,body){
+                        if (err) {
+                          console.log('Error rez score', error);
+                        } else {
+                          var resumeResultString = parser.toJson(body);
+                          var resumeResultObj = JSON.parse(resumeResultString);
+
+                          console.log(resumeResultObj.rezscore);
+
+                          var reply = resumeResultObj.rezscore.score.grade + "\n" + resumeResultObj.rezscore.score.grade_headline + "\n" + resumeResultObj.rezscore.score.grade_blurb; 
+                          sendTextMessage(sender, reply);
+                        } 
+                    });
+                  });
+                });
+              }
+          } else {
+            console.log("no message");
+          }
+        }
+      }
+    });
+    
     // if (event.postback) {
     //   var text = JSON.stringify(event.postback)
     //   sendTextMessage(sender, "Postback received: "+text.substring(0, 200))
     // }
 
-    // if (atts) {
-    //   // We received an attachment
-    //   console.log(atts);
-    //   if(atts[0].type === "image"){
-    //     var imageURL = atts[0].payload.url;
-    //     var timestamp = new Date().getUTCMilliseconds();
-    //     var folder = './uploads/' + sender;
-    //     var filename = sender + '_' + timestamp + '.png'
-
-    //     download(imageURL, folder, filename, function(){console.log('done');});
-
-    //   }
-    // }
-  
-    if (event.message && event.message.text) {
-      var message = {
-        message: event.message.text,
-        sender_id: sender
-      }
-
-      messengerMessage.create(message, function (err,post) {     
-        if (err) return console.log(err);
-      });
-
-      var text = event.message.text;
-      
-
-      // find each person with a last name matching 'Ghost', selecting the `name` and `occupation` fields
-      // bruddrTask.findOne({ 'owner_id': sender }, 'type', function (err, task) {
-      //   if (err) return handleError(err);
-      //   else {
-      //     if(task) {
-      //       var reply = 'Can you send us more details about your requirements ?'; 
-      //       sendTextMessage(sender, reply);
-      //       console.log(task.type);
-      //     } else {
-      //       witUnderstandText(text, sender);
-      //     }
-      //   }
+      // messengerMessage.create(message, function (err,post) {     
+      //   if (err) return console.log(err);
       // });
 
-      
-      // sendGenericMessage(sender);
-      // request.post({
-      //   url:'http://rezscore.com/a/a57b97/grade', 
-      //   form: {resume:'value'}
-      // }, function(err,httpResponse,body){
-      //     if (err) {
-      //       console.log('Error rez score', error);
-      //     } else {
-      //       console.log(parser.toJson(body));
-      //     } 
-      // });
-    }
   }
 
   res.sendStatus(200);
@@ -172,7 +193,7 @@ function determineTask(taskData, sender) {
   } else if (taskData.entities.task[0].value == "delivery") {
     sendTextMessage(sender, "You want to deliver something.");
   } else if (taskData.entities.task[0].value == "logo") {
-    sendTextMessage(sender, "You need help with a logo.");
+    sendTextMessage(sender, "Sure we will find a bruddr to help you with your logo");
   } else if (taskData.entities.task[0].value == "summary") {
     sendTextMessage(sender, "You need help with a summary.");
   } else if (taskData.entities.task[0].value == "resume") {
@@ -182,7 +203,7 @@ function determineTask(taskData, sender) {
     var task = {
       title: "This is a " + taskData.entities.task[0].value + " task." ,
       type: taskData.entities.task[0].value,
-      description: taskData._text,
+      description: "none",
       owner_id: sender,
       price: 0,
       status: 0,
@@ -202,24 +223,53 @@ function sendGenericMessage(sender) {
         "template_type": "generic",
         "elements": [{
           "title": "First card",
-          "subtitle": "Element #1 of an hscroll",
-          "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+          "subtitle": "Sample 1",
+          "image_url": "http://cliparts.co/cliparts/pi5/rBX/pi5rBXpdT.jpg",
           "buttons": [{
             "type": "web_url",
+            "url": "http://cliparts.co/cliparts/pi5/rBX/pi5rBXpdT.jpg",
+            "title": "View Full Image"
+          }, {
+            "type": "web_url",
             "url": "https://www.messenger.com/",
-            "title": "Web url"
+            "title": "Contact Designer"
           }, {
             "type": "postback",
-            "title": "Postback",
+            "title": "Select",
             "payload": "Payload for first element in a generic bubble",
           }],
         },{
           "title": "Second card",
-          "subtitle": "Element #2 of an hscroll",
-          "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+          "subtitle": "Sample 2",
+          "image_url": "http://cliparts.co/cliparts/ki8/5Rn/ki85Rnr8T.jpg",
           "buttons": [{
+            "type": "web_url",
+            "url": "http://cliparts.co/cliparts/ki8/5Rn/ki85Rnr8T.jpg",
+            "title": "View Full Image"
+          }, {
+            "type": "web_url",
+            "url": "https://www.messenger.com/",
+            "title": "Contact Designer"
+          },{
             "type": "postback",
-            "title": "Postback",
+            "title": "Select",
+            "payload": "Payload for second element in a generic bubble",
+          }],
+        },{
+          "title": "Second card",
+          "subtitle": "Sample 3",
+          "image_url": "http://cliparts.co/cliparts/8i6/8Rp/8i68RpaBT.png",
+          "buttons": [{
+            "type": "web_url",
+            "url": "http://cliparts.co/cliparts/8i6/8Rp/8i68RpaBT.png",
+            "title": "View Full Image"
+          }, {
+            "type": "web_url",
+            "url": "https://www.messenger.com/",
+            "title": "Contact Designer"
+          },{
+            "type": "postback",
+            "title": "Select",
             "payload": "Payload for second element in a generic bubble",
           }],
         }]
