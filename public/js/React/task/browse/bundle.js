@@ -20798,7 +20798,7 @@ var MainPanel = function (_React$Component) {
       this.getTasks({
         status: 0
       });
-      this.interval = setInterval(this.refreshTaskList.bind(this), 10000);
+      this.interval = setInterval(this.refreshTaskList.bind(this), 1500);
     }
   }, {
     key: 'render',
