@@ -64,7 +64,6 @@ var mongoose = require('mongoose');
 router.get('/', function(req, res) {
   if (req.query['hub.verify_token'] === 'bruddr') {
     res.send(req.query['hub.challenge']);
-      
   } else {
       res.send('Error, wrong validation token');
   }
@@ -72,11 +71,15 @@ router.get('/', function(req, res) {
 
 router.post('/', function (req, res) {
   var messaging_events = req.body.entry[0].messaging;
+
   for (i = 0; i < messaging_events.length; i++) {
     var event = req.body.entry[0].messaging[i];
     var sender = event.sender.id;
+
+    // Do not do anything if there's no message #HACK
+    if (!messaging_events[i].message) continue
     
-    bruddrTask.findOne({ 'owner_id': sender, 'status' : 0}, 'type description status', function (err, task) {
+    bruddrTask.findOne({'owner_id': sender, 'status': 0}, 'type description status', function (err, task) {
       if (err) return console.log(err);
       else {
         if(task) {
@@ -86,7 +89,7 @@ router.post('/', function (req, res) {
               sendTextMessage(sender, reply);
               task.description = 'Design a mickey mouse logo.';
               task.save();
-            } else if (event.postback) {
+            } else if (event.message && event.postback) {
               console.log("postback");
               var reply = 'Your logo has been selected.'; 
               sendTextMessage(sender, reply);
@@ -94,7 +97,7 @@ router.post('/', function (req, res) {
               var reply = 'Here are some of the designs created by our bruddrs.'; 
               sendTextMessage(sender, reply);
               sendGenericMessage(sender);
-              task.status = 2;
+              task.status = 1;
               task.save();
             } else {
               console.log('no message');
@@ -103,7 +106,41 @@ router.post('/', function (req, res) {
         } else {
           if (event.message && event.message.text) {
             witUnderstandText(event.message.text, sender);
-          } else {
+          } else if(event.message &&  event.message.attachments) {
+              var atts = event.message.attachments;
+              if(atts[0].type === "file"){
+                var fileURL = atts[0].payload.url;
+                var timestamp = new Date().getUTCMilliseconds();
+                var folder = './uploads/' + sender;
+                var filename = sender + '_' + timestamp + '.pdf';
+                var filePath = folder + "/" + filename;
+
+                download(fileURL, folder, filename, function(){
+                  extract(filePath, function (err, pages) {
+                    if (err) {
+                      console.dir(err);
+                      return
+                    }
+                    request.post({
+                      url:'http://rezscore.com/a/a57b97/grade', 
+                      form: {resume:pages}
+                    }, function(err,httpResponse,body){
+                        if (err) {
+                          console.log('Error rez score', error);
+                        } else {
+                          var resumeResultString = parser.toJson(body);
+                          var resumeResultObj = JSON.parse(resumeResultString);
+
+                          console.log(resumeResultObj.rezscore);
+
+                          var reply = resumeResultObj.rezscore.score.grade + "\n" + resumeResultObj.rezscore.score.grade_headline + "\n" + resumeResultObj.rezscore.score.grade_blurb; 
+                          sendTextMessage(sender, reply);
+                        } 
+                    });
+                  });
+                });
+              }
+            } else {
             console.log("no message");
           }
         }
@@ -156,7 +193,6 @@ router.post('/', function (req, res) {
           //   } 
 
   }
-
   res.sendStatus(200);
 });
 
@@ -204,7 +240,8 @@ function determineTask(taskData, sender) {
       type: taskData.entities.task[0].value,
       description: "none",
       owner_id: sender,
-      price: 0,
+      owner_name: 'Sritam Patnaik',
+      price: 29,
       status: 0,
     }
     bruddrTask.create(task, function (err,post) {     
