@@ -70,76 +70,39 @@ router.get('/', function(req, res) {
   }
 });
 
-router.post('/', function (req, res, err) {
+router.post('/', function (req, res) {
   var messaging_events = req.body.entry[0].messaging;
   for (i = 0; i < messaging_events.length; i++) {
     var event = req.body.entry[0].messaging[i];
     var sender = event.sender.id;
-    var atts = event.message.attachments;
-    var postback = event.postback;
-
-    // // find each person with a last name matching 'Ghost', selecting the `name` and `occupation` fields
-    bruddrTask.findOne({ 'owner_id': sender }, 'type description', function (err, task) {
-      if (err) return handleError(err);
+    
+    bruddrTask.findOne({ 'owner_id': sender, 'status' : 0}, 'type description status', function (err, task) {
+      if (err) return console.log(err);
       else {
         if(task) {
           if(task.type == 'logo') {
-            console.log(task);
             if (task.description == "none") {
               var reply = 'Can you send us more details about your the logo ?'; 
               sendTextMessage(sender, reply);
               task.description = 'Design a mickey mouse logo.';
               task.save();
-            } else if (postback) {
+            } else if (event.postback) {
               console.log("postback");
               var reply = 'Your logo has been selected.'; 
               sendTextMessage(sender, reply);
             } else if (task.description != "none") {
+              var reply = 'Here are some of the designs created by our bruddrs.'; 
+              sendTextMessage(sender, reply);
               sendGenericMessage(sender);
+              task.status = 2;
+              task.save();
             } else {
               console.log('no message');
             }
-          } else {
-            var reply = 'Can you send us your resume ?'; 
-            sendTextMessage(sender, reply);
-          }
+          } 
         } else {
-          console.log("no task");
           if (event.message && event.message.text) {
             witUnderstandText(event.message.text, sender);
-          } else if(atts) {
-              if(atts[0].type === "file"){
-                var fileURL = atts[0].payload.url;
-                var timestamp = new Date().getUTCMilliseconds();
-                var folder = './uploads/' + sender;
-                var filename = sender + '_' + timestamp + '.pdf';
-                var filePath = folder + "/" + filename;
-
-                download(fileURL, folder, filename, function(){
-                  extract(filePath, function (err, pages) {
-                    if (err) {
-                      console.dir(err);
-                      return
-                    }
-                    request.post({
-                      url:'http://rezscore.com/a/a57b97/grade', 
-                      form: {resume:pages}
-                    }, function(err,httpResponse,body){
-                        if (err) {
-                          console.log('Error rez score', error);
-                        } else {
-                          var resumeResultString = parser.toJson(body);
-                          var resumeResultObj = JSON.parse(resumeResultString);
-
-                          console.log(resumeResultObj.rezscore);
-
-                          var reply = resumeResultObj.rezscore.score.grade + "\n" + resumeResultObj.rezscore.score.grade_headline + "\n" + resumeResultObj.rezscore.score.grade_blurb; 
-                          sendTextMessage(sender, reply);
-                        } 
-                    });
-                  });
-                });
-              }
           } else {
             console.log("no message");
           }
@@ -152,9 +115,45 @@ router.post('/', function (req, res, err) {
     //   sendTextMessage(sender, "Postback received: "+text.substring(0, 200))
     // }
 
-      // messengerMessage.create(message, function (err,post) {     
-      //   if (err) return console.log(err);
-      // });
+    // messengerMessage.create(message, function (err,post) {     
+    //   if (err) return console.log(err);
+    // });
+          // This code is for the resume score checking
+          // else if(event.message.attachments) {
+          //     var atts = event.message.attachments;
+          //     if(atts[0].type === "file"){
+          //       var fileURL = atts[0].payload.url;
+          //       var timestamp = new Date().getUTCMilliseconds();
+          //       var folder = './uploads/' + sender;
+          //       var filename = sender + '_' + timestamp + '.pdf';
+          //       var filePath = folder + "/" + filename;
+
+          //       download(fileURL, folder, filename, function(){
+          //         extract(filePath, function (err, pages) {
+          //           if (err) {
+          //             console.dir(err);
+          //             return
+          //           }
+          //           request.post({
+          //             url:'http://rezscore.com/a/a57b97/grade', 
+          //             form: {resume:pages}
+          //           }, function(err,httpResponse,body){
+          //               if (err) {
+          //                 console.log('Error rez score', error);
+          //               } else {
+          //                 var resumeResultString = parser.toJson(body);
+          //                 var resumeResultObj = JSON.parse(resumeResultString);
+
+          //                 console.log(resumeResultObj.rezscore);
+
+          //                 var reply = resumeResultObj.rezscore.score.grade + "\n" + resumeResultObj.rezscore.score.grade_headline + "\n" + resumeResultObj.rezscore.score.grade_blurb; 
+          //                 sendTextMessage(sender, reply);
+          //               } 
+          //           });
+          //         });
+          //       });
+          //     }
+          //   } 
 
   }
 
@@ -222,8 +221,8 @@ function sendGenericMessage(sender) {
       "payload": {
         "template_type": "generic",
         "elements": [{
-          "title": "First card",
-          "subtitle": "Sample 1",
+          "title": "Designed By:",
+          "subtitle": "Melinda Wang",
           "image_url": "http://cliparts.co/cliparts/pi5/rBX/pi5rBXpdT.jpg",
           "buttons": [{
             "type": "web_url",
@@ -235,12 +234,12 @@ function sendGenericMessage(sender) {
             "title": "Contact Designer"
           }, {
             "type": "postback",
-            "title": "Select",
+            "title": "Select: Sample 1",
             "payload": "Payload for first element in a generic bubble",
           }],
         },{
-          "title": "Second card",
-          "subtitle": "Sample 2",
+          "title": "Designed By:",
+          "subtitle": "Samuel Cho",
           "image_url": "http://cliparts.co/cliparts/ki8/5Rn/ki85Rnr8T.jpg",
           "buttons": [{
             "type": "web_url",
@@ -252,12 +251,12 @@ function sendGenericMessage(sender) {
             "title": "Contact Designer"
           },{
             "type": "postback",
-            "title": "Select",
+            "title": "Select: Sample 2",
             "payload": "Payload for second element in a generic bubble",
           }],
         },{
-          "title": "Second card",
-          "subtitle": "Sample 3",
+          "title": "Designed by:",
+          "subtitle": "John Ive",
           "image_url": "http://cliparts.co/cliparts/8i6/8Rp/8i68RpaBT.png",
           "buttons": [{
             "type": "web_url",
@@ -269,7 +268,7 @@ function sendGenericMessage(sender) {
             "title": "Contact Designer"
           },{
             "type": "postback",
-            "title": "Select",
+            "title": "Select: Sample 3",
             "payload": "Payload for second element in a generic bubble",
           }],
         }]
