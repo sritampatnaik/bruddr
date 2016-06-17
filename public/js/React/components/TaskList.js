@@ -9,7 +9,6 @@ export class TaskList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tasks : this.props.tasks
     };
   }
   
@@ -18,7 +17,7 @@ export class TaskList extends React.Component {
       <ReactList
           ref={'list'}
           itemRenderer={this.renderCell.bind(this)}
-          length={this.state.tasks.length}
+          length={this.props.tasks.length}
           pageSize={this.props.pageSize || 20}
           type={this.props.type || 'simple' }
         />
@@ -30,7 +29,7 @@ export class TaskList extends React.Component {
       <TaskCell
         key={key}
         index={index}
-        taskData={this.state.tasks[index]}
+        taskData={this.props.tasks[index]}
         handleCellClicked = {this.props.handleCellClicked.bind(this)}
         
         padding= '10px 0px'

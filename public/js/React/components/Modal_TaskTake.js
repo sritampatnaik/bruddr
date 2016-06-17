@@ -23,7 +23,7 @@ export class Modal_TaskTake extends React.Component {
     ]
     
     return (
-      <div className="modal" id='Modal_TaskTake'>
+      <div className="modal animated fadeIn" id='Modal_TaskTake'>
         <div className="modal-dialog" style={styleSheet.modalDialog}>
           <div className="modal-content" style={styleSheet.modalContent}>
             
@@ -117,9 +117,7 @@ export class Modal_TaskTake extends React.Component {
       url: _apiURL,
       dataType: 'json',
       success: function(data) {
-        this.props.refresh(
-          {status:this.props.status}
-        )
+        this.props.refresh()
       }.bind(this),
       error: function(xhr, status, err) {
         alert('error:' + err)
@@ -134,9 +132,7 @@ export class Modal_TaskTake extends React.Component {
       url: _apiURL,
       dataType: 'json',
       success: function(data) {
-        this.props.refresh(
-          {status:this.props.status}
-        )
+        this.props.refresh()
       }.bind(this),
       error: function(xhr, status, err) {
         alert('error:' + err)

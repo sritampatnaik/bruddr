@@ -26,25 +26,32 @@
 		
 		<div class='callToActionContainer'>
 			<div class='row'>
-				<div class='col-md-4 col-md-offset-1 margin-vertical-m'>
-					<table class='max-width' cellspacing="10">
-						<tbody class='max-width'>
-							<tr class='max-width'>
-								<td class='td-left'>Balance:</td>
-								<td class='td-right'><i class='fa fa-dollar'></i><%= balance.toFixed(2) %></td>
-							</tr>
-							<tr class='max-width'>
-								<td class='td-left'>Pending Tasks:</td>
-								<td class='td-right'><%= pendingTasks %></td>
-							</tr>
-							<tr class='max-width'>
-								<td class='td-left'>Completed Tasks:</td>
-								<td class='td-right'><%= completedTasks %></td>
-							</tr>
-						</tbody>
-					</table>
+				<div class='col-md-6 margin-vertical-m'>
+					<div class="card">
+					  <div class="card-header card-info text-xs-center">
+					    Bruddr Stats
+					  </div>
+					  <div class="card-block">
+							<table class='max-width' cellspacing="10">
+								<tbody class='max-width'>
+									<tr class='max-width'>
+										<td class='td-left'>Balance:</td>
+										<td class='td-right'><i class='fa fa-dollar'></i><%= balance.toFixed(2) %></td>
+									</tr>
+									<tr class='max-width'>
+										<td class='td-left'>Pending Tasks:</td>
+										<td class='td-right'><%= pendingTasks %></td>
+									</tr>
+									<tr class='max-width'>
+										<td class='td-left'>Completed Tasks:</td>
+										<td class='td-right'><%= completedTasks %></td>
+									</tr>
+								</tbody>
+							</table>
+					  </div>
+					</div>
 				</div>	
-				<div class='col-md-6 col-md-offset-1 margin-vertical-m'>
+				<div class='col-md-6 margin-vertical-m'>
 					<a id='browseButton' href='/task/browse'>
 						<div class="card text-xs-center">
 				      <div class="card-footer text-muted">

@@ -20153,7 +20153,7 @@ var Modal_TaskTake = exports.Modal_TaskTake = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'modal', id: 'Modal_TaskTake' },
+        { className: 'modal animated fadeIn', id: 'Modal_TaskTake' },
         _react2.default.createElement(
           'div',
           { className: 'modal-dialog', style: styleSheet.modalDialog },
@@ -20313,7 +20313,7 @@ var Modal_TaskTake = exports.Modal_TaskTake = function (_React$Component) {
         url: _apiURL,
         dataType: 'json',
         success: function (data) {
-          this.props.refresh({ status: this.props.status });
+          this.props.refresh();
         }.bind(this),
         error: function (xhr, status, err) {
           alert('error:' + err);
@@ -20329,7 +20329,7 @@ var Modal_TaskTake = exports.Modal_TaskTake = function (_React$Component) {
         url: _apiURL,
         dataType: 'json',
         success: function (data) {
-          this.props.refresh({ status: this.props.status });
+          this.props.refresh();
         }.bind(this),
         error: function (xhr, status, err) {
           alert('error:' + err);
@@ -20638,9 +20638,7 @@ var TaskList = exports.TaskList = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TaskList).call(this, props));
 
-    _this.state = {
-      tasks: _this.props.tasks
-    };
+    _this.state = {};
     return _this;
   }
 
@@ -20650,7 +20648,7 @@ var TaskList = exports.TaskList = function (_React$Component) {
       return _react2.default.createElement(_reactList2.default, {
         ref: 'list',
         itemRenderer: this.renderCell.bind(this),
-        length: this.state.tasks.length,
+        length: this.props.tasks.length,
         pageSize: this.props.pageSize || 20,
         type: this.props.type || 'simple'
       });
@@ -20661,7 +20659,7 @@ var TaskList = exports.TaskList = function (_React$Component) {
       return _react2.default.createElement(_TaskCell.TaskCell, {
         key: key,
         index: index,
-        taskData: this.state.tasks[index],
+        taskData: this.props.tasks[index],
         handleCellClicked: this.props.handleCellClicked.bind(this),
 
         padding: '10px 0px',
@@ -20783,6 +20781,8 @@ var MainPanel = function (_React$Component) {
 
     _this.state = {
       loaded: false,
+      isReloading: false,
+      hasReloadedBefore: false,
       tasks: [],
 
       selectedTab: 'Available',
@@ -20798,17 +20798,39 @@ var MainPanel = function (_React$Component) {
       this.getTasks({
         status: 0
       });
+      this.interval = setInterval(this.refreshTaskList.bind(this), 1500);
     }
   }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { style: { position: 'relative' } },
+        this.renderReloadingInfo(),
         this.renderTabs(),
         this.renderTaskList(),
         this.renderPopup()
       );
+    }
+  }, {
+    key: 'renderReloadingInfo',
+    value: function renderReloadingInfo() {
+      // Remove the line under if you want a front end for this
+      return;
+      if (this.state.isReloading) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'row animated fadeInUp', style: styleSheet.reloadingDiv },
+          'Reloading . .'
+        );
+      }
+      if (!this.state.isReloading && this.state.hasReloadedBefore) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'row animated fadeOutUp', style: styleSheet.reloadingDiv },
+          'Done!'
+        );
+      }
     }
   }, {
     key: 'renderTabs',
@@ -20817,7 +20839,7 @@ var MainPanel = function (_React$Component) {
 
       return _react2.default.createElement(
         'ul',
-        { className: 'nav nav-inline row' },
+        { style: { paddingTop: '20px' }, className: 'nav nav-inline row' },
         this.state.tabs.map(function (tab) {
           return _react2.default.createElement(
             'li',
@@ -20852,6 +20874,7 @@ var MainPanel = function (_React$Component) {
           'div',
           { className: 'animated slideInUp', style: { padding: '25px 0px' } },
           _react2.default.createElement(_TaskList.TaskList, {
+            ref: 'list',
             handleCellClicked: this.handleCellClicked.bind(this),
             tasks: this.state.tasks,
             pageSize: 50
@@ -20870,8 +20893,7 @@ var MainPanel = function (_React$Component) {
     value: function renderPopup() {
       return _react2.default.createElement(_Modal_TaskTake.Modal_TaskTake, {
         taskData: this.state.selectedTask,
-        refresh: this.getTasks.bind(this),
-        status: this.state.tabs.indexOf(this.state.selectedTab)
+        refresh: this.refreshTaskList.bind(this)
       });
     }
   }, {
@@ -20889,11 +20911,28 @@ var MainPanel = function (_React$Component) {
       var _this3 = this;
 
       this.setState({
-        selectedTab: tab
+        selectedTab: tab,
+        loaded: false
       }, function () {
         _this3.getTasks({
           status: _this3.state.tabs.indexOf(_this3.state.selectedTab)
         });
+      });
+    }
+  }, {
+    key: 'refreshTaskList',
+    value: function refreshTaskList() {
+      var _this4 = this;
+
+      this.setState({
+        isReloading: true,
+        hasReloadedBefore: true
+      }, function () {
+        setTimeout(function () {
+          _this4.getTasks({
+            status: _this4.state.tabs.indexOf(_this4.state.selectedTab)
+          });
+        }, 0);
       });
     }
 
@@ -20902,10 +20941,6 @@ var MainPanel = function (_React$Component) {
   }, {
     key: 'getTasks',
     value: function getTasks(query) {
-      console.log(query);
-      this.setState({
-        loaded: false
-      });
       var _apiURL = '/api/v1/bruddrtask/getTasks';
       $.ajax({
         type: "GET",
@@ -20913,9 +20948,11 @@ var MainPanel = function (_React$Component) {
         data: query,
         dataType: 'json',
         success: function (data) {
+          // hacky fix to compare objects
           this.setState({
-            tasks: data,
-            loaded: true
+            loaded: true,
+            isReloading: false,
+            tasks: data
           });
         }.bind(this),
         error: function (xhr, status, err) {
@@ -20928,6 +20965,20 @@ var MainPanel = function (_React$Component) {
 
   return MainPanel;
 }(_react2.default.Component);
+
+var styleSheet = {
+  reloadingDiv: {
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    right: '0',
+    color: '#f8f8f8',
+    padding: '4px',
+    textAlign: 'center',
+    backgroundColor: 'darkOrange',
+    borderRadius: '0px 0px 3px 3px'
+  }
+};
 
 _reactDom2.default.render(_react2.default.createElement(MainPanel, null), taskContainer);
 
