@@ -45,7 +45,8 @@ class MainPanel extends React.Component {
   }
   
   renderReloadingInfo() {
-    
+    // Remove the line under if you want a front end for this
+    return;
     if (this.state.isReloading) {
       return (
         <div className='row animated fadeInUp' style={styleSheet.reloadingDiv}>
@@ -142,7 +143,7 @@ class MainPanel extends React.Component {
       setTimeout(()=> {
         this.getTasks({
           status:this.state.tabs.indexOf(this.state.selectedTab)
-        })} , 1500)
+        })} , 0)
     })
   }
   

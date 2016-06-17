@@ -20815,7 +20815,8 @@ var MainPanel = function (_React$Component) {
   }, {
     key: 'renderReloadingInfo',
     value: function renderReloadingInfo() {
-
+      // Remove the line under if you want a front end for this
+      return;
       if (this.state.isReloading) {
         return _react2.default.createElement(
           'div',
@@ -20931,7 +20932,7 @@ var MainPanel = function (_React$Component) {
           _this4.getTasks({
             status: _this4.state.tabs.indexOf(_this4.state.selectedTab)
           });
-        }, 1500);
+        }, 0);
       });
     }
 
